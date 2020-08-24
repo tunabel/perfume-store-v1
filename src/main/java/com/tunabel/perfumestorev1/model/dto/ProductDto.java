@@ -2,7 +2,7 @@ package com.tunabel.perfumestorev1.model.dto;
 
 import java.util.Date;
 
-public class ProductDTO {
+public class ProductDto {
 
     private int id;
     private int brandId;

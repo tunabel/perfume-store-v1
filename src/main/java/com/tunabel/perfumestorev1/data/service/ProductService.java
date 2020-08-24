@@ -74,5 +74,9 @@ public class ProductService {
         return null;
     }
 
+    public Product findBySkuId(int skuId) {
+        return productRepository.findBySkuId(skuId);
+    }
+
 
 }

@@ -10,10 +10,23 @@ import org.springframework.data.domain.Pageable;
 
 
 
-public interface ProductRepository extends JpaRepository<Product,Integer> {
+public interface ProductRepository extends JpaRepository<Product,Integer> , ProductRepositoryCustom {
 
     @Query("select count(p.id) from Product p")
     long getTotalProducts();
+
+//    @Query("SELECT p FROM Product p " +
+//            "JOIN ProductSku s " +
+//            "WHERE s.id = :skuId")
+//    Product findBySkuId(@Param("skuId") int skuId);
+
+    @Query(value = "SELECT p.* FROM dbo_product p " +
+            "WHERE p.product_id = (" +
+                "SELECT s.product_id " +
+                "FROM dbo_product_sku s " +
+                "WHERE s.sku_id = :skuId" +
+            ")", nativeQuery = true)
+    Product findBySkuId(@Param("skuId") int skuId);
 
 //    @Query("SELECT p FROM dbo_product p " +
 //            "WHERE (:brandId IS NULL OR (p.brandId = :brandId))" +

@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +45,7 @@ public class Product {
     private List<ProductImage> productImageList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<ProductSKU> productSKUList = new ArrayList<>();
+    private List<ProductSku> productSkuList = new ArrayList<>();
 
     private String name;
 
@@ -56,5 +55,4 @@ public class Product {
 
     @Column(name = "created_date")
     private Date createdDate;
-
 }

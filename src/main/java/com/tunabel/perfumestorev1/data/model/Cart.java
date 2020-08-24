@@ -22,5 +22,5 @@ public class Cart {
     private String username;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private List<CartSKU> cartSKUList = new ArrayList<>();
+    private List<CartSku> cartSkuList = new ArrayList<>();
 }

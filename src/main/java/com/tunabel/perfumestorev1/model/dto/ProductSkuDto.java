@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductSKUDTO {
+public class ProductSkuDto {
 
     @Null
     private int id;
@@ -30,9 +30,6 @@ public class ProductSKUDTO {
     private int volume;
 
     private String imageURL;
-
-    @Null
-    private int status;
 
     @Null
     private Date createdDate;

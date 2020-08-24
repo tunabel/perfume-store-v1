@@ -18,7 +18,6 @@ public class ScentService {
         return scentRepository.findById(scentId).get();
     }
 
-
     public List<Scent> getScentList() {
         try {
             return scentRepository.findAll();

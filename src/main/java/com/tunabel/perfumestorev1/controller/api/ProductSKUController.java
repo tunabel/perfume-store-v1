@@ -1,9 +1,9 @@
 package com.tunabel.perfumestorev1.controller.api;
 
 
-import com.tunabel.perfumestorev1.data.model.ProductSKU;
+import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
-import com.tunabel.perfumestorev1.model.dto.ProductSKUDTO;
+import com.tunabel.perfumestorev1.model.dto.ProductSkuDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,10 @@ public class ProductSKUController {
 
     @GetMapping("/all")
     public ResponseEntity getAllSKUs() {
-        List<ProductSKU> skuList = productSKUService.getNewArrivalList();
-        List<ProductSKUDTO> skudtoList = new ArrayList<>();
-        for(ProductSKU sku: skuList) {
-            ProductSKUDTO skudto = ProductSKUDTO.builder().id(sku.getId()).build();
+        List<ProductSku> skuList = productSKUService.getNewArrivalList(12);
+        List<ProductSkuDto> skudtoList = new ArrayList<>();
+        for(ProductSku sku: skuList) {
+            ProductSkuDto skudto = ProductSkuDto.builder().id(sku.getId()).build();
             skudtoList.add(skudto);
         }
 

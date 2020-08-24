@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "dbo_product_sku")
 @Getter
 @Setter
-public class ProductSKU {
+public class ProductSku {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "sku_id")
@@ -34,10 +34,10 @@ public class ProductSKU {
     private int quantity;
     private int volume;
 
+    private String spec;
+
     @Column(name = "image_url")
     private String imageURL;
-
-    private int status;
 
     @Column(name = "created_date")
     private Date createdDate;

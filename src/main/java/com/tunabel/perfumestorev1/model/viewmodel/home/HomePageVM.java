@@ -1,6 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.home;
 
-import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSKUVM;
+import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HomePageVM {
-    private List<ProductSKUVM> newArrivalList;
-    private List<ProductSKUVM> bestSellerList;
+    private List<ProductSkuVM> newArrivalList;
+    private List<ProductSkuVM> bestSellerList;
     private String searchQuery;
 }

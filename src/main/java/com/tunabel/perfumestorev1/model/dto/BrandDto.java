@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class BrandDTO {
+public class BrandDto {
     private int id;
     private String name;
 

@@ -11,15 +11,15 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductSKUVM {
+public class ProductSkuVM {
     private int id;
     private String name;
+    private String brand;
     private String spec;
     private int mainSku;
-    private int price;
+    private String price;
     private int quantity;
     private int volume;
     private String imageURL;
     private int status;
-    private LocalDate createdDate;
 }

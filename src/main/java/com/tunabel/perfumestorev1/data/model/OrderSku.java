@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "dbo_order_sku")
-public class OrderSKU {
+public class OrderSku {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_sku_id")
@@ -22,7 +22,7 @@ public class OrderSKU {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "sku_id")
-    private ProductSKU productSKU;
+    private ProductSku productSKU;
 
     private int quantity;
 

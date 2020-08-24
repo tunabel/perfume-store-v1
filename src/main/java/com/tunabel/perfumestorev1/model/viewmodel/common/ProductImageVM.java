@@ -13,6 +13,5 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ProductImageVM {
     private int id;
-    private String link;
-    private LocalDate createdDate;
+    private String imageURL;
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 
-public class ProductImageDTO {
+public class ProductImageDto {
 
     private int id;
     private int productId;

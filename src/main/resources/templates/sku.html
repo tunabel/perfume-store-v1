@@ -4,7 +4,8 @@
 <body>
 <div th:replace="fragments/header"></div>
 
-<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+
+<div class="hero-wrap hero-bread" style="background-image: url('../images/bg_6.jpg');">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
@@ -33,26 +34,64 @@
                             class="carousel slide"
                             data-ride="carousel"
                     >
-                        <ol class="carousel-indicators" th:each="image, state : ${vm.getChildrenSkuList()}">
+<!--                        <ol class="carousel-indicators">-->
 
+<!--                            <li-->
+<!--                                    th:each="image, state : ${vm.getChildrenSkuList()}"-->
+<!--                                    data-target="#productCarousel"-->
+<!--                                    data-slide-to="${state.index}"-->
+<!--                                    th:classappend="(${state.index} == 0 )? 'active' : '' "-->
+
+<!--                            >-->
+<!--                                <img-->
+<!--                                        th:src="@{'../'+${image.getImageURL()}}"-->
+<!--                                        th:alt="${vm.getProductName()}+' image'"-->
+<!--                                />-->
+<!--                            </li>-->
+<!--                        </ol>-->
+<!--                        <div class="carousel-inner" th:each="image, state : ${vm.getChildrenSkuList()}">-->
+<!--                            <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active': '' ">-->
+<!--                                <img-->
+<!--                                        class="d-block w-100"-->
+<!--                                        th:src="@{'../'+${image.getImageURL()}}"-->
+<!--                                        th:alt="${vm.getProductName()}+' image'"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <ol class="carousel-indicators">
                             <li
-                                    data-target="#productCarousel"
-                                    data-data-slide-to="${state.index}"
-                                    th:classappend="${state.index} == 0 ? 'active' : '' "
-
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide-to="0"
+                                    class="active"
                             >
                                 <img
-                                        th:src="${image.getImageURL()}"
-                                        th:alt="${vm.getProductName()}+' image'"
+                                        src="../images/product/1.jpg"
+                                        alt=""
+                                />
+                            </li>
+                            <li
+                                    data-target="#carouselExampleIndicators"
+                                    data-slide-to="1"
+                            >
+                                <img
+                                        src="../images/product/11.jpg"
+                                        alt=""
                                 />
                             </li>
                         </ol>
-                        <div class="carousel-inner" th:each="image, state : ${vm.getChildrenSkuList()}">
-                            <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active': '' ">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
                                 <img
                                         class="d-block w-100"
-                                        th:src="${image.getImageURL()}"
-                                        th:alt="${vm.getProductName()}+' image'"
+                                        src="../images/product/1.jpg"
+                                        alt="First slide"
+                                />
+                            </div>
+                            <div class="carousel-item">
+                                <img
+                                        class="d-block w-100"
+                                        src="../images/product/11.jpg"
+                                        alt="Second slide"
                                 />
                             </div>
                         </div>
@@ -68,11 +107,11 @@
 
                     <div class="product_sku_list" style="margin-top: 40px">
                         <span style="margin-bottom:20px">Product family</span>
-                        <div class="sku_button_list" th:each="sku, state : ${vm.getChildrenSkuList()}">
-                            <div class="sku_button" th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''">
-                                <img  th:src="${sku.getImageURL()}"
+                        <div class="sku_button_list">
+                            <div class="sku_button" th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''" th:each="sku, state : ${vm.getChildrenSkuList()}">
+                                <img  th:src="@{'../'+${sku.getImageURL()}}"
                                       th:alt="${sku.getName()}+' image'"
-                                     class="sku_thumb">
+                                      class="sku_thumb">
                                 <span class="sku_name" th:text="${sku.getName()} + ' ' + ${sku.getSpec()}"></span>
                             </div>
                         </div>
@@ -105,7 +144,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a
-                        class="nav-link"
+                        class="nav-link active"
                         id="home-tab"
                         data-toggle="tab"
                         href="#desc"
@@ -142,7 +181,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div
-                    class="tab-pane fade"
+                    class="tab-pane fade "
                     id="desc"
                     role="tabpanel"
                     aria-labelledby="home-tab"
@@ -166,7 +205,7 @@
                 <div>
                     <p>
                         <span style="font-weight: bold">Brand: </span>
-                        <a th:href="@{'/shop?brand='{id}(id=${vm.getBrandId()})}" th:text="${vm.getBrandName()()}"></a>
+                        <a th:href="@{'/shop?brand='{id}(id=${vm.getBrandId()})}" th:text="${vm.getBrandName()}"></a>
                     </p>
                     <p>
                         <span style="font-weight: bold">Brand Description: </span>
@@ -223,23 +262,22 @@
 </div>
 
 
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-migrate-3.0.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.easing.1.3.js"></script>
-<script src="js/jquery.waypoints.min.js"></script>
-<script src="js/jquery.stellar.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/aos.js"></script>
-<script src="js/jquery.animateNumber.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
-<script src="js/scrollax.min.js"></script>
-
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/main.js"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/jquery.animateNumber.min.js}"></script>
+<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script th:src="@{/js/jquery.nicescroll.min.js}"></script>
+<script th:src="@{/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

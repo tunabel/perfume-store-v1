@@ -1,14 +1,15 @@
 package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.Brand;
-import com.tunabel.perfumestorev1.data.model.ProductSKU;
+import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.model.Scent;
 import com.tunabel.perfumestorev1.data.model.Type;
 import com.tunabel.perfumestorev1.data.service.*;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 import com.tunabel.perfumestorev1.model.viewmodel.shop.ShopVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 @Controller
@@ -40,11 +42,10 @@ public class ShopController extends BaseController {
 
     @GetMapping(value = "/shop")
     public String shop(Model model,
-                       @Valid @ModelAttribute("productname") ProductVM productName,
-                       @RequestParam(name = "brandId", required = false) Integer brandId,
+                       @Valid @ModelAttribute("searchProps") ProductSearchVM searchVM,
                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                        @RequestParam(name = "size", required = false, defaultValue = "12") Integer size,
-                       @RequestParam(name = "sortByPrice", required = false) String sort) {
+                       @RequestParam(name = "sortBy", required = false, defaultValue = "best") String sort) {
 
         ShopVM vm = new ShopVM();
 
@@ -86,34 +87,41 @@ public class ShopController extends BaseController {
             typeVM.setName(type.getName());
             typeVMList.add(typeVM);
         }
-
-
         /**
          * set list product SKUs
          */
 
-        List<ProductSKU> productSKUList = productSKUService.getProductSKUList();
-        List<ProductSKUVM> productSKUVMList = new ArrayList<>();
+        Page<ProductSku> productSkuPage;
+        PageRequest pageRequest = PageRequest.of(page,size);
 
-        for(ProductSKU productSKU : productSKUList) {
-            ProductSKUVM skuVM = new ProductSKUVM();
+        if ( searchVM != null) {
+            productSkuPage = productSKUService.getPageMainSkuByQuery(searchVM, pageRequest, sort);
+        }
+
+        productSkuPage = productSKUService.getPageMainSku(pageRequest, sort);
+
+        List<ProductSkuVM> productSkuVMList = new ArrayList<>();
+
+        for(ProductSku productSKU : productSkuPage.getContent()) {
+            ProductSkuVM skuVM = new ProductSkuVM();
             skuVM.setId(productSKU.getId());
             skuVM.setName(productSKU.getProduct().getName());
-            skuVM.setPrice(productSKU.getPrice());
+            skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫",productSKU.getPrice()));
             skuVM.setImageURL(productSKU.getImageURL());
-            productSKUVMList.add(skuVM);
+            productSkuVMList.add(skuVM);
         }
+//
+//        if(productSkuVMList.size() == 0) {
+//            vm.setSearchQuery("As the fragrance vanishes, the sensation tingles...");
+//        }
 
-        if(productSKUVMList.size() == 0) {
-            vm.setSearchQuery("As the fragrance vanishes, the sensation tingles...");
-        }
-
-        vm.setProductSKUVMList(productSKUVMList);
+        vm.setProductSkuVMList(productSkuVMList);
         vm.setBrandVMList(brandVMList);
         vm.setScentVMList(scentVMList);
         vm.setTypeVMList(typeVMList);
 
         model.addAttribute("vm",vm);
+        model.addAttribute("page",productSkuPage);
         return "shop";
     }
 
