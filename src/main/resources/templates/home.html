@@ -38,21 +38,21 @@
                 <div class="product-slider owl-carousel ftco-animate">
                     <div class="item" th:each="productSKU : ${vm.getNewArrivalList()}">
                         <div class="product">
-                            <a href="#" class="img-prod">
+                            <a th:href="${'/sku='+productSKU.getId()}" class="img-prod">
                                 <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                                      th:alt="${productSKU.getName()}">
-                                <!--                                <span class="status">30%</span>-->
-                            </a>
-                            <div class="text pt-3 px-3">
-                                <h3 th:text="${productSKU.getName()}"><a th:href="${'/product/'+productSKU.getId()}"></a></h3>
-                                <div class="d-flex">
-                                    <div class="pricing">
-                                        <p class="price">
-                                            $<span th:text="${productSKU.getPrice()}"></span>
-                                        </p>
+                                <div class="text pt-3 px-3">
+                                    <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
+                                    <h3 th:text="${productSKU.getName()}"></h3>
+                                    <div class="d-flex">
+                                        <div class="pricing">
+                                            <p class="price">
+                                                <span th:text="${productSKU.getPrice()}"></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
@@ -79,8 +79,18 @@
                     </div>
                 </div>
                 <div class="pb-md-5">
-                    <p>When you smell a fragrance, what do you experience? Is it the delicate notes skilfully pieced together like a haute couture garment, a feeling of luxury that is synonymous with the brand? Or perhaps it’s a memory triggered by an emotional connection tethered to the past? Fragrances are never created with the sole intention of being iconic. They usually start as a sensorial manifestation of a single person’s vision: they’re the recollection of a life story or a specific moment in time that is then bottled.</p>
-                    <p>The power of scent is that it can match our mood or personality: it allows us the licence to dream or induces a sense of nostalgia for a time, place, or person. It is its ability to transcend time and era, as well as to forge an emotional connection, that makes scent truly iconic. The House of Chanel has never stopped making us dream through its meticulously crafted garments set against the most breathtaking backdrops created at the Grand Palais every season.</p>
+                    <p>When you smell a fragrance, what do you experience? Is it the delicate notes skilfully pieced
+                        together like a haute couture garment, a feeling of luxury that is synonymous with the brand? Or
+                        perhaps it’s a memory triggered by an emotional connection tethered to the past? Fragrances are
+                        never created with the sole intention of being iconic. They usually start as a sensorial
+                        manifestation of a single person’s vision: they’re the recollection of a life story or a
+                        specific moment in time that is then bottled.</p>
+                    <p>The power of scent is that it can match our mood or personality: it allows us the licence to
+                        dream or induces a sense of nostalgia for a time, place, or person. It is its ability to
+                        transcend time and era, as well as to forge an emotional connection, that makes scent truly
+                        iconic. The House of Chanel has never stopped making us dream through its meticulously crafted
+                        garments set against the most breathtaking backdrops created at the Grand Palais every
+                        season.</p>
                 </div>
             </div>
         </div>
@@ -100,24 +110,21 @@
         <div class="row">
             <div class="col-sm col-md-6 col-lg ftco-animate" th:each="productSKU : ${vm.getBestSellerList()}">
                 <div class="product">
-                    <a th:href="${'/product/'+productSKU.getId()}" class="img-prod">
+                    <a th:href="${'/sku='+productSKU.getId()}" class="img-prod">
                         <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                              th:alt="${productSKU.getName()}">
-                    </a>
-                    <div class="text py-3 px-3">
-                        <h3 th:text="${productSKU.getName()}"><a th:href="${'/product/'+productSKU.getId()}"></a></h3>
-                        <div class="d-flex">
-                            <div class="pricing">
-                                <p class="price">$<span th:text="${productSKU.getPrice()}"></span></p>
+                        <div class="text pt-3 px-3">
+                            <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
+                            <h3 th:text="${productSKU.getName()}"></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price">
+                                        <span th:text="${productSKU.getPrice()}"></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <hr>
-                        <p class="bottom-area d-flex">
-                            <a href="#" class="add-to-cart"><span>Add to cart <i
-                                    class="ion-ios-add ml-1"></i></span></a>
-                            <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-                        </p>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

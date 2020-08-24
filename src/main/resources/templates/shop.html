@@ -3,171 +3,234 @@
 <head th:replace="fragments/head"></head>
 <body>
 <div th:replace="fragments/header"></div>
-		
-	<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
-      <div class="container">
+
+<div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
+    <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center">
-            <h1 class="mb-0 bread">Collection</h1>
-<!--            <p class="breadcrumbs"><span class="mr-2"><a href="home.html">Home</a></span> <span>Product</span></p>-->
-          </div>
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-0 bread">Collection</h1>
+                <!--            <p class="breadcrumbs"><span class="mr-2"><a href="home.html">Home</a></span> <span>Product</span></p>-->
+            </div>
         </div>
-      </div>
     </div>
-		
-	<section class="ftco-section bg-light">
-    	<div class="container-fluid">
-    		<div class="row">
-				<div class="col-md-4 col-lg-2">
-					<div class="product_sidebar">
-                        <div class="single_sedebar">
-                            <form action="#">
-                                <input type="text" name="#" placeholder="Search keyword">
-                                <i class="ti-search"></i>
+</div>
+
+<section class="ftco-section bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 col-xl-2">
+                <div class="product_sidebar">
+                    <!--/*@thymesVar id="searchProps" type="com.tunabel.perfumestorev1.model.dto.ProductDto"*/-->
+                    <form action="#" th:action="@{/shop}" th:object="${searchProps}" method="get" >
+                        <div class="single_sidebar" style="margin-bottom: 5px">
+                            <input type="text" name="#" class="sidebar_search" placeholder="Search product..." th:field="*{name}">
+                            <i class="icon-search"></i>
+                        </div>
+
+                        <div style="display:flex; justify-content: space-between" class="single_sidebar">
+                            <button type="submit" class="btn btn-sidebar sidebar_submit">Search</button>
+                            <a href="shop" class="btn btn-sidebar sidebar_reset">Reset</a>
+                        </div>
+                        <div class="single_sidebar">
+                            <div class="select_option">
+                                <div class="select_option_list">Gender <i class="right icon-caret-down"></i></div>
+                                <div class="select_option_dropdown">
+                                    <div class="checkbox">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" value="1"  th:field="*{gender}">
+                                            <span class="checkbox-custom"></span>
+                                            <div class="input-title">Ladies</div>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" value="2"  th:field="*{gender}">
+                                            <span class="checkbox-custom"></span>
+                                            <div class="input-title">Gentlemen</div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_sidebar">
+                            <div class="select_option">
+                                <div class="select_option_list">Brand <i class="right icon-caret-down"></i></div>
+                                <div class="select_option_dropdown">
+                                    <div class="checkbox" th:each="brand : ${vm.getBrandVMList()}">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox"
+                                                   th:value="${brand.getId()}"
+                                                   th:field="*{brand}">
+                                            <span class="checkbox-custom"></span>
+                                            <div class="input-title" th:text="${brand.getName()}"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_sidebar">
+                            <div class="select_option">
+                                <div class="select_option_list">Scent Families <i class="right icon-caret-down"></i>
+                                </div>
+                                <div class="select_option_dropdown">
+                                    <div class="checkbox" th:each="scent : ${vm.getScentVMList()}">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox"
+                                                   th:value="${scent.getId()}"
+                                                   th:field="*{scent}">
+                                            <span class="checkbox-custom"></span>
+                                            <div class="input-title" th:text="${scent.getName()}"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single_sidebar">
+
+                            <div class="select_option">
+                                <div class="select_option_list">Type <i class="right icon-caret-down"></i></div>
+                                <div class="select_option_dropdown">
+                                    <div class="checkbox" th:each="type : ${vm.getTypeVMList()}">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox"
+                                                   th:value="${type.getId()}"
+                                                   th:field="*{type}">
+                                            <span class="checkbox-custom"></span>
+                                            <div class="input-title" th:text="${type.getName()}"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9 col-xl-10">
+                <div class="row">
+                    <div class="select-bar">
+                        <span>Sort by: </span>
+                        <select name="select" id="sortSelect" onChange="window.location.href=this.value">
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=best'">Best Sellers</option>
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=new'">New Arrivals</option>
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceDesc'">Price High To Low</option>
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceAsc'">Price Low To High</option>
+                        </select>
+                    </div>
+
+<!--                    <div class="select-bar">-->
+<!--                        <span>Sort by: </span>-->
+<!--                        <select name="select" id="sizeSelect">-->
+<!--                            <option value="12"><a th:href="@{${#httpServletRequest.requestURI}+'?size=12'}" th:text="12"></a></option>-->
+<!--                            <option value="36"><a th:href="@{${#httpServletRequest.requestURI}+'?size=36'}" th:text="36"></a></option>-->
+<!--                            <option value="72"><a th:href="@{${#httpServletRequest.requestURI}+'?size=72'}" th:text="72"></a></option>-->
+<!--                            <option value="128"><a th:href="@{${#httpServletRequest.requestURI}+'?size=128'}" th:text="128"></a></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+                </div>
+                <div class="row">
+                    <div class="col-sm col-md-3 col-lg-2 ftco-animate" th:each="sku : ${vm.getProductSkuVMList()}">
+                        <div class="product">
+                            <a th:href="${'/product/?sku='+sku.getId()}" class="img-prod">
+                                <img class="img-fluid" th:src="${sku.getImageURL()}" th:alt="${sku.getName()}">
+                                <div class="text py-3 px-3">
+                                    <h3 style="font-weight:bold" th:text="${sku.getBrand()}"></h3>
+                                    <h3 th:text="${sku.getName()}"></h3>
+                                    <div class="d-flex">
+                                        <div class="pricing">
+                                            <p class="price">
+                                                <span th:text="${sku.getPrice()}"></span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <p class="bottom-area d-flex">
+                                        <a href="#" class="add-to-cart">
+                                            <span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+<!--                                        <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center" th:if="${vm.getProductSkuVMList().size()>0}">
+                <div class="block-27">
+                    <ul>
+
+                        <li><a href="#">&lt;</a></li>
+                        <th:block th:each="i: ${#numbers.sequence(1, page.totalPages)}">
+                            <li class="active" th:if="${page.number+1 == i}" aria-current="page">
+                                <a th:href="${#httpServletRequest.requestURI}" th:text="${i}"></a>
+                            </li>
+                            <li th:unless="${page.number+1 == i}">
+                                <a  th:text="${i}"
+                                   th:href="@{${#httpServletRequest.requestURI}+'?page='+i}">
+                                </a>
+                            </li>
+                        </th:block>
+                        <li><a href="#">&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section-parallax">
+    <div class="parallax-img d-flex align-items-center">
+        <div class="container">
+            <div class="row d-flex justify-content-center py-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <h1 class="big">Subscribe</h1>
+                    <h2>Subcribe to our Newsletter</h2>
+                    <div class="row d-flex justify-content-center mt-5">
+                        <div class="col-md-8">
+                            <form action="#" class="subscribe-form">
+                                <div class="form-group d-flex">
+                                    <input type="text" class="form-control" placeholder="Enter email address">
+                                    <input type="submit" value="Subscribe" class="submit px-3">
+                                </div>
                             </form>
                         </div>
-                        <div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Brand <i class="right icon-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-                                    <p th:each="brand : ${vm.getBrandVMList()}">
-										<a th:href="${'/?brand='+brand.getId()}" >
-											<span th:text="${brand.getName()}"></span>
-										</a>
-									</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Scent Families <i class="right icon-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-									<p th:each="scent : ${vm.getScentVMList()}">
-										<a th:href="${'/?brand='+scent.getId()}" >
-											<span th:text="${scent.getName()}"></span>
-										</a>
-									</p>
-                                </div>
-                            </div>
-                        </div>
-						<div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Type <i class="right icon-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-									<p th:each="type : ${vm.getTypeVMList()}">
-										<a th:href="${'/?brand='+type.getId()}" >
-											<span th:text="${type.getName()}"></span>
-										</a>
-									</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-				</div>
-				<div class="col-md-8 col-lg-10">
-					<div class="row">
-						<div class="col-sm col-md-6 col-lg-3 ftco-animate" th:each="sku : ${vm.getProductSKUVMList()}">
-							<div class="product">
-								<a th:href="${'/?sku='+sku.getId()}" class="img-prod">
-									<img class="img-fluid" th:src="${sku.getImageURL()}" th:alt="${sku.getName()}">
-<!--									<span class="status">30%</span>-->
-<!--									<span class="status">New Arrival</span>-->
-								</a>
-								<div class="text py-3 px-3">
-									<h3><a th:href="${'/?sku='+sku.getId()}" >
-										<span th:text="${sku.getName()}"></span>
-									</a></h3>
-									<div class="d-flex">
-										<div class="pricing">
-											<p class="price">
-<!--												<span class="mr-2 price-dc">$120.00</span>-->
-<!--												<span class="price-sale">$80.00</span></p>-->
-												<span th:text="${sku.getPrice()}"></span>
-										</div>
-<!--										<div class="rating">-->
-<!--											<p class="text-right">-->
-<!--												<span class="ion-ios-star-outline"></span>-->
-<!--												<span class="ion-ios-star-outline"></span>-->
-<!--												<span class="ion-ios-star-outline"></span>-->
-<!--												<span class="ion-ios-star-outline"></span>-->
-<!--												<span class="ion-ios-star-outline"></span>-->
-<!--											</p>-->
-<!--										</div>-->
-									</div>
-									<hr>
-									<p class="bottom-area d-flex">
-										<a href="#" class="add-to-cart"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-										<a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-    		<div class="row mt-5">
-          <div class="col text-center">
-            <div class="block-27">
-              <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-    	</div>
-    </section>
-
-		<section class="ftco-section-parallax">
-      <div class="parallax-img d-flex align-items-center">
-        <div class="container">
-          <div class="row d-flex justify-content-center py-5">
-            <div class="col-md-7 text-center heading-section ftco-animate">
-            	<h1 class="big">Subscribe</h1>
-              <h2>Subcribe to our Newsletter</h2>
-              <div class="row d-flex justify-content-center mt-5">
-                <div class="col-md-8">
-                  <form action="#" class="subscribe-form">
-                    <div class="form-group d-flex">
-                      <input type="text" class="form-control" placeholder="Enter email address">
-                      <input type="submit" value="Subscribe" class="submit px-3">
-                    </div>
-                  </form>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
 <div th:replace="fragments/footer :: footer_info"></div>
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
 
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/bootstrap-datepicker.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
-  <script src="js/main.js"></script>
-    
-  </body>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.easing.1.3.js"></script>
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/jquery.animateNumber.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="js/google-map.js"></script>
+<script src="js/main.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+
+</body>
 </html>

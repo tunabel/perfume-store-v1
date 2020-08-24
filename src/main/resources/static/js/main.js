@@ -298,13 +298,13 @@
 	var goHere = function() {
 
 		$('.mouse-icon').on('click', function(event){
-			
+
 			event.preventDefault();
 
 			$('html,body').animate({
 				scrollTop: $('.goto-here').offset().top
 			}, 500, 'easeInOutExpo');
-			
+
 			return false;
 		});
 	};
@@ -326,8 +326,24 @@
 
 	$('.controls').on('click', function(){
 	  $(this).addClass('active').siblings().removeClass('active');
-	}); 
+	});
 
+
+	//nice-select
+	$(document).ready(function() {
+		$('select').niceSelect();
+	});
+
+	//nice-scroll
+	$(".nice-scroll").niceScroll({
+		cursorborder:"",
+		cursorcolor:"#dddddd",
+		boxzoom:false,
+		cursorwidth: 5,
+		background: 'rgba(0, 0, 0, 0.2)',
+		cursorborderradius:50,
+		horizrailenabled: fa/lse
+	});
 
 
 })(jQuery);
