@@ -72,6 +72,7 @@ public class SkuController extends BaseController {
             for (ProductImage image : product.getProductImageList()) {
                 ProductImageVM imageVM = new ProductImageVM();
                 imageVM.setId(image.getId());
+                System.out.println(image.getImageUrl());
                 imageVM.setImageURL(image.getImageUrl());
 
                 imageVMList.add(imageVM);

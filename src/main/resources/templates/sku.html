@@ -30,71 +30,35 @@
             <div class="col-lg-6 mb-5 ftco-animate">
                 <div class="s_product_img">
                     <div
-                            id="productCarousel"
-                            class="carousel slide"
-                            data-ride="carousel"
+                        id="productCarousel"
+                        class="carousel slide"
+                        data-ride="carousel"
                     >
-<!--                        <ol class="carousel-indicators">-->
-
-<!--                            <li-->
-<!--                                    th:each="image, state : ${vm.getChildrenSkuList()}"-->
-<!--                                    data-target="#productCarousel"-->
-<!--                                    data-slide-to="${state.index}"-->
-<!--                                    th:classappend="(${state.index} == 0 )? 'active' : '' "-->
-
-<!--                            >-->
-<!--                                <img-->
-<!--                                        th:src="@{'../'+${image.getImageURL()}}"-->
-<!--                                        th:alt="${vm.getProductName()}+' image'"-->
-<!--                                />-->
-<!--                            </li>-->
-<!--                        </ol>-->
-<!--                        <div class="carousel-inner" th:each="image, state : ${vm.getChildrenSkuList()}">-->
-<!--                            <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active': '' ">-->
-<!--                                <img-->
-<!--                                        class="d-block w-100"-->
-<!--                                        th:src="@{'../'+${image.getImageURL()}}"-->
-<!--                                        th:alt="${vm.getProductName()}+' image'"-->
-<!--                                />-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <ol class="carousel-indicators">
                             <li
-                                    data-target="#carouselExampleIndicators"
-                                    data-slide-to="0"
-                                    class="active"
+                                th:each="image, state : ${vm.getProductImageVMList()}"
+                                data-target="#productCarousel"
+                                th:data-slide-to="${state.index}"
+                                th:classappend="(${state.index} == 0 )? 'active' : '' "
+
                             >
                                 <img
-                                        src="../images/product/1.jpg"
-                                        alt=""
-                                />
-                            </li>
-                            <li
-                                    data-target="#carouselExampleIndicators"
-                                    data-slide-to="1"
-                            >
-                                <img
-                                        src="../images/product/11.jpg"
-                                        alt=""
+                                        th:src="@{'../'+${image.getImageURL()}}"
+                                        th:alt="${vm.getProductName()}+' image'"
                                 />
                             </li>
                         </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
+                        <div class="carousel-inner" >
+                            <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active': '' "
+                                 th:each="image, state : ${vm.getProductImageVMList()}">
                                 <img
                                         class="d-block w-100"
-                                        src="../images/product/1.jpg"
-                                        alt="First slide"
-                                />
-                            </div>
-                            <div class="carousel-item">
-                                <img
-                                        class="d-block w-100"
-                                        src="../images/product/11.jpg"
-                                        alt="Second slide"
+                                        th:src="@{'../'+${image.getImageURL()}}"
+                                        th:alt="${vm.getProductName()}+' image'"
                                 />
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -108,12 +72,14 @@
                     <div class="product_sku_list" style="margin-top: 40px">
                         <span style="margin-bottom:20px">Product family</span>
                         <div class="sku_button_list">
-                            <div class="sku_button" th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''" th:each="sku, state : ${vm.getChildrenSkuList()}">
+                            <a class="sku_button" th:href="@{'~/product/?sku='+${sku.getId()}"
+                                 th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''"
+                                 th:each="sku, state : ${vm.getChildrenSkuList()}">
                                 <img  th:src="@{'../'+${sku.getImageURL()}}"
                                       th:alt="${sku.getName()}+' image'"
                                       class="sku_thumb">
                                 <span class="sku_name" th:text="${sku.getName()} + ' ' + ${sku.getSpec()}"></span>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
