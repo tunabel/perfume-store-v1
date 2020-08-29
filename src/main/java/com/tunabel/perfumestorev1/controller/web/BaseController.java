@@ -19,16 +19,19 @@ public class BaseController {
     public void checkCookie(HttpServletResponse response,
                             HttpServletRequest request,
                             final Principal principal) {
-        Cookie cookie[] = request.getCookies();
 
+        Cookie cookie[] = request.getCookies();
+        //if user is authenticated
         if (principal != null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             Cart cartEntity = cartService.findByUserName(username);
+            //if user has cart
             if (cartEntity != null) {
                 Cookie cookie1 = new Cookie("guid", cartEntity.getGuid());
                 cookie1.setPath("/");
                 cookie1.setMaxAge(60 * 60 * 24);
                 response.addCookie(cookie1);
+                //if user doesn't have cart, create new cart for him
             } else {
                 UUID uuid = UUID.randomUUID();
                 String guid = uuid.toString();
@@ -42,13 +45,15 @@ public class BaseController {
                 cookie2.setMaxAge(60 * 60 * 24);
                 response.addCookie(cookie2);
             }
+            //if user is not logged in / guest
         } else {
             boolean flag2 = true;
 
             String guid = null;
-
+            //if guest has visited and has cookies
             if (cookie != null) {
                 for (Cookie c : cookie) {
+                    //search for guid. if there is cookies > find cart in DB
                     if (c.getName().equals("guid")) {
                         flag2 = false;
                         guid = c.getValue();
@@ -56,6 +61,7 @@ public class BaseController {
                 }
             }
 
+            //if guest doesnt have cookies > create new cart
             if (flag2 == true) {
                 UUID uuid = UUID.randomUUID();
                 String guid2 = uuid.toString();

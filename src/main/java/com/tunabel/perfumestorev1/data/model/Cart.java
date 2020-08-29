@@ -11,11 +11,8 @@ public class Cart {
     @Column(name = "cart_id")
     @Id
     private int id;
-
     private String guid;
-
     private String username;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<CartSku> cartSkuList = new ArrayList<>();
 

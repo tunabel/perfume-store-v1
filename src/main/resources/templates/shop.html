@@ -21,9 +21,10 @@
             <div class="col-md-4 col-lg-3 col-xl-2">
                 <div class="product_sidebar">
                     <!--/*@thymesVar id="searchProps" type="com.tunabel.perfumestorev1.model.dto.ProductDto"*/-->
-                    <form action="#" th:action="@{/shop}" th:object="${searchProps}" method="get" >
+                    <form action="#" th:action="@{/shop}" th:object="${searchProps}" method="get">
                         <div class="single_sidebar" style="margin-bottom: 5px">
-                            <input type="text" name="#" class="sidebar_search" placeholder="Search product..." th:field="*{name}">
+                            <input type="text" name="#" class="sidebar_search" placeholder="Search product..."
+                                   th:field="*{name}">
                             <i class="icon-search"></i>
                         </div>
 
@@ -37,14 +38,14 @@
                                 <div class="select_option_dropdown">
                                     <div class="checkbox">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" value="1"  th:field="*{gender}">
+                                            <input type="checkbox" value="1" th:field="*{gender}">
                                             <span class="checkbox-custom"></span>
                                             <div class="input-title">Ladies</div>
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label class="checkbox-label">
-                                            <input type="checkbox" value="2"  th:field="*{gender}">
+                                            <input type="checkbox" value="2" th:field="*{gender}">
                                             <span class="checkbox-custom"></span>
                                             <div class="input-title">Gentlemen</div>
                                         </label>
@@ -112,20 +113,22 @@
                         <select name="select" id="sortSelect" onChange="window.location.href=this.value">
                             <option th:value="${#httpServletRequest.requestURI}+'?sortBy=best'">Best Sellers</option>
                             <option th:value="${#httpServletRequest.requestURI}+'?sortBy=new'">New Arrivals</option>
-                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceDesc'">Price High To Low</option>
-                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceAsc'">Price Low To High</option>
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceDesc'">Price High To Low
+                            </option>
+                            <option th:value="${#httpServletRequest.requestURI}+'?sortBy=priceAsc'">Price Low To High
+                            </option>
                         </select>
                     </div>
 
-<!--                    <div class="select-bar">-->
-<!--                        <span>Sort by: </span>-->
-<!--                        <select name="select" id="sizeSelect">-->
-<!--                            <option value="12"><a th:href="@{${#httpServletRequest.requestURI}+'?size=12'}" th:text="12"></a></option>-->
-<!--                            <option value="36"><a th:href="@{${#httpServletRequest.requestURI}+'?size=36'}" th:text="36"></a></option>-->
-<!--                            <option value="72"><a th:href="@{${#httpServletRequest.requestURI}+'?size=72'}" th:text="72"></a></option>-->
-<!--                            <option value="128"><a th:href="@{${#httpServletRequest.requestURI}+'?size=128'}" th:text="128"></a></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
+                    <!--                    <div class="select-bar">-->
+                    <!--                        <span>Sort by: </span>-->
+                    <!--                        <select name="select" id="sizeSelect">-->
+                    <!--                            <option value="12"><a th:href="@{${#httpServletRequest.requestURI}+'?size=12'}" th:text="12"></a></option>-->
+                    <!--                            <option value="36"><a th:href="@{${#httpServletRequest.requestURI}+'?size=36'}" th:text="36"></a></option>-->
+                    <!--                            <option value="72"><a th:href="@{${#httpServletRequest.requestURI}+'?size=72'}" th:text="72"></a></option>-->
+                    <!--                            <option value="128"><a th:href="@{${#httpServletRequest.requestURI}+'?size=128'}" th:text="128"></a></option>-->
+                    <!--                        </select>-->
+                    <!--                    </div>-->
 
                 </div>
                 <div class="row">
@@ -133,23 +136,23 @@
                         <div class="product">
                             <a th:href="${'/product/?sku='+sku.getId()}" class="img-prod">
                                 <img class="img-fluid" th:src="${sku.getImageURL()}" th:alt="${sku.getName()}">
-                                <div class="text py-3 px-3">
-                                    <h3 style="font-weight:bold" th:text="${sku.getBrand()}"></h3>
-                                    <h3 th:text="${sku.getName()}"></h3>
-                                    <div class="d-flex">
-                                        <div class="pricing">
-                                            <p class="price">
-                                                <span th:text="${sku.getPrice()}"></span>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <p class="bottom-area d-flex">
-                                        <a href="#" class="add-to-cart">
-                                            <span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-<!--                                        <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
-                                    </p>
-                                </div>
                             </a>
+                            <div class="text py-3 px-3">
+                                <h3 style="font-weight:bold" th:text="${sku.getBrand()}"></h3>
+                                <h3 th:text="${sku.getName()}"></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price">
+                                            <span th:text="${sku.getPrice()}"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <a href="#" class="add-to-cart">
+                                        <span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                    <!-- <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -166,7 +169,7 @@
                                 <a th:href="${#httpServletRequest.requestURI}" th:text="${i}"></a>
                             </li>
                             <li th:unless="${page.number+1 == i}">
-                                <a  th:text="${i}"
+                                <a th:text="${i}"
                                    th:href="@{${#httpServletRequest.requestURI}+'?page='+i}">
                                 </a>
                             </li>
