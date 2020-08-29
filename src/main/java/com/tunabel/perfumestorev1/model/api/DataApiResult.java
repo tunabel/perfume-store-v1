@@ -1,8 +1,10 @@
 package com.tunabel.perfumestorev1.model.api;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class DataApiResult extends BaseApiResult {
     private Object data;
 }

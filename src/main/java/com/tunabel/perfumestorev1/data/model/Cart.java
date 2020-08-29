@@ -1,16 +1,11 @@
 package com.tunabel.perfumestorev1.data.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "dbo_cart")
-@Getter
-@Setter
 public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cart_id")
@@ -23,4 +18,36 @@ public class Cart {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private List<CartSku> cartSkuList = new ArrayList<>();
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getGuid() {
+        return this.guid;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public List<CartSku> getCartSkuList() {
+        return this.cartSkuList;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setCartSkuList(List<CartSku> cartSkuList) {
+        this.cartSkuList = cartSkuList;
+    }
 }

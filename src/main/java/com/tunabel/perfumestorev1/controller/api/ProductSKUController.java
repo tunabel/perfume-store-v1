@@ -26,7 +26,9 @@ public class ProductSKUController {
         List<ProductSku> skuList = productSKUService.getNewArrivalList(12);
         List<ProductSkuDto> skudtoList = new ArrayList<>();
         for(ProductSku sku: skuList) {
-            ProductSkuDto skudto = ProductSkuDto.builder().id(sku.getId()).build();
+            ProductSkuDto skudto = new ProductSkuDto();
+            skudto.setId(sku.getId());
+
             skudtoList.add(skudto);
         }
 

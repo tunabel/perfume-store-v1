@@ -15,7 +15,7 @@ public class ScentService {
     private ScentRepository scentRepository;
 
     public Scent findOne(int scentId) {
-        return scentRepository.findById(scentId).get();
+        return scentRepository.findOne(scentId);
     }
 
     public List<Scent> getScentList() {

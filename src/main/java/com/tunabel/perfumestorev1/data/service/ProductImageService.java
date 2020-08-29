@@ -18,7 +18,7 @@ public class ProductImageService {
     @Transactional
     public void addNewListProductImages(List<ProductImage> productImages) {
         try {
-            productImageRepository.saveAll(productImages);
+            productImageRepository.save(productImages);
         } catch (Exception e) {
         }
     }
@@ -31,7 +31,7 @@ public class ProductImageService {
     }
 
     public ProductImage findOne(int productImageId) {
-        return productImageRepository.findById(productImageId).get();
+        return productImageRepository.findOne(productImageId);
     }
 
     public boolean updateProductImage(ProductImage productImage) {
@@ -45,7 +45,7 @@ public class ProductImageService {
 
     public boolean deleteProductImage(int productImageId) {
         try {
-            productImageRepository.deleteById(productImageId);
+            productImageRepository.delete(productImageId);
             return true;
         } catch (Exception e) {
         }

@@ -23,11 +23,11 @@ public class ProductService {
 
     @Transactional
     public void addNewListProducts(List<Product> listProducts) {
-        productRepository.saveAll(listProducts);
+        productRepository.save(listProducts);
     }
 
     public Product findOne(int productId) {
-        return productRepository.findById(productId).get();
+        return productRepository.findOne(productId);
     }
 
 
@@ -43,7 +43,7 @@ public class ProductService {
 
     public boolean deleteProduct(int productId) {
         try {
-            productRepository.deleteById(productId);
+            productRepository.delete(productId);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

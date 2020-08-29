@@ -1,5 +1,8 @@
 package com.tunabel.perfumestorev1.controller.web;
 
+import com.tunabel.perfumestorev1.constant.StatusRegisterUserEnum;
+import com.tunabel.perfumestorev1.data.model.User;
+import com.tunabel.perfumestorev1.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,4 +15,40 @@ import javax.validation.Valid;
 
 @Controller
 public class DefaultController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/login")
+    public String login() {
+        return "/login";
+    }
+
+    @GetMapping("/403")
+    public String error403() {
+        return "/error/403";
+    }
+
+    @GetMapping(path = "/register")
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "/register";
+    }
+
+    @RequestMapping(path = "/register-user", method = RequestMethod.POST)
+    public String registerNewUser(@Valid @ModelAttribute("user") User user) {
+
+        StatusRegisterUserEnum status = userService.registerNewUser(user);
+
+        switch (status) {
+            case Existed_Email:
+                return "redirect:/register?erremail";
+            case Existed_Username:
+                return "redirect:/register?erruser";
+            case Error_OnSystem:
+                return "redirect:/register?errsys";
+        }
+
+        return "redirect:/login?success";
+    }
 }

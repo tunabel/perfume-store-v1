@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductSKUService {
@@ -60,7 +59,7 @@ public class ProductSKUService {
 
     }
 
-    public Optional<ProductSku> findById(int skuId) {
-        return productSKURepository.findById(skuId);
+    public ProductSku findById(int skuId) {
+        return productSKURepository.findOne(skuId);
     }
 }

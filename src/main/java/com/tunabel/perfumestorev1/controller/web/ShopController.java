@@ -92,7 +92,7 @@ public class ShopController extends BaseController {
          */
 
         Page<ProductSku> productSkuPage;
-        PageRequest pageRequest = PageRequest.of(page,size);
+        PageRequest pageRequest = new PageRequest(page,size);
 
         if ( searchVM != null) {
             productSkuPage = productSKUService.getPageMainSkuByQuery(searchVM, pageRequest, sort);
@@ -106,6 +106,7 @@ public class ShopController extends BaseController {
             ProductSkuVM skuVM = new ProductSkuVM();
             skuVM.setId(productSKU.getId());
             skuVM.setName(productSKU.getProduct().getName());
+            skuVM.setBrand(productSKU.getProduct().getBrand().getName());
             skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫",productSKU.getPrice()));
             skuVM.setImageURL(productSKU.getImageURL());
             productSkuVMList.add(skuVM);

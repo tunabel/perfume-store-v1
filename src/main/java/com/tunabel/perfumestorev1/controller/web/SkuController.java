@@ -34,14 +34,11 @@ public class SkuController extends BaseController {
 
 
         Product product = productService.findBySkuId(skuId);
-        Optional<ProductSku> mainSkuOptional = productSKUService.findById(skuId);
+        ProductSku mainSku = productSKUService.findById(skuId);
 
-        if (mainSkuOptional.isEmpty()) {
+        if (mainSku == null) {
             return null;
         }
-
-        ProductSku mainSku = mainSkuOptional.get();
-
 
         SkuDetailVM skuVM = new SkuDetailVM();
 

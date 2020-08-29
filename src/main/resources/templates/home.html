@@ -38,7 +38,7 @@
                 <div class="product-slider owl-carousel ftco-animate">
                     <div class="item" th:each="productSKU : ${vm.getNewArrivalList()}">
                         <div class="product">
-                            <a th:href="${'/sku='+productSKU.getId()}" class="img-prod">
+                            <a th:href="${'/product/?sku='+productSKU.getId()}" class="img-prod">
                                 <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                                      th:alt="${productSKU.getName()}">
                                 <div class="text pt-3 px-3">
@@ -110,7 +110,7 @@
         <div class="row">
             <div class="col-sm col-md-6 col-lg ftco-animate" th:each="productSKU : ${vm.getBestSellerList()}">
                 <div class="product">
-                    <a th:href="${'/sku='+productSKU.getId()}" class="img-prod">
+                    <a th:href="${'/product/?sku='+productSKU.getId()}" class="img-prod">
                         <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                              th:alt="${productSKU.getName()}">
                         <div class="text pt-3 px-3">

@@ -72,7 +72,7 @@
                     <div class="product_sku_list" style="margin-top: 40px">
                         <span style="margin-bottom:20px">Product family</span>
                         <div class="sku_button_list">
-                            <a class="sku_button" th:href="@{'~/product/?sku='+${sku.getId()}"
+                            <a class="sku_button" th:href="@{'~/product/?sku='+${sku.getId()}}"
                                  th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''"
                                  th:each="sku, state : ${vm.getChildrenSkuList()}">
                                 <img  th:src="@{'../'+${sku.getImageURL()}}"

@@ -15,7 +15,7 @@ public class TypeService {
     private TypeRepository typeRepository;
 
     public Type findOne(int typeId) {
-        return typeRepository.findById(typeId).get();
+        return typeRepository.findOne(typeId);
     }
 
     public List<Type> getTypeList() {
