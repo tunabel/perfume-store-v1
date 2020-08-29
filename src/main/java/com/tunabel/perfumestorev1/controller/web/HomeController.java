@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,32 +32,46 @@ public class HomeController extends BaseController {
     private ProductSKUService productSKUService;
 
     @GetMapping(value = "")
-    public String home(Model model) {
+    public String home(Model model, HttpServletResponse response,
+                       HttpServletRequest request,
+                       final Principal principal) {
+
+        this.checkCookie(response, request, principal);
 
         HomePageVM vm = new HomePageVM();
 
-        /**
-         * set list new Arrivals
-         */
-
         List<ProductSku> newArrivalList = productSKUService.getNewArrivalList(12);
-        List<ProductSkuVM> newArrivalVMList = new ArrayList<>();
+        //TODO BestSeller List
+        List<ProductSku> bestSellerList = productSKUService.getNewArrivalList(5);
 
-        for(ProductSku productSKU : newArrivalList) {
+        List<ProductSkuVM> newArrivalVMList = new ArrayList<>();
+        for (ProductSku productSKU : newArrivalList) {
             ProductSkuVM skuVM = new ProductSkuVM();
             skuVM.setId(productSKU.getId());
             skuVM.setBrand(productSKU.getProduct().getBrand().getName());
-            skuVM.setName(productSKU.getProduct().getName() +" - " + productSKU.getName());
-            skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫",productSKU.getPrice()));
+            skuVM.setName(productSKU.getProduct().getName());
+            skuVM.setSpec(productSKU.getName());
+            skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSKU.getPrice()));
             skuVM.setImageURL(productSKU.getImageURL());
             newArrivalVMList.add(skuVM);
         }
+        List<ProductSkuVM> bestSellerVMList = new ArrayList<>();
+        for (ProductSku productSKU : bestSellerList) {
+            ProductSkuVM skuVM = new ProductSkuVM();
+            skuVM.setId(productSKU.getId());
+            skuVM.setBrand(productSKU.getProduct().getBrand().getName());
+            skuVM.setName(productSKU.getProduct().getName());
+            skuVM.setSpec(productSKU.getName());
+            skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSKU.getPrice()));
+            skuVM.setImageURL(productSKU.getImageURL());
+            bestSellerVMList.add(skuVM);
+        }
 
         vm.setNewArrivalList(newArrivalVMList);
-        vm.setBestSellerList(newArrivalVMList);
-        //TODO BestSeller List
+        vm.setBestSellerList(bestSellerVMList);
 
-        model.addAttribute("vm",vm);
+
+        model.addAttribute("vm", vm);
         return "home";
     }
 

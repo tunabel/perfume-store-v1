@@ -41,18 +41,26 @@
                             <a th:href="${'/product/?sku='+productSKU.getId()}" class="img-prod">
                                 <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                                      th:alt="${productSKU.getName()}">
-                                <div class="text pt-3 px-3">
-                                    <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
-                                    <h3 th:text="${productSKU.getName()}"></h3>
-                                    <div class="d-flex">
-                                        <div class="pricing">
-                                            <p class="price">
-                                                <span th:text="${productSKU.getPrice()}"></span>
-                                            </p>
-                                        </div>
+                            </a>
+                            <div class="text py-3 px-3">
+                                <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
+                                <h3 th:text="${productSKU.getName()}"></h3>
+                                <div class="subtitle-price" th:text="${productSKU.getSpec()}"></div>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price">
+                                            <span th:text="${productSKU.getPrice()}"></span>
+                                        </p>
                                     </div>
                                 </div>
-                            </a>
+                                <hr />
+                                <p class="bottom-area d-flex">
+                                    <a href="#" class="add-to-cart">
+                                        <span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                    <!-- <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
+                                </p>
+                            </div>
+
                         </div>
                     </div>
 
@@ -113,18 +121,25 @@
                     <a th:href="${'/product/?sku='+productSKU.getId()}" class="img-prod">
                         <img class="img-fluid" th:src="${productSKU.getImageURL()}"
                              th:alt="${productSKU.getName()}">
-                        <div class="text pt-3 px-3">
-                            <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
-                            <h3 th:text="${productSKU.getName()}"></h3>
-                            <div class="d-flex">
-                                <div class="pricing">
-                                    <p class="price">
-                                        <span th:text="${productSKU.getPrice()}"></span>
-                                    </p>
-                                </div>
+                    </a>
+                    <div class="text py-3 px-3">
+                        <h3 style="font-weight:bold" th:text="${productSKU.getBrand()}"></h3>
+                        <h3 th:text="${productSKU.getName()}"></h3>
+                        <div class="subtitle-price" th:text="${productSKU.getSpec()}"></div>
+                        <div class="d-flex">
+                            <div class="pricing">
+                                <p class="price">
+                                    <span th:text="${productSKU.getPrice()}"></span>
+                                </p>
                             </div>
                         </div>
-                    </a>
+                        <hr />
+                        <p class="bottom-area d-flex">
+                            <a href="#" class="add-to-cart">
+                                <span>Add to cart <i class="icon-add ml-1"></i></span></a>
+                            <!-- <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,106 +155,6 @@
         </div>
     </div>
 </section>
-
-<!--<section class="ftco-section testimony-section bg-light">-->
-<!--    <div class="container">-->
-<!--        <div class="row justify-content-center mb-3 pb-3">-->
-<!--            <div class="col-md-12 heading-section text-center ftco-animate">-->
-<!--                <h1 class="big">Testimony</h1>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row justify-content-center">-->
-<!--            <div class="col-md-8 ftco-animate">-->
-<!--                <div class="row ftco-animate">-->
-<!--                    <div class="col-md-12">-->
-<!--                        <div class="carousel-testimony owl-carousel ftco-owl">-->
-<!--                            <div class="item">-->
-<!--                                <div class="testimony-wrap py-4 pb-5">-->
-<!--                                    <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">-->
-<!--											<span class="quote d-flex align-items-center justify-content-center">-->
-<!--												<i class="icon-quote-left"></i>-->
-<!--											</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="text text-center">-->
-<!--                                        <p class="mb-4">A small river named Duden flows by their place and supplies-->
-<!--                                            it with the necessary regelialia. It is a paradisematic country, in-->
-<!--                                            which roasted parts of sentences fly into your mouth.</p>-->
-<!--                                        <p class="name">Roger Scott</p>-->
-<!--                                        <span class="position">Customer</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <div class="testimony-wrap py-4 pb-5">-->
-<!--                                    <div class="user-img mb-4" style="background-image: url(images/person_2.jpg)">-->
-<!--											<span class="quote d-flex align-items-center justify-content-center">-->
-<!--												<i class="icon-quote-left"></i>-->
-<!--											</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="text text-center">-->
-<!--                                        <p class="mb-4">A small river named Duden flows by their place and supplies-->
-<!--                                            it with the necessary regelialia. It is a paradisematic country, in-->
-<!--                                            which roasted parts of sentences fly into your mouth.</p>-->
-<!--                                        <p class="name">Roger Scott</p>-->
-<!--                                        <span class="position">Customer</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <div class="testimony-wrap py-4 pb-5">-->
-<!--                                    <div class="user-img mb-4" style="background-image: url(images/person_3.jpg)">-->
-<!--											<span class="quote d-flex align-items-center justify-content-center">-->
-<!--												<i class="icon-quote-left"></i>-->
-<!--											</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="text text-center">-->
-<!--                                        <p class="mb-4">A small river named Duden flows by their place and supplies-->
-<!--                                            it with the necessary regelialia. It is a paradisematic country, in-->
-<!--                                            which roasted parts of sentences fly into your mouth.</p>-->
-<!--                                        <p class="name">Roger Scott</p>-->
-<!--                                        <span class="position">Customer</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <div class="testimony-wrap py-4 pb-5">-->
-<!--                                    <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">-->
-<!--											<span class="quote d-flex align-items-center justify-content-center">-->
-<!--												<i class="icon-quote-left"></i>-->
-<!--											</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="text text-center">-->
-<!--                                        <p class="mb-4">A small river named Duden flows by their place and supplies-->
-<!--                                            it with the necessary regelialia. It is a paradisematic country, in-->
-<!--                                            which roasted parts of sentences fly into your mouth.</p>-->
-<!--                                        <p class="name">Roger Scott</p>-->
-<!--                                        <span class="position">Customer</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <div class="testimony-wrap py-4 pb-5">-->
-<!--                                    <div class="user-img mb-4" style="background-image: url(images/person_1.jpg)">-->
-<!--											<span class="quote d-flex align-items-center justify-content-center">-->
-<!--												<i class="icon-quote-left"></i>-->
-<!--											</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="text text-center">-->
-<!--                                        <p class="mb-4">A small river named Duden flows by their place and supplies-->
-<!--                                            it with the necessary regelialia. It is a paradisematic country, in-->
-<!--                                            which roasted parts of sentences fly into your mouth.</p>-->
-<!--                                        <p class="name">Roger Scott</p>-->
-<!--                                        <span class="position">Customer</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 
 <section class="ftco-section">
     <div class="container">
@@ -431,12 +346,10 @@
 <script src="js/jquery.magnific-popup.min.js"></script>
 <script src="js/aos.js"></script>
 <script src="js/jquery.animateNumber.min.js"></script>
-<script src="js/bootstrap-datepicker.js"></script>
 <script src="js/scrollax.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
-</script>
-<script src="js/google-map.js"></script>
 <script src="js/main.js"></script>
+
+<script src="js/page_home.js"></script>
 
 
 </body>

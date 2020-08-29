@@ -13122,3 +13122,8 @@ textarea.form-control {
 .product_description_area .tab-content p {
     color: #797979
 }
+
+.subtitle-price {
+    font-size: 13px;
+    margin-top: -5px;
+}

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,8 +48,12 @@ public class ShopController extends BaseController {
                        @Valid @ModelAttribute("searchProps") ProductSearchVM searchVM,
                        @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                        @RequestParam(name = "size", required = false, defaultValue = "12") Integer size,
-                       @RequestParam(name = "sortBy", required = false, defaultValue = "best") String sort) {
+                       @RequestParam(name = "sortBy", required = false, defaultValue = "best") String sort,
+                       HttpServletResponse response,
+                       HttpServletRequest request,
+                       final Principal principal) {
 
+        this.checkCookie(response, request, principal);
         ShopVM vm = new ShopVM();
 
         /**
