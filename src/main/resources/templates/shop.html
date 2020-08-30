@@ -138,7 +138,9 @@
                                 <img class="img-fluid" th:src="${sku.getImageURL()}" th:alt="${sku.getName()}">
                             </a>
                             <div class="text py-3 px-3">
-                                <h3 style="font-weight:bold" th:text="${sku.getBrand()}"></h3>
+                                <h3>
+                                    <a th:text="${sku.getBrand()}" class="brand-link" th:href="${'/shop?brand='+sku.getBrandId()}"></a>
+                                </h3>
                                 <h3 th:text="${sku.getName()}"></h3>
                                 <div class="d-flex">
                                     <div class="pricing">
@@ -147,11 +149,11 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <p class="bottom-area d-flex">
-                                    <a href="#" class="add-to-cart">
-                                        <span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
+                                <div class="bottom-area d-flex">
+                                    <button type="button" th:attr="data-sku=${sku.getId()}" class="add-to-cart">
+                                        <span>Add to cart <i class="ion-ios-cart ml-1"></i></span></button>
                                     <!-- <a href="#" class="ml-auto"><span><i class="ion-ios-heart-empty"></i></span></a>-->
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -229,6 +231,7 @@
 <script src="js/aos.js"></script>
 <script src="js/jquery.animateNumber.min.js"></script>
 <script src="js/scrollax.min.js"></script>
+<script src="js/axios.min.js"></script>
 <script src="js/main.js"></script>
 
 <script src="js/page_shop.js"></script>

@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/cart-product")
-public class CartProductApiController {
+@RequestMapping(path = "/api/cart-sku")
+public class CartSkuApiController {
 
     @Autowired
     private CartService cartService;

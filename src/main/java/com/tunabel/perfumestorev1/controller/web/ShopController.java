@@ -114,6 +114,7 @@ public class ShopController extends BaseController {
             skuVM.setId(productSKU.getId());
             skuVM.setName(productSKU.getProduct().getName());
             skuVM.setBrand(productSKU.getProduct().getBrand().getName());
+            skuVM.setBrandId(productSKU.getProduct().getBrandId());
             skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫",productSKU.getPrice()));
             skuVM.setImageURL(productSKU.getImageURL());
             productSkuVMList.add(skuVM);

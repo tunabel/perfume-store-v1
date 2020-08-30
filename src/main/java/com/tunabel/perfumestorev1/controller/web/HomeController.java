@@ -49,6 +49,7 @@ public class HomeController extends BaseController {
             ProductSkuVM skuVM = new ProductSkuVM();
             skuVM.setId(productSKU.getId());
             skuVM.setBrand(productSKU.getProduct().getBrand().getName());
+            skuVM.setBrandId(productSKU.getProduct().getBrandId());
             skuVM.setName(productSKU.getProduct().getName());
             skuVM.setSpec(productSKU.getName());
             skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSKU.getPrice()));
@@ -60,6 +61,7 @@ public class HomeController extends BaseController {
             ProductSkuVM skuVM = new ProductSkuVM();
             skuVM.setId(productSKU.getId());
             skuVM.setBrand(productSKU.getProduct().getBrand().getName());
+            skuVM.setBrandId(productSKU.getProduct().getBrandId());
             skuVM.setName(productSKU.getProduct().getName());
             skuVM.setSpec(productSKU.getName());
             skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSKU.getPrice()));

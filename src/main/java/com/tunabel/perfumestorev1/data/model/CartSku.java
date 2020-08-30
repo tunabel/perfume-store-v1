@@ -11,12 +11,15 @@ public class CartSku {
     @Id
     private int id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", insertable = false, updatable = false)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "sku_id", insertable = false, updatable = false)
+    @Column(name = "cart_id", insertable = false, updatable = false)
+    private int cartId;
+
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sku_id")
     private ProductSku productSKU;
 
     @Column(name = "sku_id", insertable = false, updatable = false)

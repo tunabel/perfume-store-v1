@@ -4,6 +4,7 @@ public class ProductSkuVM {
     private int id;
     private String name;
     private String brand;
+    private int brandId;
     private String spec;
     private int mainSku;
     private String price;
@@ -12,10 +13,11 @@ public class ProductSkuVM {
     private String imageURL;
     private int status;
 
-    public ProductSkuVM(int id, String name, String brand, String spec, int mainSku, String price, int quantity, int volume, String imageURL, int status) {
+    public ProductSkuVM(int id, String name, String brand, int brandId, String spec, int mainSku, String price, int quantity, int volume, String imageURL, int status) {
         this.id = id;
         this.name = name;
         this.brand = brand;
+        this.brandId = brandId;
         this.spec = spec;
         this.mainSku = mainSku;
         this.price = price;
@@ -106,5 +108,13 @@ public class ProductSkuVM {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 }

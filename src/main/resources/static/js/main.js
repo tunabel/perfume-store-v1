@@ -299,15 +299,14 @@ $(document).ready(function () {
         }
     }
 
-
     $(".add-to-cart").on("click", function () {
         var dataCart = {};
-        var pdInfo = $(this).data("product");
-        dataCart.amount = 1;
-        dataCart.productId = pdInfo;
+        var skuId = $(this).data("sku");
+        dataCart.qty = 1;
+        dataCart.skuId = skuId;
         dataCart.guid = getCookie("guid");
 
-        var linkPost = "/api/cart-product/add";
+        var linkPost = "/api/cart-sku/add";
 
         axios.post(linkPost, dataCart).then(function (res) {
             if (res.data.success) {
