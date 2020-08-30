@@ -5,9 +5,12 @@ public class CartSkuVM {
     private int id;
     private int skuId;
     private String skuImage;
-    private int amount;
+    private String brandName;
     private String productName;
-    private String price;
+    private String volume;
+    private int quantity;
+    private double price;
+
 
     public int getId() {
         return id;
@@ -33,12 +36,12 @@ public class CartSkuVM {
         this.skuImage = skuImage;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getProductName() {
@@ -49,11 +52,27 @@ public class CartSkuVM {
         this.productName = productName;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 }

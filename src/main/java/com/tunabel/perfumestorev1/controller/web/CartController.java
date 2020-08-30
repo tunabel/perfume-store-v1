@@ -37,13 +37,10 @@ public class CartController extends BaseController {
         CartVM vm = new CartVM();
 
         int skuQty = 0;
-        double totalPrice = 0;
+        long totalPrice = 0;
         List<CartSkuVM> cartSkuVMList = new ArrayList<>();
 
         String guid = getGuid(request);
-
-//        DecimalFormat df = new DecimalFormat("####0.00");
-
         try {
             if (guid != null) {
                 Cart cartEntity = cartService.findFirstCartByGuid(guid);
@@ -54,10 +51,13 @@ public class CartController extends BaseController {
                         cartSkuVM.setId(cartSku.getId());
                         cartSkuVM.setSkuId(cartSku.getProductSKU().getId());
                         cartSkuVM.setProductName(cartSku.getProductSKU().getName());
+                        cartSkuVM.setBrandName(cartSku.getProductSKU().getProduct().getBrand().getName());
+                        cartSkuVM.setVolume(cartSku.getProductSKU().getName());
                         cartSkuVM.setSkuImage(cartSku.getProductSKU().getImageURL());
-                        cartSkuVM.setAmount(cartSku.getQuantity());
-                        double price = cartSku.getQuantity() * cartSku.getProductSKU().getPrice();
-                        cartSkuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", price));
+                        cartSkuVM.setQuantity(cartSku.getQuantity());
+                        cartSkuVM.setPrice(cartSku.getProductSKU().getPrice());
+//                        cartSkuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", price));
+                        long price = cartSku.getQuantity() * cartSku.getProductSKU().getPrice();
                         totalPrice += price;
                         cartSkuVMList.add(cartSkuVM);
                     }
@@ -68,11 +68,10 @@ public class CartController extends BaseController {
         }
 
         vm.setSkuQty(skuQty);
-        vm.setCartSkuVMS(cartSkuVMList);
-        vm.setTotalPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", totalPrice));
-
+        vm.setCartSkuVMList(cartSkuVMList);
+//        vm.setTotalPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", totalPrice));
+        vm.setTotalPrice(totalPrice);
         vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
-
 
         model.addAttribute("vm", vm);
 

@@ -6,8 +6,8 @@ import java.util.List;
 public class CartVM {
 
     private int skuQty;
-    private List<CartSkuVM> cartSkuVMS;
-    private String totalPrice;
+    private List<CartSkuVM> cartSkuVMList;
+    private long totalPrice;
     private HeaderMenuVM headerMenuVM;
 
     public int getSkuQty() {
@@ -18,19 +18,19 @@ public class CartVM {
         this.skuQty = skuQty;
     }
 
-    public List<CartSkuVM> getCartSkuVMS() {
-        return cartSkuVMS;
+    public List<CartSkuVM> getCartSkuVMList() {
+        return cartSkuVMList;
     }
 
-    public void setCartSkuVMS(List<CartSkuVM> cartSkuVMS) {
-        this.cartSkuVMS = cartSkuVMS;
+    public void setCartSkuVMList(List<CartSkuVM> cartSkuVMList) {
+        this.cartSkuVMList = cartSkuVMList;
     }
 
-    public String getTotalPrice() {
+    public long getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
 

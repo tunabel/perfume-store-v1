@@ -8,8 +8,15 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <h1 class="mb-0 bread">Collection</h1>
-                <!--            <p class="breadcrumbs"><span class="mr-2"><a href="home.html">Home</a></span> <span>Product</span></p>-->
+
+                <h1 class="mb-0 bread">Shop</h1>
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="/">Home</a>
+                    </span>
+                    <span class="mr-2"> / </span>
+                    <span>Shop</span>
+                </p>
             </div>
         </div>
     </div>
@@ -139,7 +146,8 @@
                             </a>
                             <div class="text py-3 px-3">
                                 <h3>
-                                    <a th:text="${sku.getBrand()}" class="brand-link" th:href="${'/shop?brand='+sku.getBrandId()}"></a>
+                                    <a th:text="${sku.getBrand()}" class="brand-link"
+                                       th:href="${'/shop?brand='+sku.getBrandId()}"></a>
                                 </h3>
                                 <h3 th:text="${sku.getName()}"></h3>
                                 <div class="d-flex">
