@@ -11,17 +11,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
-public class DefaultController {
+public class DefaultController extends BaseController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/login")
-    public String login() {
-        return "/login";
+    public String login(HttpServletResponse response,
+                        HttpServletRequest request,
+                        final Principal principal) {
+
+        if (principal == null) {
+
+            return "/login";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/403")
