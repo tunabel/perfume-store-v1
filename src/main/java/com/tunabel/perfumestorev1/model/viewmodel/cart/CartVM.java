@@ -1,4 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.cart;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
+
 import java.util.List;
 
 public class CartVM {
@@ -6,6 +8,7 @@ public class CartVM {
     private int skuQty;
     private List<CartSkuVM> cartSkuVMS;
     private String totalPrice;
+    private HeaderMenuVM headerMenuVM;
 
     public int getSkuQty() {
         return skuQty;
@@ -29,5 +32,13 @@ public class CartVM {
 
     public void setTotalPrice(String totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public HeaderMenuVM getHeaderMenuVM() {
+        return headerMenuVM;
+    }
+
+    public void setHeaderMenuVM(HeaderMenuVM headerMenuVM) {
+        this.headerMenuVM = headerMenuVM;
     }
 }

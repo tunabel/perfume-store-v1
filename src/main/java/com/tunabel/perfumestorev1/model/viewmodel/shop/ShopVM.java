@@ -1,9 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.shop;
 
-import com.tunabel.perfumestorev1.model.viewmodel.common.BrandVM;
-import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
-import com.tunabel.perfumestorev1.model.viewmodel.common.ScentVM;
-import com.tunabel.perfumestorev1.model.viewmodel.common.TypeVM;
+import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 
 import java.util.List;
 
@@ -12,19 +9,11 @@ public class ShopVM {
     private List<BrandVM> brandVMList;
     private List<TypeVM> typeVMList;
     private List<ScentVM> scentVMList;
+    private HeaderMenuVM headerMenuVM;
     private int page;
     private String sort;
     private int size;
 
-    public ShopVM(List<ProductSkuVM> productSkuVMList, List<BrandVM> brandVMList, List<TypeVM> typeVMList, List<ScentVM> scentVMList, int page, String sort, int size) {
-        this.productSkuVMList = productSkuVMList;
-        this.brandVMList = brandVMList;
-        this.typeVMList = typeVMList;
-        this.scentVMList = scentVMList;
-        this.page = page;
-        this.sort = sort;
-        this.size = size;
-    }
 
     public ShopVM() {
     }
@@ -83,5 +72,13 @@ public class ShopVM {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public HeaderMenuVM getHeaderMenuVM() {
+        return headerMenuVM;
+    }
+
+    public void setHeaderMenuVM(HeaderMenuVM headerMenuVM) {
+        this.headerMenuVM = headerMenuVM;
     }
 }

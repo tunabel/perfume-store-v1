@@ -1,30 +1,30 @@
 package com.tunabel.perfumestorev1.model.viewmodel.common;
 
 public class HeaderMenuVM {
-    private String name;
-    private String link;
+    private boolean isLoggedIn;
+    private int cartQty;
 
-    public HeaderMenuVM(String name, String link) {
-        this.name = name;
-        this.link = link;
+    public HeaderMenuVM(boolean isLoggedIn, int cartQty) {
+        this.isLoggedIn = isLoggedIn;
+        this.cartQty = cartQty;
     }
 
     public HeaderMenuVM() {
     }
 
-    public String getName() {
-        return this.name;
+    public boolean isLoggedIn() {
+        return isLoggedIn;
     }
 
-    public String getLink() {
-        return this.link;
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getCartQty() {
+        return cartQty;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setCartQty(int cartQty) {
+        this.cartQty = cartQty;
     }
 }

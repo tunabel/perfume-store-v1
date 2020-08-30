@@ -10994,6 +10994,16 @@ h1, h2, h3, h4, h5,
 /*    */
 /*}*/
 
+.product .text .bottom-area .add-to-cart:active:focus {
+    outline: none;
+    background-color: #795376;
+}
+
+.product .text .bottom-area .add-to-cart:focus,
+.product .text .bottom-area .add-to-cart:active {
+    outline: none;
+}
+
 .product .text .bottom-area .add-to-cart:hover {
     background-color: var(--main);
     color: white !important;

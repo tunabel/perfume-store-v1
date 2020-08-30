@@ -1,5 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.home;
 
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 
 import java.util.List;
@@ -7,15 +8,17 @@ import java.util.List;
 public class HomePageVM {
     private List<ProductSkuVM> newArrivalList;
     private List<ProductSkuVM> bestSellerList;
+    private HeaderMenuVM headerMenuVM;
     private String searchQuery;
 
-    public HomePageVM(List<ProductSkuVM> newArrivalList, List<ProductSkuVM> bestSellerList, String searchQuery) {
-        this.newArrivalList = newArrivalList;
-        this.bestSellerList = bestSellerList;
-        this.searchQuery = searchQuery;
+    public HomePageVM() {
     }
 
-    public HomePageVM() {
+    public HomePageVM(List<ProductSkuVM> newArrivalList, List<ProductSkuVM> bestSellerList, HeaderMenuVM headerMenuVM, String searchQuery) {
+        this.newArrivalList = newArrivalList;
+        this.bestSellerList = bestSellerList;
+        this.headerMenuVM = headerMenuVM;
+        this.searchQuery = searchQuery;
     }
 
     public List<ProductSkuVM> getNewArrivalList() {
@@ -40,5 +43,13 @@ public class HomePageVM {
 
     public void setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
+    }
+
+    public HeaderMenuVM getHeaderMenuVM() {
+        return headerMenuVM;
+    }
+
+    public void setHeaderMenuVM(HeaderMenuVM headerMenuVM) {
+        this.headerMenuVM = headerMenuVM;
     }
 }

@@ -32,7 +32,7 @@ public class CartController extends BaseController {
                        HttpServletRequest request,
                        final Principal principal) {
 
-        this.checkCookie(response, request, principal);
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
         CartVM vm = new CartVM();
 
@@ -70,6 +70,10 @@ public class CartController extends BaseController {
         vm.setSkuQty(skuQty);
         vm.setCartSkuVMS(cartSkuVMList);
         vm.setTotalPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", totalPrice));
+
+        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+
+
         model.addAttribute("vm", vm);
 
         return "/cart";

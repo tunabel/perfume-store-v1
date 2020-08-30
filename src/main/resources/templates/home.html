@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"></head>
 <body>
-<div th:replace="fragments/header"></div>
+<div th:replace="fragments/header :: header_info (vm=${vm.getHeaderMenuVM()})"></div>
 
 <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
     <div class="overlay"></div>

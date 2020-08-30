@@ -19,7 +19,6 @@ public class CartService {
         return cartRepository.findOne(cartId);
     }
 
-
     public boolean updateCart(Cart cart) {
         try {
             cartRepository.save(cart);

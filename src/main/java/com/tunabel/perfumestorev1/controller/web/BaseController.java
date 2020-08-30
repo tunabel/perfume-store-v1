@@ -1,8 +1,11 @@
 package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.Cart;
+import com.tunabel.perfumestorev1.data.model.CartSku;
 import com.tunabel.perfumestorev1.data.service.CartService;
+import com.tunabel.perfumestorev1.data.service.CartSkuService;
 import com.tunabel.perfumestorev1.data.service.UserService;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -16,23 +19,27 @@ public class BaseController {
     @Autowired
     private CartService cartService;
 
-    public void checkCookie(HttpServletResponse response,
-                            HttpServletRequest request,
-                            final Principal principal) {
+    @Autowired
+    private CartSkuService cartSkuService;
 
+    public int checkCookieAndShowCartQty(HttpServletResponse response,
+                                         HttpServletRequest request,
+                                         final Principal principal) {
+        //i need number of productSkus in cart
+        int cartQty = 0;
         Cookie cookie[] = request.getCookies();
-        //if user is authenticated
+        //if user is authenticated (principal is not null)
         if (principal != null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             Cart cartEntity = cartService.findByUserName(username);
-            //if user has cart
-            if (cartEntity != null) {
+
+            if (cartEntity != null) { //if authenticated user has cart
                 Cookie cookie1 = new Cookie("guid", cartEntity.getGuid());
                 cookie1.setPath("/");
                 cookie1.setMaxAge(60 * 60 * 24);
+                cartQty = cartSkuService.countSkuQty(cartEntity.getId());
                 response.addCookie(cookie1);
-                //if user doesn't have cart, create new cart for him
-            } else {
+            } else { //if user doesn't have cart, create new cart for him
                 UUID uuid = UUID.randomUUID();
                 String guid = uuid.toString();
                 Cart cart = new Cart();
@@ -57,6 +64,8 @@ public class BaseController {
                     if (c.getName().equals("guid")) {
                         flag2 = false;
                         guid = c.getValue();
+                        Cart guestCart = cartService.findFirstCartByGuid(guid);
+                        cartQty = cartSkuService.countSkuQty(guestCart.getId());
                     }
                 }
             }
@@ -84,7 +93,16 @@ public class BaseController {
             }
 
         }
+        return cartQty;
     }
 
+    public HeaderMenuVM getHeaderMenuVM(int cartQty,
+                                        final Principal principal) {
+        HeaderMenuVM headerMenuVM = new HeaderMenuVM();
+        headerMenuVM.setCartQty(cartQty);
+        headerMenuVM.setLoggedIn(principal != null);
+
+        return headerMenuVM;
+    }
 
 }

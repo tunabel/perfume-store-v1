@@ -55,10 +55,14 @@ public class CartSkuService {
 
     public CartSku findFirstCartSkuByCartIdAndSkuId(int cartId, int skuId) {
         try {
-            return cartSkuRepository.findFirstCartSkuByCartIdAndSkuId(cartId,skuId);
-        }catch (Exception e) {
+            return cartSkuRepository.findFirstCartSkuByCartIdAndSkuId(cartId, skuId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int countSkuQty(int cartId) {
+        return cartSkuRepository.countSkuByCartId(cartId);
     }
 }

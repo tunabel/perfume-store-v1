@@ -4,6 +4,7 @@ import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.BrandService;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
 import com.tunabel.perfumestorev1.data.service.ProductService;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.home.HomePageVM;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class HomeController extends BaseController {
                        HttpServletRequest request,
                        final Principal principal) {
 
-        this.checkCookie(response, request, principal);
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
         HomePageVM vm = new HomePageVM();
 
@@ -72,6 +73,7 @@ public class HomeController extends BaseController {
         vm.setNewArrivalList(newArrivalVMList);
         vm.setBestSellerList(bestSellerVMList);
 
+        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
 
         model.addAttribute("vm", vm);
         return "home";

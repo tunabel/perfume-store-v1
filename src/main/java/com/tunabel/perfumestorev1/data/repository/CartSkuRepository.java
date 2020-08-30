@@ -14,4 +14,7 @@ public interface CartSkuRepository extends JpaRepository<CartSku,Integer> {
     CartSku findFirstCartSkuByCartIdAndSkuId(@Param("cartId") int cartId,
                                                      @Param("skuId") int skuId);
 
+    @Query(value = "SELECT COUNT(cs.sku_id) FROM dbo_cart_sku cs " +
+            "WHERE cs.cart_id = :cartId", nativeQuery = true)
+    int countSkuByCartId(@Param("cartId") int cartId);
 }

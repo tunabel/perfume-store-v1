@@ -53,7 +53,7 @@ public class ShopController extends BaseController {
                        HttpServletRequest request,
                        final Principal principal) {
 
-        this.checkCookie(response, request, principal);
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
         ShopVM vm = new ShopVM();
 
         /**
@@ -128,6 +128,7 @@ public class ShopController extends BaseController {
         vm.setBrandVMList(brandVMList);
         vm.setScentVMList(scentVMList);
         vm.setTypeVMList(typeVMList);
+        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
 
         model.addAttribute("vm",vm);
         model.addAttribute("page",productSkuPage);

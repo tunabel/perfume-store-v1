@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +33,12 @@ public class SkuController extends BaseController {
 
     @GetMapping(value = "/product")
     public String detail(Model model,
-                         @RequestParam(name = "sku") int skuId) {
+                         @RequestParam(name = "sku") int skuId,
+                         HttpServletResponse response,
+                         HttpServletRequest request,
+                         final Principal principal) {
+
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
 
         Product product = productService.findBySkuId(skuId);
@@ -80,7 +88,7 @@ public class SkuController extends BaseController {
         mainSkuImageVM.setId(0);
         mainSkuImageVM.setImageURL(mainSku.getImageURL());
 
-        imageVMList.add(0,mainSkuImageVM);
+        imageVMList.add(0, mainSkuImageVM);
         skuVM.setProductImageVMList(imageVMList);
 
         skuVM.setTypeName(product.getType().getName());
@@ -95,6 +103,7 @@ public class SkuController extends BaseController {
 
         skuVM.setGenderId(product.getGender());
 
+        skuVM.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
         //TODO
         //List Related Skus (top 10 best sellers of same scent
 

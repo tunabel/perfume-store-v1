@@ -1,5 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.sku;
 
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductImageVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 
@@ -30,7 +31,9 @@ public class SkuDetailVM {
     private List<ProductSkuVM> childrenSkuList;
     private List<ProductSkuVM> relatedSkuList;
 
-    public SkuDetailVM(String typeName, int typeId, String scentName, int scentId, String brandName, int brandId, String brandDesc, int genderId, String productName, String productDesc, int skuId, String skuName, String price, int quantity, List<ProductImageVM> productImageVMList, List<ProductSkuVM> childrenSkuList, List<ProductSkuVM> relatedSkuList) {
+    private HeaderMenuVM headerMenuVM;
+
+    public SkuDetailVM(String typeName, int typeId, String scentName, int scentId, String brandName, int brandId, String brandDesc, int genderId, String productName, String productDesc, int skuId, String skuName, String price, int quantity, List<ProductImageVM> productImageVMList, List<ProductSkuVM> childrenSkuList, List<ProductSkuVM> relatedSkuList, HeaderMenuVM headerMenuVM) {
         this.typeName = typeName;
         this.typeId = typeId;
         this.scentName = scentName;
@@ -48,14 +51,12 @@ public class SkuDetailVM {
         this.productImageVMList = productImageVMList;
         this.childrenSkuList = childrenSkuList;
         this.relatedSkuList = relatedSkuList;
+        this.headerMenuVM = headerMenuVM;
     }
 
     public SkuDetailVM() {
     }
 
-    public static SkuDetailVMBuilder builder() {
-        return new SkuDetailVMBuilder();
-    }
 
     public String getTypeName() {
         return this.typeName;
@@ -193,119 +194,11 @@ public class SkuDetailVM {
         this.relatedSkuList = relatedSkuList;
     }
 
-    public static class SkuDetailVMBuilder {
-        private String typeName;
-        private int typeId;
-        private String scentName;
-        private int scentId;
-        private String brandName;
-        private int brandId;
-        private String brandDesc;
-        private int genderId;
-        private String productName;
-        private String productDesc;
-        private int skuId;
-        private String skuName;
-        private String price;
-        private int quantity;
-        private List<ProductImageVM> productImageVMList;
-        private List<ProductSkuVM> childrenSkuList;
-        private List<ProductSkuVM> relatedSkuList;
+    public HeaderMenuVM getHeaderMenuVM() {
+        return headerMenuVM;
+    }
 
-        SkuDetailVMBuilder() {
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder typeName(String typeName) {
-            this.typeName = typeName;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder typeId(int typeId) {
-            this.typeId = typeId;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder scentName(String scentName) {
-            this.scentName = scentName;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder scentId(int scentId) {
-            this.scentId = scentId;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder brandName(String brandName) {
-            this.brandName = brandName;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder brandId(int brandId) {
-            this.brandId = brandId;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder brandDesc(String brandDesc) {
-            this.brandDesc = brandDesc;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder genderId(int genderId) {
-            this.genderId = genderId;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder productName(String productName) {
-            this.productName = productName;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder productDesc(String productDesc) {
-            this.productDesc = productDesc;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder skuId(int skuId) {
-            this.skuId = skuId;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder skuName(String skuName) {
-            this.skuName = skuName;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder price(String price) {
-            this.price = price;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder quantity(int quantity) {
-            this.quantity = quantity;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder productImageVMList(List<ProductImageVM> productImageVMList) {
-            this.productImageVMList = productImageVMList;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder childrenSkuList(List<ProductSkuVM> childrenSkuList) {
-            this.childrenSkuList = childrenSkuList;
-            return this;
-        }
-
-        public SkuDetailVM.SkuDetailVMBuilder relatedSkuList(List<ProductSkuVM> relatedSkuList) {
-            this.relatedSkuList = relatedSkuList;
-            return this;
-        }
-
-        public SkuDetailVM build() {
-            return new SkuDetailVM(typeName, typeId, scentName, scentId, brandName, brandId, brandDesc, genderId, productName, productDesc, skuId, skuName, price, quantity, productImageVMList, childrenSkuList, relatedSkuList);
-        }
-
-        public String toString() {
-            return "SkuDetailVM.SkuDetailVMBuilder(typeName=" + this.typeName + ", typeId=" + this.typeId + ", scentName=" + this.scentName + ", scentId=" + this.scentId + ", brandName=" + this.brandName + ", brandId=" + this.brandId + ", brandDesc=" + this.brandDesc + ", genderId=" + this.genderId + ", productName=" + this.productName + ", productDesc=" + this.productDesc + ", skuId=" + this.skuId + ", skuName=" + this.skuName + ", price=" + this.price + ", quantity=" + this.quantity + ", productImageVMList=" + this.productImageVMList + ", childrenSkuList=" + this.childrenSkuList + ", relatedSkuList=" + this.relatedSkuList + ")";
-        }
+    public void setHeaderMenuVM(HeaderMenuVM headerMenuVM) {
+        this.headerMenuVM = headerMenuVM;
     }
 }
