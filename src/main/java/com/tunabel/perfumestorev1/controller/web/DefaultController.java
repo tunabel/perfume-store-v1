@@ -2,14 +2,13 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.constant.StatusRegisterUserEnum;
 import com.tunabel.perfumestorev1.data.model.User;
+import com.tunabel.perfumestorev1.data.service.CartSkuService;
 import com.tunabel.perfumestorev1.data.service.UserService;
+import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,9 @@ public class DefaultController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CartSkuService cartSkuService;
 
     @GetMapping("/login")
     public String login(final Principal principal) {
@@ -66,5 +68,23 @@ public class DefaultController extends BaseController {
         }
 
         return "redirect:/login?success";
+    }
+
+    @GetMapping("/api/cart-sku/delete/{cartSkuId}")
+    public String deleteCartSku(@PathVariable int cartSkuId) {
+        BaseApiResult result = new BaseApiResult();
+
+        try {
+            if(cartSkuService.deleteCartSku(cartSkuId) == true) {
+                result.setMessage("Delete success");
+                result.setSuccessful(true);
+                return "redirect:/cart";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        result.setSuccessful(false);
+        result.setMessage("Delete failure!");
+        return "redirect:/cart";
     }
 }

@@ -37,49 +37,50 @@
                             <th>Total</th>
                         </tr>
                         </thead>
-                        <tbody th:each="sku : ${vm.getCartSkuVMList()}">
+                        <tbody th:each="cartSku : ${vm.getCartSkuVMList()}">
                         <tr class="text-center">
                             <td class="product-remove">
-                                <a th:href="@{'/api/cart-sku/delete/'+${sku.getId()}}"><span class="ion-ios-close"></span></a>
+                                <a class="delete-cartSku" th:attr="data-cartSku=${cartSku.getId()}" th:href="@{'/api/cart-sku/delete/'+${cartSku.getId()}}">
+                                    <span class="ion-ios-close"></span></a>
                             </td>
                             <td class="image-prod">
 <!--                                <div class="img" style="background-image:url(images/product-3.jpg);"></div>-->
-                                <img class="img" th:src="${sku.getSkuImage()}" th:alt="${sku.getProductName()}">
+                                <img class="img" th:src="${cartSku.getSkuImage()}" th:alt="${cartSku.getProductName()}">
                             </td>
                             <td class="product-name">
-                                <h3 th:text="${sku.getBrandName()}" class="brand-link"></h3>
-                                <h3 th:text="${sku.getProductName()}"></h3>
-                                <p th:text="${sku.getVolume()}"></p>
+                                <h3 th:text="${cartSku.getBrandName()}" class="brand-link"></h3>
+                                <h3 th:text="${cartSku.getProductName()}"></h3>
+                                <p th:text="${cartSku.getVolume()}"></p>
                             </td>
 
-                            <td class="price" th:text="${sku.getPrice()}"></td>
+                            <td class="price" th:text="${cartSku.getPrice()}"></td>
 
                             <td class="quantity">
                                 <div class="input-group">
 <!--                                    <div class="input-group-prepend">-->
 <!--                                        <button class="btn btn-quantity-minus" type="button" th:id="@{'minus'+${sku.getSkuId()}}"><span class="ml-1" >-</span></button>-->
 <!--                                    </div>-->
-                                    <input type="number" name="quantity" th:id="@{'quantity'+${sku.getSkuId()}}" class="quantity form-control input-number"
-                                           th:value="${sku.getQuantity()}" min="1" max="100">
+                                    <input type="number" name="quantity" th:id="@{'quantity'+${cartSku.getSkuId()}}" class="quantity form-control input-number"
+                                           th:value="${cartSku.getQuantity()}" min="1" max="100">
 <!--                                    <div class="input-group-append">-->
-<!--                                        <button class="btn btn-quantity-plus" type="button" th:id="@{'plus'+${sku.getSkuId()}}">-->
+<!--                                        <button class="btn btn-quantity-plus" type="button" th:id="@{'plus'+${cartSku.getSkuId()}}">-->
 <!--                                            <span>+</span></button>-->
 <!--                                    </div>-->
                                 </div>
                             </td>
-                            <td class="price" th:id="@{'price'+${sku.getSkuId()}}" th:text="${sku.getPrice()*sku.getQuantity()}"></td>
+                            <td class="price" th:id="@{'price'+${cartSku.getSkuId()}}" th:text="${cartSku.getPrice()*cartSku.getQuantity()}"></td>
 
                             <script type="text/javascript" th:inline="javascript">
-                                document.getElementById('quantity'+[[${sku.getSkuId()}]]).onchange = function() {
+                                document.getElementById('quantity'+[[${cartSku.getSkuId()}]]).onchange = function() {
                                     //get current totalPrice and deduce from it the subtotal of selected sku
                                     document.getElementById('totalPrice').innerText =
-                                        parseInt(document.getElementById('totalPrice').innerText) - parseInt(document.getElementById('price'+[[${sku.getSkuId()}]]).innerText);
+                                        parseInt(document.getElementById('totalPrice').innerText) - parseInt(document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText);
                                     // calculate new subtotal by using new quantity
-                                    document.getElementById('price'+[[${sku.getSkuId()}]]).innerText =
-                                        [[${sku.getPrice()}]] * document.getElementById('quantity'+[[${sku.getSkuId()}]]).value;
+                                    document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText =
+                                        [[${cartSku.getPrice()}]] * document.getElementById('quantity'+[[${cartSku.getSkuId()}]]).value;
                                     // add new subtotal to totalPrice
                                     document.getElementById('totalPrice').innerText =
-                                        parseInt(document.getElementById('totalPrice').innerText) + parseInt(document.getElementById('price'+[[${sku.getSkuId()}]]).innerText);
+                                        parseInt(document.getElementById('totalPrice').innerText) + parseInt(document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText);
                                 }
                             </script>
                         </tr><!-- END TR-->
@@ -107,7 +108,7 @@
                         <span id="totalPrice" th:text="${vm.getTotalPrice()}"></span>
                     </p>
                 </div>
-                <p class="text-center"><a href="#" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
+                <p class="text-center"><div href="#" class="btn btn-primary py-3 px-4">Proceed to Checkout</div>
                 </p>
             </div>
         </div>

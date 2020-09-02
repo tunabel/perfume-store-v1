@@ -83,22 +83,22 @@ public class CartSkuApiController {
         return result;
     }
 
-    @GetMapping("/delete/{cartSkuId}")
-    public BaseApiResult deleteCartSku(@PathVariable int cartSkuId) {
-        BaseApiResult result = new BaseApiResult();
-
-        try {
-            if(cartSkuService.deleteCartSku(cartSkuId) == true) {
-                result.setMessage("Delete success");
-                result.setSuccessful(true);
-                return result;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        result.setSuccessful(false);
-        result.setMessage("Fail!");
-        return result;
-    }
+//    @GetMapping("/delete/{cartSkuId}")
+//    public String deleteCartSku(@PathVariable int cartSkuId) {
+//        BaseApiResult result = new BaseApiResult();
+//
+//        try {
+//            if(cartSkuService.deleteCartSku(cartSkuId) == true) {
+//                result.setMessage("Delete success");
+//                result.setSuccessful(true);
+//                return "redirect:/cart";
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        result.setSuccessful(false);
+//        result.setMessage("Delete failure!");
+//        return "redirect:/cart";
+//    }
 
 }

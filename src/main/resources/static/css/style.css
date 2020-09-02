@@ -10956,6 +10956,7 @@ h1, h2, h3, h4, h5,
 .product .text h3 a.brand-link {
     font-weight: bold;
 }
+
 .product .text h3 a.brand-link:hover {
     text-decoration: underline;
 }
@@ -11010,7 +11011,6 @@ h1, h2, h3, h4, h5,
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 
 .product-details h3 {
@@ -11120,17 +11120,22 @@ h1, h2, h3, h4, h5,
     color: var(--main);
 }
 
-.ftco-cart .btn {
-    background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    min-width: 35px;
-    text-align: center;
-}
+/*.ftco-cart .btn {*/
+/*    background: transparent;*/
+/*    border: 1px solid rgba(0, 0, 0, 0.1);*/
+/*    min-width: 35px;*/
+/*    text-align: center;*/
 
-.ftco-cart .btn:hover {
-    background: var(--main);
-    color: white !important;
-}
+/*}*/
+
+/*.ftco-cart .btn:hover {*/
+/*    background: var(--main);*/
+/*    color: white !important;*/
+/*}*/
+
+/*.ftco-cart .btn-primary {*/
+/*    color: black !important;*/
+/*}*/
 
 .ftco-cart button, .ftco-cart .form-control {
     /*height: 54px !important;*/
@@ -11182,7 +11187,7 @@ h1, h2, h3, h4, h5,
 }
 
 .cart-list {
-    overflow-x: scroll;
+    max-width: 100%;
 }
 
 .table {
@@ -11218,6 +11223,7 @@ h1, h2, h3, h4, h5,
     padding: 8px 15px;
     color: #000000;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .table tbody tr td.product-remove a:hover {
@@ -12970,19 +12976,19 @@ textarea.form-control {
 
 .s_product_img .carousel .carousel-indicators {
     margin: 0px;
-    right : 20px;
-    width : auto;
-    left  : auto;
+    right: 20px;
+    width: auto;
+    left: auto;
     bottom: 30px
 }
 
 .s_product_img .carousel .carousel-indicators li {
-    height      : 60px;
-    width       : 60px;
-    background  : transparent;
-    text-indent : 0;
+    height: 60px;
+    width: 60px;
+    background: transparent;
+    text-indent: 0;
     margin-right: 10px;
-    position    : relative
+    position: relative
 }
 
 .s_product_img .carousel .carousel-indicators li:after {
@@ -12990,14 +12996,14 @@ textarea.form-control {
 }
 
 .s_product_img .carousel .carousel-indicators li:before {
-    content   : "";
-    background: rgba(241,184,196, 0.4);
-    position  : absolute;
-    left      : 0px;
-    top       : 0px;
-    width     : 100%;
-    height    : 100%;
-    opacity   : 0;
+    content: "";
+    background: rgba(241, 184, 196, 0.4);
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
     border-radius: 10px;
 }
 
@@ -13011,7 +13017,7 @@ textarea.form-control {
 }
 
 .s_product_overview .brand_link {
-    display:block;
+    display: block;
     margin-bottom: 0;
     font-weight: bold;
     font-size: 20px;
@@ -13019,9 +13025,9 @@ textarea.form-control {
 }
 
 .s_product_overview h3 {
-    font-size    : 24px;
-    font-weight  : 500;
-    color        : black;
+    font-size: 24px;
+    font-weight: 500;
+    color: black;
     margin-bottom: -5px
 }
 
@@ -13031,9 +13037,9 @@ textarea.form-control {
 }
 
 .s_product_overview h2 {
-    font-size    : 24px;
-    font-weight  : bold;
-    color        : #795376;
+    font-size: 24px;
+    font-weight: bold;
+    color: #795376;
     margin-bottom: 15px
 }
 
@@ -13089,25 +13095,26 @@ textarea.form-control {
 .s_product_overview .product_quantity label {
     font-weight: bold;
 }
+
 .s_product_overview .btn-cart {
 
 }
 
 .product_description_area {
     padding-bottom: 120px;
-    margin-top    : 60px
+    margin-top: 60px
 }
 
 .product_description_area .nav.nav-tabs {
     background: #f6f6f6;
     text-align: center;
-    display   : block;
-    border    : none;
-    padding   : 10px 0px
+    display: block;
+    border: none;
+    padding: 10px 0px
 }
 
 .product_description_area .nav.nav-tabs li {
-    display     : inline-block;
+    display: inline-block;
     margin-right: 7px
 }
 
@@ -13116,29 +13123,29 @@ textarea.form-control {
 }
 
 .product_description_area .nav.nav-tabs li a {
-    padding      : 0px;
-    border       : none;
-    line-height  : 38px;
-    background   : #fff;
-    border       : 1px solid #eeeeee;
+    padding: 0px;
+    border: none;
+    line-height: 38px;
+    background: #fff;
+    border: 1px solid #eeeeee;
     border-radius: 0px;
-    padding      : 0px 30px;
-    color        : #2a2a2a;
-    font-size    : 13px;
-    font-weight  : normal
+    padding: 0px 30px;
+    color: #2a2a2a;
+    font-size: 13px;
+    font-weight: normal
 }
 
 .product_description_area .nav.nav-tabs li a.active {
-    background  : #F4EDF2;
-    color       : #fff;
+    background: #F4EDF2;
+    color: #fff;
     border-color: #F4EDF2
 }
 
 .product_description_area .tab-content {
-    border-left  : 1px solid #eee;
-    border-right : 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
-    padding      : 30px
+    padding: 30px
 }
 
 .product_description_area .tab-content p {

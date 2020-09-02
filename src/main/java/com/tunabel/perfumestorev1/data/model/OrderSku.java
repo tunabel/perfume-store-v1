@@ -1,12 +1,7 @@
 package com.tunabel.perfumestorev1.data.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "dbo_order_sku")
 public class OrderSku {
@@ -27,4 +22,44 @@ public class OrderSku {
     private int quantity;
 
     private int price;
+
+    public int getId() {
+        return this.id;
+    }
+
+    public Order getOrder() {
+        return this.order;
+    }
+
+    public ProductSku getProductSKU() {
+        return this.productSKU;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
+
+    public int getPrice() {
+        return this.price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setProductSKU(ProductSku productSKU) {
+        this.productSKU = productSKU;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

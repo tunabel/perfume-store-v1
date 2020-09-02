@@ -65,4 +65,6 @@ public class CartSkuService {
     public int countSkuQty(int cartId) {
         return cartSkuRepository.countSkuByCartId(cartId);
     }
+
+
 }
