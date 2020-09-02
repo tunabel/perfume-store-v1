@@ -128,7 +128,11 @@ public class ShopController extends BaseController {
         vm.setBrandVMList(brandVMList);
         vm.setScentVMList(scentVMList);
         vm.setTypeVMList(typeVMList);
-        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("shop");
+        vm.setHeaderMenuVM(headerMenuVM);
+
 
         model.addAttribute("vm",vm);
         model.addAttribute("page",productSkuPage);

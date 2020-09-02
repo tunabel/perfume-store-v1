@@ -5,6 +5,7 @@ import com.tunabel.perfumestorev1.data.model.CartSku;
 import com.tunabel.perfumestorev1.data.service.CartService;
 import com.tunabel.perfumestorev1.model.viewmodel.cart.CartSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.cart.CartVM;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,9 +70,11 @@ public class CartController extends BaseController {
 
         vm.setSkuQty(skuQty);
         vm.setCartSkuVMList(cartSkuVMList);
-//        vm.setTotalPrice(String.format(Locale.forLanguageTag("vi"), "%,f.000₫", totalPrice));
         vm.setTotalPrice(totalPrice);
-        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("cart");
+        vm.setHeaderMenuVM(headerMenuVM);
 
         model.addAttribute("vm", vm);
 

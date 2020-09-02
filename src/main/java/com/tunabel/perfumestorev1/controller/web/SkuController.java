@@ -6,6 +6,7 @@ import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.BrandService;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
 import com.tunabel.perfumestorev1.data.service.ProductService;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductImageVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.sku.SkuDetailVM;
@@ -103,7 +104,10 @@ public class SkuController extends BaseController {
 
         skuVM.setGenderId(product.getGender());
 
-        skuVM.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("shop");
+        skuVM.setHeaderMenuVM(headerMenuVM);
+
         //TODO
         //List Related Skus (top 10 best sellers of same scent
 

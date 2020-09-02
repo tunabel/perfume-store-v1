@@ -16,17 +16,17 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a th:href="@{/}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a th:href="@{/shop}" class="nav-link">Shop</a></li>
-                    <li class="nav-item"><a href="blog" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="about" class="nav-link">About Us</a></li>
-                    <li class="nav-item" th:if="${!vm.isLoggedIn()}">
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'home' ? 'cta' : ''}"><a th:href="@{/}" class="nav-link">Home</a></li>
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'shop' ? 'cta' : ''}"><a th:href="@{/shop}" class="nav-link">Shop</a></li>
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'blog' ? 'cta' : ''}"><a href="blog" class="nav-link">Blog</a></li>
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'aboutus' ? 'cta' : ''}"><a href="about" class="nav-link">About Us</a></li>
+                    <li class="nav-item" th:if="${!vm.isLoggedIn()}" th:classappend="${vm.getPageName() == 'profile' ? 'cta' : ''}">
                         <a th:href="@{/login}" class="nav-link">
 							<span class="icon-user">
 							</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" th:if="${vm.isLoggedIn()}">
+                    <li class="nav-item dropdown" th:if="${vm.isLoggedIn()}" th:classappend="${vm.getPageName() == 'profile' ? 'cta' : ''}">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false"><span class="icon-user-circle">
 							</span></a>
@@ -35,8 +35,8 @@
                             <a class="dropdown-item" th:href="${'/logout'}">Logout</a>
                         </div>
                     </li>
-                    <li class="nav-item cta cta-colored">
-                        <a th:href="@{/cart}" class="nav-link">
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'cart' ? 'cta' : ''}">
+                        <a th:href="@{/cart}" class="nav-link" >
 							<span class="icon-shopping_cart">
 							</span>
                             [<span th:text="${vm.getCartQty()}"></span>]

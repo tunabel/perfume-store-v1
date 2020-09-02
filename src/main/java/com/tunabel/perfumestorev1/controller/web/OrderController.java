@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,7 +58,9 @@ public class OrderController extends BaseController {
             }
         }
 
-        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("home");
+        vm.setHeaderMenuVM(headerMenuVM);
 
         model.addAttribute("order", order);
         model.addAttribute("vm", vm);
@@ -182,7 +185,10 @@ public class OrderController extends BaseController {
             }
         }
 
-        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("profile");
+        vm.setHeaderMenuVM(headerMenuVM);
+
         vm.setOrderVMS(orderVMS);
 
         model.addAttribute("vm", vm);
@@ -223,7 +229,10 @@ public class OrderController extends BaseController {
 
         int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
-        vm.setHeaderMenuVM(this.getHeaderMenuVM(cartQty, principal));
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("profile");
+        vm.setHeaderMenuVM(headerMenuVM);
+
         vm.setOrderSkuVMList(orderSkuVMList);
         vm.setTotalPrice(totalPrice);
         vm.setTotalSku(orderSkuVMList.size());

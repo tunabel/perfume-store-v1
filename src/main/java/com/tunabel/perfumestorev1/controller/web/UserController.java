@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.User;
 import com.tunabel.perfumestorev1.data.service.UserService;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.user.ChangePasswordVM;
 import com.tunabel.perfumestorev1.model.viewmodel.user.UserDetailVM;
 import com.tunabel.perfumestorev1.model.viewmodel.user.UserVM;
@@ -41,7 +42,6 @@ public class UserController extends BaseController {
         userVM.setGender(userEntity.getGender());
         userVM.setName(userEntity.getName());
         userVM.setPhoneNumber(userEntity.getPhone());
-
 
         model.addAttribute("vm", vm);
         model.addAttribute("user", userVM);
