@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
@@ -28,20 +31,31 @@ public class UserController extends BaseController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/detail")
-    public String getUserDetail(Model model) {
+    public String getUserDetail(Model model, HttpServletResponse response,
+                                HttpServletRequest request,
+                                final Principal principal) {
         UserDetailVM vm = new UserDetailVM();
         UserVM userVM = new UserVM();
+
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User userEntity = userService.findUserByUsername(username);
 
         userVM.setAddress(userEntity.getAddress());
-        userVM.setAvatar(userEntity.getAvatarURL());
+        if (!userEntity.getAvatarURL().isEmpty()) {
+            System.out.println("AA"+userEntity.getAvatarURL());
+            userVM.setAvatar(userEntity.getAvatarURL());
+        }
         userVM.setEmail(userEntity.getEmail());
         userVM.setGender(userEntity.getGender());
         userVM.setName(userEntity.getName());
-        userVM.setPhoneNumber(userEntity.getPhone());
+        userVM.setPhone(userEntity.getPhone());
+
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("home");
+        vm.setHeaderMenuVM(headerMenuVM);
 
         model.addAttribute("vm", vm);
         model.addAttribute("user", userVM);
@@ -56,25 +70,36 @@ public class UserController extends BaseController {
             User userEntity = userService.findUserByUsername(username);
 
             userEntity.setAddress(user.getAddress());
-            userEntity.setAvatarURL(user.getAvatar());
+            if (user.getAvatar() != null) {
+                System.out.println("AA"+user.getAvatar());
+                userEntity.setAvatarURL(user.getAvatar());
+            }
             userEntity.setEmail(user.getEmail());
-            userEntity.setPhone(user.getPhoneNumber());
+            userEntity.setPhone(user.getPhone());
             userEntity.setGender(user.getGender());
             userEntity.setName(user.getName());
             userService.updateUser(userEntity);
 
             return "redirect:/user/detail?updateSuccess";
-        } catch (Exception ex ) {
+        } catch (Exception ex) {
             ex.getMessage();
         }
         return "redirect:/user/detail?updateFailure";
     }
 
     @GetMapping("/change-password")
-    public String changePassword(Model model) {
-        ChangePasswordVM changePasswordVM = new ChangePasswordVM();
+    public String changePassword(Model model, HttpServletResponse response,
+                                 HttpServletRequest request,
+                                 final Principal principal) {
+        ChangePasswordVM vm = new ChangePasswordVM();
 
-        model.addAttribute("changePassword", changePasswordVM);
+        int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
+
+        HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
+        headerMenuVM.setPageName("home");
+        vm.setHeaderMenuVM(headerMenuVM);
+
+        model.addAttribute("changePassword", vm);
 
         return "/change-password";
     }
@@ -87,15 +112,15 @@ public class UserController extends BaseController {
 
         String currentPassHash = user.getPassword();
 
-        if (passwordEncoder.matches(changePasswordVM.getNewPassword(), currentPassHash))  {
+        if (passwordEncoder.matches(changePasswordVM.getNewPassword(), currentPassHash)) {
             if (changePasswordVM.getConfirmPassword().equals(changePasswordVM.getNewPassword())) {
                 user.setPassword(changePasswordVM.getConfirmPassword());
                 userService.updateUser(user);
 
-                return "redirect:/user/change-password?success";
+                return "redirect:/user/detail?pwsuccess";
             }
         }
-        return "redirect:/user/change-password?fail";
+        return "redirect:/user/change-password?pwfail";
 
     }
 }

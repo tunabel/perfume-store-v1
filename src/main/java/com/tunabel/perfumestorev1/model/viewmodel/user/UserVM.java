@@ -7,7 +7,7 @@ public class UserVM {
     private String email;
     private String name;
     private String address;
-    private String phoneNumber;
+    private String phone;
     private int gender;
 
     public UserVM() {
@@ -37,8 +37,8 @@ public class UserVM {
         return this.address;
     }
 
-    public String getPhoneNumber() {
-        return this.phoneNumber;
+    public String getPhone() {
+        return this.phone;
     }
 
     public int getGender() {
@@ -69,8 +69,8 @@ public class UserVM {
         this.address = address;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setGender(int gender) {
@@ -78,6 +78,6 @@ public class UserVM {
     }
 
     public String toString() {
-        return "UserVM(id=" + this.getId() + ", avatar=" + this.getAvatar() + ", username=" + this.getUsername() + ", email=" + this.getEmail() + ", name=" + this.getName() + ", address=" + this.getAddress() + ", phoneNumber=" + this.getPhoneNumber() + ", gender=" + this.getGender() + ")";
+        return "UserVM(id=" + this.getId() + ", avatar=" + this.getAvatar() + ", username=" + this.getUsername() + ", email=" + this.getEmail() + ", name=" + this.getName() + ", address=" + this.getAddress() + ", phoneNumber=" + this.getPhone() + ", gender=" + this.getGender() + ")";
     }
 }

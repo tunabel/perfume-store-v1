@@ -13166,3 +13166,10 @@ textarea.form-control {
     font-size: 13px;
     margin-top: -5px;
 }
+
+
+.user-avatar {
+    width: 40%;
+    border: 2px solid var(--main);
+    border-radius: 10px;
+}
