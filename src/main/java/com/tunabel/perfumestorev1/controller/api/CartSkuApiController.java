@@ -12,6 +12,8 @@ import com.tunabel.perfumestorev1.model.dto.CartSkuDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/cart-sku")
 public class CartSkuApiController {
@@ -60,26 +62,36 @@ public class CartSkuApiController {
     }
 
     @PostMapping("/update")
-    public BaseApiResult updateCartSku(@RequestBody CartSkuDto dto) {
+    public BaseApiResult updateCartSku(@RequestBody List<CartSkuDto> dtoList) {
+
         BaseApiResult result = new BaseApiResult();
 
-        try {
-            if(dto.getId()>0 && dto.getQty() > 0) {
-                CartSku cartSkuEntity = cartSkuService.findOne(dto.getId());
+        boolean flagResult = true;
+        for(CartSkuDto dto: dtoList) {
 
-                if(cartSkuEntity != null) {
-                    cartSkuEntity.setQuantity(dto.getQty());
-                    cartSkuService.updateCartSku(cartSkuEntity);
-                    result.setMessage("Update Cart Product success !");
-                    result.setSuccessful(true);
-                    return result;
+            try {
+                if(dto.getId()>0 && dto.getQty() > 0) {
+                    CartSku cartSkuEntity = cartSkuService.findOne(dto.getId());
+
+                    if(cartSkuEntity != null) {
+                        cartSkuEntity.setQuantity(dto.getQty());
+                        cartSkuService.updateCartSku(cartSkuEntity);
+                    }
                 }
+            } catch (Exception e) {
+                flagResult = false;
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        result.setMessage("Fail!");
-        result.setSuccessful(false);
+
+        if(flagResult) {
+            result.setMessage("Update Cart Product success !");
+            result.setSuccessful(true);
+        } else {
+            result.setMessage("Fail!");
+            result.setSuccessful(false);
+        }
+
         return result;
     }
 

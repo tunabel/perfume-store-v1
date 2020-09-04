@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +73,7 @@ public class OrderController extends BaseController {
                            final Principal principal) {
         Order order = new Order();
 
-        boolean flag = false;
+        boolean isCookiePresent = false;
 
         Cookie cookie[] = request.getCookies();
 
@@ -83,13 +82,13 @@ public class OrderController extends BaseController {
         if (cookie != null) {
             for (Cookie c : cookie) {
                 if (c.getName().equals("guid")) {
-                    flag = true;
+                    isCookiePresent = true;
                     guid = c.getValue();
                 }
             }
         }
 
-        if (flag == true) {
+        if (isCookiePresent == true) {
 
             long totalPrice = 0;
 
@@ -104,6 +103,8 @@ public class OrderController extends BaseController {
             order.setPhone(orderVM.getPhone());
             order.setName(orderVM.getCustomerName());
             order.setCreatedDate(new Date());
+            //0 as new pending order
+            order.setStatus(0);
 
 
             Cart cartEntity = cartService.findFirstCartByGuid(guid);
@@ -127,7 +128,7 @@ public class OrderController extends BaseController {
                 order.setTotalPrice((int) totalPrice);
 
                 orderService.addNewOrder(order);
-
+                //delete cart
                 cartService.deleteCart(cartEntity.getId());
             }
         }

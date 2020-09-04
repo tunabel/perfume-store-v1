@@ -40,11 +40,12 @@
                         <tbody th:each="cartSku : ${vm.getCartSkuVMList()}">
                         <tr class="text-center">
                             <td class="product-remove">
-                                <a class="delete-cartSku" th:attr="data-cartSku=${cartSku.getId()}" th:href="@{'/api/cart-sku/delete/'+${cartSku.getId()}}">
+                                <a class="delete-cartSku" th:attr="data-cartSku=${cartSku.getId()}"
+                                   th:href="@{'/api/cart-sku/delete/'+${cartSku.getId()}}">
                                     <span class="ion-ios-close"></span></a>
                             </td>
                             <td class="image-prod">
-<!--                                <div class="img" style="background-image:url(images/product-3.jpg);"></div>-->
+                                <!--                                <div class="img" style="background-image:url(images/product-3.jpg);"></div>-->
                                 <img class="img" th:src="${cartSku.getSkuImage()}" th:alt="${cartSku.getProductName()}">
                             </td>
                             <td class="product-name">
@@ -55,32 +56,26 @@
 
                             <td class="price" th:text="${cartSku.getPrice()}"></td>
 
-                            <td class="quantity">
-                                <div class="input-group">
-<!--                                    <div class="input-group-prepend">-->
-<!--                                        <button class="btn btn-quantity-minus" type="button" th:id="@{'minus'+${sku.getSkuId()}}"><span class="ml-1" >-</span></button>-->
-<!--                                    </div>-->
-                                    <input type="number" name="quantity" th:id="@{'quantity'+${cartSku.getSkuId()}}" class="quantity form-control input-number"
-                                           th:value="${cartSku.getQuantity()}" min="1" max="100">
-<!--                                    <div class="input-group-append">-->
-<!--                                        <button class="btn btn-quantity-plus" type="button" th:id="@{'plus'+${cartSku.getSkuId()}}">-->
-<!--                                            <span>+</span></button>-->
-<!--                                    </div>-->
-                                </div>
+                            <td class="quantity  cart-sku-row">
+                                <input type="number" name="quantity" th:id="@{'quantity'+${cartSku.getSkuId()}}"
+                                       class="form-control"
+                                       th:value="${cartSku.getQuantity()}" min="1" max="100">
+                                <span class="sku-id d-none" th:text="${cartSku.getId()}"></span>
                             </td>
-                            <td class="price" th:id="@{'price'+${cartSku.getSkuId()}}" th:text="${cartSku.getPrice()*cartSku.getQuantity()}"></td>
+                            <td class="price" th:id="@{'price'+${cartSku.getSkuId()}}"
+                                th:text="${cartSku.getPrice()*cartSku.getQuantity()}"></td>
 
                             <script type="text/javascript" th:inline="javascript">
-                                document.getElementById('quantity'+[[${cartSku.getSkuId()}]]).onchange = function() {
+                                document.getElementById('quantity' + [[${cartSku.getSkuId()}]]).onchange = function () {
                                     //get current totalPrice and deduce from it the subtotal of selected sku
                                     document.getElementById('totalPrice').innerText =
-                                        parseInt(document.getElementById('totalPrice').innerText) - parseInt(document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText);
+                                        parseInt(document.getElementById('totalPrice').innerText) - parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
                                     // calculate new subtotal by using new quantity
-                                    document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText =
-                                        [[${cartSku.getPrice()}]] * document.getElementById('quantity'+[[${cartSku.getSkuId()}]]).value;
+                                    document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText =
+                                        [[${cartSku.getPrice()}]] * document.getElementById('quantity' + [[${cartSku.getSkuId()}]]).value;
                                     // add new subtotal to totalPrice
                                     document.getElementById('totalPrice').innerText =
-                                        parseInt(document.getElementById('totalPrice').innerText) + parseInt(document.getElementById('price'+[[${cartSku.getSkuId()}]]).innerText);
+                                        parseInt(document.getElementById('totalPrice').innerText) + parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
                                 }
                             </script>
                         </tr><!-- END TR-->
@@ -91,24 +86,29 @@
         </div>
         <div class="row justify-content-end">
             <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                <div class="btn btn-primary py-3 px-4 update-cart-btn" style="width: 50%">Update Cart</div>
+            </div>
+            <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                 <div class="cart-total mb-3">
-                    <h3>Cart Totals</h3>
-<!--                    <p class="d-flex">-->
-<!--                        <span>Subtotal</span>-->
-<!--                        <span id="subTotalPrice" th:text="${vm.getTotalPrice()}"></span>-->
-<!--                    </p>-->
+                    <!--                    <h3>Cart Totals</h3>-->
 
-<!--                    <p class="d-flex">-->
-<!--                        <span>Discount</span>-->
-<!--                        <span>$3.00</span>-->
-<!--                    </p>-->
-                    <hr>
+                    <!--                    <p class="d-flex">-->
+                    <!--                        <span>Subtotal</span>-->
+                    <!--                        <span id="subTotalPrice" th:text="${vm.getTotalPrice()}"></span>-->
+                    <!--                    </p>-->
+
+                    <!--                    <p class="d-flex">-->
+                    <!--                        <span>Discount</span>-->
+                    <!--                        <span>$3.00</span>-->
+                    <!--                    </p>-->
+                    <!--                    <hr>-->
                     <p class="d-flex total-price">
-                        <span>Total</span>
+                        <span>Cart Total</span>
                         <span id="totalPrice" th:text="${vm.getTotalPrice()}"></span>
                     </p>
                 </div>
-                <p class="text-center"><div href="#" class="btn btn-primary py-3 px-4">Proceed to Checkout</div>
+                <p class="text-center">
+                <div href="#" class="btn btn-primary py-3 px-4">Proceed to Checkout</div>
                 </p>
             </div>
         </div>
@@ -138,8 +138,9 @@
 <script src="js/jquery.magnific-popup.min.js"></script>
 <script src="js/aos.js"></script>
 <script src="js/scrollax.min.js"></script>
-<script src="js/main.js"></script>
 <script src="js/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.9.0/sweetalert2.all.min.js"></script>
+<script src="js/main.js"></script>
 
 <script src="js/page_cart.js"></script>
 </body>

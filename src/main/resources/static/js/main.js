@@ -263,8 +263,6 @@ AOS.init({
 
 
 $(document).ready(function () {
-
-
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -299,6 +297,7 @@ $(document).ready(function () {
         }
     }
 
+    //ADD TO CART BTN IN HOME & SHOP
     $(".add-to-cart").on("click", function () {
         var dataCart = {};
         var skuId = $(this).data("sku");
@@ -309,6 +308,85 @@ $(document).ready(function () {
         var linkPost = "/api/cart-sku/add";
 
         axios.post(linkPost, dataCart).then(function (res) {
+            if (res.data.success) {
+                swal(
+                    'Success',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Fail',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Fail',
+                'error'
+            );
+        });
+    });
+
+    //ADD TO CART BTN IN SKU DETAIL
+    $(".add-to-cart-sku").on("click", function () {
+        var dataCart = {};
+        var skuId = $(this).data("skuId");
+        dataCart.qty = document.getElementById('quantity').value;
+        dataCart.skuID = skuId;
+        dataCart.guid = getCookie("guid");
+
+        var linkPost = "/api/cart-sku/add";
+
+        axios.post(linkPost, dataCart).then(function (res) {
+            if (res.data.success) {
+                swal(
+                    'Success',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Fail',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Fail',
+                'error'
+            );
+        });
+    });
+
+    //UPDATE CART IN CART PAGE
+    $(".update-cart-btn").on("click", function () {
+
+        var skuList = [];
+        var count = 0;
+        var itemList = document.getElementsByClassName("cart-sku-row");
+
+        Array.prototype.forEach.call(itemList, function(el) {
+            let dataCart = {};
+            dataCart.qty = el.firstElementChild.value;
+            dataCart.id = el.lastElementChild.innerText;
+            dataCart.guid = getCookie("guid");
+            console.log(dataCart.id);
+            skuList[count] = dataCart;
+            count++;
+        })
+
+        var linkPost = "/api/cart-sku/update";
+
+        axios.post(linkPost, skuList).then(function (res) {
             if (res.data.success) {
                 swal(
                     'Success',
