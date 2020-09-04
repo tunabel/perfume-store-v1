@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
+import com.tunabel.perfumestorev1.model.viewmodel.cart.CartSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderSkuService orderSkuService;
 
+    @Autowired
+    private CartSkuService cartSkuService;
+
     @GetMapping("/checkout")
     public String checkout(Model model, HttpServletResponse response,
                            HttpServletRequest request,
@@ -45,6 +49,18 @@ public class OrderController extends BaseController {
 
         int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
+        Cookie cookie[] = request.getCookies();
+
+        String guid = null;
+
+        if (cookie != null) {
+            for (Cookie c : cookie) {
+                if (c.getName().equals("guid")) {
+                    guid = c.getValue();
+                }
+            }
+        }
+
         if (principal != null) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             User userEntity = userService.findUserByUsername(username);
@@ -53,9 +69,18 @@ public class OrderController extends BaseController {
                 order.setCustomerName(userEntity.getName());
                 order.setPhone(userEntity.getPhone());
                 order.setEmail(userEntity.getEmail());
-                order.setPrice(orderSkuService.sumPendingOrderValueByUsername(username));
             }
         }
+        long totalPrice = 0;
+        Cart cartEntity = cartService.findFirstCartByGuid(guid);
+        if (cartEntity != null) {
+            for (CartSku cartSku : cartEntity.getCartSkuList()) {
+                long price = cartSku.getQuantity() * cartSku.getProductSKU().getPrice();
+                totalPrice += price;
+            }
+        }
+
+        order.setPrice(totalPrice);
 
         HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
         headerMenuVM.setPageName("home");
@@ -119,7 +144,7 @@ public class OrderController extends BaseController {
                     int price = cartSku.getQuantity() * cartSku.getProductSKU().getPrice();
                     totalPrice += price;
 
-                    orderSku.setPrice((int) totalPrice);
+                    orderSku.setPrice(price);
 
                     orderSkus.add(orderSku);
                 }
@@ -218,7 +243,7 @@ public class OrderController extends BaseController {
                 orderSkuVM.setSkuId(orderSku.getProductSKU().getId());
                 orderSkuVM.setMainImage(orderSku.getProductSKU().getImageURL());
                 orderSkuVM.setQuantity(orderSku.getQuantity());
-                orderSkuVM.setSkuName(orderSku.getProductSKU().getName());
+                orderSkuVM.setSkuName( orderSku.getProductSKU().getProduct().getBrand().getName()+ " - "+  orderSku.getProductSKU().getProduct().getName() + " - "+ orderSku.getProductSKU().getName());
 
                 orderSkuVM.setPrice(orderSku.getPrice());
 

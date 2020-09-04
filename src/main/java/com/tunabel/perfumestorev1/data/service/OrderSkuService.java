@@ -10,7 +10,5 @@ public class OrderSkuService {
     @Autowired
     OrderSkuRepository orderSkuRepository;
 
-    public long sumPendingOrderValueByUsername(String username) {
-        return orderSkuRepository.sumPendingOrderValueByUsername(username);
-    }
+
 }

@@ -15,5 +15,5 @@ public interface OrderSkuRepository extends JpaRepository<OrderSku,Integer> {
                 "WHERE o.username = :username " +
                 "AND o.status = 0)",
             nativeQuery = true)
-    public long sumPendingOrderValueByUsername(@Param("username") String username);
+    public Long sumPendingOrderValueByUsername(@Param("username") String username);
 }
