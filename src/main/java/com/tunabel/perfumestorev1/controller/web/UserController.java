@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -39,12 +40,16 @@ public class UserController extends BaseController {
 
         int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
+        Cookie cookies[] = request.getCookies();
+
+        String axt = principal.getName();
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User userEntity = userService.findUserByUsername(username);
 
         userVM.setAddress(userEntity.getAddress());
-        if (!userEntity.getAvatarURL().isEmpty()) {
+        if (userEntity.getAvatarURL() != null) {
             System.out.println("AA"+userEntity.getAvatarURL());
             userVM.setAvatar(userEntity.getAvatarURL());
         }
