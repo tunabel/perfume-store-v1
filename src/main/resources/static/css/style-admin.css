@@ -10905,7 +10905,7 @@ fieldset:disabled .ajax-upload-dragdrop a.ajax-file-upload,
 .btn-primary:hover {
   color: #fff;
   background-color: #e811fb;
-  border-color: #e705fb;
+  border-color: #f1b8c4;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -10914,15 +10914,15 @@ fieldset:disabled .ajax-upload-dragdrop a.ajax-file-upload,
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
-  background-color: #ec37fc;
-  border-color: #ec37fc;
+  background-color: #f1b8c4;
+  border-color: #f1b8c4;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #e705fb;
-  border-color: #dc04f0;
+  background-color: #f1b8c4;
+  border-color: #f1b8c4;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -13446,7 +13446,7 @@ a.badge:hover, a.badge:focus {
 
 a.badge-primary:hover, a.badge-primary:focus {
   color: #fff;
-  background-color: #e705fb;
+  background-color: #f1b8c4;
 }
 
 a.badge-primary:focus, a.badge-primary.focus {
@@ -14907,7 +14907,7 @@ a.close.disabled {
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #e705fb !important;
+  background-color: #f1b8c4 !important;
 }
 
 .bg-secondary {
@@ -18475,21 +18475,21 @@ input:focus {
   outline: none;
 }
 
-@font-face {
-  font-family: 'Karla';
-  src: url("../fonts/karla/Karla-Bold.eot");
-  src: url("../fonts/karla/Karla-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/karla/Karla-Bold.woff2") format("woff2"), url("../fonts/karla/Karla-Bold.woff") format("woff"), url("../fonts/karla/Karla-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
+/*@font-face {*/
+/*  font-family: 'Karla';*/
+/*  src: url("../fonts/karla/Karla-Bold.eot");*/
+/*  src: url("../fonts/karla/Karla-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/karla/Karla-Bold.woff2") format("woff2"), url("../fonts/karla/Karla-Bold.woff") format("woff"), url("../fonts/karla/Karla-Bold.ttf") format("truetype");*/
+/*  font-weight: bold;*/
+/*  font-style: normal;*/
+/*}*/
 
-@font-face {
-  font-family: 'Karla';
-  src: url("../fonts/karla/Karla-Regular.eot");
-  src: url("../fonts/karla/Karla-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/karla/Karla-Regular.woff2") format("woff2"), url("../fonts/karla/Karla-Regular.woff") format("woff"), url("../fonts/karla/Karla-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+/*@font-face {*/
+/*  font-family: 'Karla';*/
+/*  src: url("../fonts/karla/Karla-Regular.eot");*/
+/*  src: url("../fonts/karla/Karla-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/karla/Karla-Regular.woff2") format("woff2"), url("../fonts/karla/Karla-Regular.woff") format("woff"), url("../fonts/karla/Karla-Regular.ttf") format("truetype");*/
+/*  font-weight: normal;*/
+/*  font-style: normal;*/
+/*}*/
 
 .bg-twitter {
   background: #2caae1;
@@ -20087,7 +20087,7 @@ code {
   width: 18px;
   height: 18px;
   border-radius: 2px;
-  border: solid #ec37fc;
+  border: solid #f1b8c4;
   border-width: 2px;
   -webkit-transition: all;
   -moz-transition: all;
@@ -20122,7 +20122,7 @@ code {
 }
 
 .form-check .form-check-label input[type="checkbox"]:checked + .input-helper:before {
-  background: #ec37fc;
+  background: #f1b8c4;
   border-width: 0;
 }
 
@@ -20151,7 +20151,7 @@ code {
   content: "";
   top: 0;
   left: 0;
-  border: solid #ec37fc;
+  border: solid #f1b8c4;
   border-width: 2px;
   width: 20px;
   height: 20px;
@@ -20228,12 +20228,12 @@ code {
 
 .form-check-primary.form-check label input[type="checkbox"] + .input-helper:before,
 .form-check-primary.form-check label input[type="radio"] + .input-helper:before {
-  border-color: #ec37fc;
+  border-color: #f1b8c4;
 }
 
 .form-check-primary.form-check label input[type="checkbox"]:checked + .input-helper:before,
 .form-check-primary.form-check label input[type="radio"]:checked + .input-helper:before {
-  background: #ec37fc;
+  background: #f1b8c4;
 }
 
 .form-check-secondary.form-check label input[type="checkbox"] + .input-helper:before,

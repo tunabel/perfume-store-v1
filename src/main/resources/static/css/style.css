@@ -9935,13 +9935,13 @@ button.bg-dark:focus {
     color: #fff !important;
 }
 
-.text-primary {
-    color: #78d5ef !important;
-}
+/*.text-primary {*/
+/*    color: #78d5ef !important;*/
+/*}*/
 
-a.text-primary:hover, a.text-primary:focus {
-    color: #4ac7ea !important;
-}
+/*a.text-primary:hover, a.text-primary:focus {*/
+/*    color: #4ac7ea !important;*/
+/*}*/
 
 .text-secondary {
     color: #6c757d !important;
@@ -13172,4 +13172,22 @@ textarea.form-control {
     width: 40%;
     border: 2px solid var(--main);
     border-radius: 10px;
+}
+
+
+.auth-form-btn, .auth-form-btn:not(:disabled):not(.disabled)  {
+    background-color: var(--main);
+    color:white;
+}
+
+
+.auth-form-btn:hover {
+    background-color: white;
+    color: var(--main);
+}
+
+
+.auth-form-btn:disabled, .auth-form-btn:disabled:hover {
+    background-color: #bababa;
+    color: white;
 }
