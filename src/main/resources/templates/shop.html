@@ -149,7 +149,10 @@
                                     <a th:text="${sku.getBrand()}" class="brand-link"
                                        th:href="${'/shop?brand='+sku.getBrandId()}"></a>
                                 </h3>
-                                <h3 th:text="${sku.getName()}"></h3>
+                                <h3 >
+                                    <a th:text="${sku.getName()}" style="color:gray"
+                                       th:href="${'/product/?sku='+sku.getId()}"></a>
+                                </h3>
                                 <div class="d-flex">
                                     <div class="pricing">
                                         <p class="price">
@@ -172,7 +175,6 @@
             <div class="col text-center" th:if="${vm.getProductSkuVMList().size()>0}">
                 <div class="block-27">
                     <ul>
-
                         <li><a href="#">&lt;</a></li>
                         <th:block th:each="i: ${#numbers.sequence(1, page.totalPages)}">
                             <li class="active" th:if="${page.number+1 == i}" aria-current="page">
