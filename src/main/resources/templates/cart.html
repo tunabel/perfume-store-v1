@@ -54,7 +54,11 @@
                                 <p th:text="${cartSku.getVolume()}"></p>
                             </td>
 
-                            <td class="price" th:text="${cartSku.getPrice()}"></td>
+                            <td>
+                                <span th:text="${cartSku.getPrice()}" style="display:none"></span>
+                                <span class="price"
+                                      th:text="${#numbers.formatInteger(cartSku.getPrice(), 3, 'POINT')+'.000đ'}"></span>
+                            </td>
 
                             <td class="quantity  cart-sku-row">
                                 <input type="number" name="quantity" th:id="@{'quantity'+${cartSku.getSkuId()}}"
@@ -62,8 +66,12 @@
                                        th:value="${cartSku.getQuantity()}" min="1" max="100">
                                 <span class="sku-id d-none" th:text="${cartSku.getId()}"></span>
                             </td>
-                            <td class="price" th:id="@{'price'+${cartSku.getSkuId()}}"
-                                th:text="${cartSku.getPrice()*cartSku.getQuantity()}"></td>
+                            <td>
+                                <span class="price" th:id="@{'price'+${cartSku.getSkuId()}}"
+                                      th:text="${cartSku.getPrice()*cartSku.getQuantity()}" style="display:none"></span>
+                                <span style="color:black" th:id="@{'display_price'+${cartSku.getSkuId()}}"
+                                      th:text="${#numbers.formatInteger(cartSku.getPrice()*cartSku.getQuantity(), 3, 'POINT')+'.000đ'}"></span>
+                            </td>
 
                             <script type="text/javascript" th:inline="javascript">
                                 document.getElementById('quantity' + [[${cartSku.getSkuId()}]]).onchange = function () {
@@ -71,11 +79,17 @@
                                     document.getElementById('totalPrice').innerText =
                                         parseInt(document.getElementById('totalPrice').innerText) - parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
                                     // calculate new subtotal by using new quantity
-                                    document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText =
-                                        [[${cartSku.getPrice()}]] * document.getElementById('quantity' + [[${cartSku.getSkuId()}]]).value;
+                                    var newSub = [[${cartSku.getPrice()}]] * document.getElementById('quantity' + [[${cartSku.getSkuId()}]]).value;
+
+                                    document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText = newSub;
+                                    document.getElementById('display_price' + [[${cartSku.getSkuId()}]]).innerText = (newSub.toLocaleString("DE") + ".000đ");
+
                                     // add new subtotal to totalPrice
-                                    document.getElementById('totalPrice').innerText =
-                                        parseInt(document.getElementById('totalPrice').innerText) + parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
+
+                                    var newTotal = parseInt(document.getElementById('totalPrice').innerText) +
+                                        parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
+                                    document.getElementById('totalPrice').innerText = newTotal;
+                                    document.getElementById('display_totalPrice').innerText = (newTotal.toLocaleString("DE") + ".000đ");
                                 }
                             </script>
                         </tr><!-- END TR-->
@@ -104,11 +118,13 @@
                     <!--                    <hr>-->
                     <p class="d-flex total-price">
                         <span>Cart Total</span>
-                        <span id="totalPrice" th:text="${vm.getTotalPrice()}"></span>
+                        <span id="totalPrice" th:text="${vm.getTotalPrice()}" style="display:none"></span>
+                        <span id="display_totalPrice"
+                              th:text="${#numbers.formatInteger(vm.getTotalPrice(), 3, 'POINT')+'.000đ'}"></span>
                     </p>
                 </div>
                 <p class="text-center">
-                <a th:href="@{'/order/checkout'}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
+                    <a th:href="@{'/order/checkout'}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a>
                 </p>
             </div>
         </div>

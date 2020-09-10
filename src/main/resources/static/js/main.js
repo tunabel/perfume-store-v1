@@ -337,7 +337,7 @@ $(document).ready(function () {
     //ADD TO CART BTN IN SKU DETAIL
     $(".add-to-cart-sku").on("click", function () {
         var dataCart = {};
-        var skuId = $(this).data("skuId");
+        var skuId = $(this).data("sku");
         dataCart.qty = document.getElementById('quantity').value;
         dataCart.skuID = skuId;
         dataCart.guid = getCookie("guid");

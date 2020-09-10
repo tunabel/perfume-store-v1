@@ -41,7 +41,6 @@ public class SkuController extends BaseController {
 
         int cartQty = this.checkCookieAndShowCartQty(response, request, principal);
 
-
         Product product = productService.findBySkuId(skuId);
         ProductSku mainSku = productSKUService.findById(skuId);
 
@@ -78,7 +77,6 @@ public class SkuController extends BaseController {
             for (ProductImage image : product.getProductImageList()) {
                 ProductImageVM imageVM = new ProductImageVM();
                 imageVM.setId(image.getId());
-                System.out.println(image.getImageUrl());
                 imageVM.setImageURL(image.getImageUrl());
 
                 imageVMList.add(imageVM);

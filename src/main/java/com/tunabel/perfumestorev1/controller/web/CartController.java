@@ -51,7 +51,7 @@ public class CartController extends BaseController {
                         CartSkuVM cartSkuVM = new CartSkuVM();
                         cartSkuVM.setId(cartSku.getId());
                         cartSkuVM.setSkuId(cartSku.getProductSKU().getId());
-                        cartSkuVM.setProductName(cartSku.getProductSKU().getName());
+                        cartSkuVM.setProductName(cartSku.getProductSKU().getProduct().getName());
                         cartSkuVM.setBrandName(cartSku.getProductSKU().getProduct().getBrand().getName());
                         cartSkuVM.setVolume(cartSku.getProductSKU().getName());
                         cartSkuVM.setSkuImage(cartSku.getProductSKU().getImageURL());

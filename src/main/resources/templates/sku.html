@@ -83,8 +83,9 @@
                         </div>
                     </div>
 
+                    <label for="quantity">Quantity:</label>
                     <div class="product_quantity">
-                        <label for="quantity">Quantity:</label>
+
                         <select name="select" id="quantity">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -98,7 +99,9 @@
                         </select>
 
                     </div>
-                    <span type="button" th:attr="data-skuId=${vm.getSkuId()}" class="btn btn-primary add-to-cart-sku">Add to Cart</span>
+                </div>
+                <div>
+                    <span type="button" th:attr="data-sku=${vm.getSkuId()}" class="btn btn-primary add-to-cart-sku">Add to Cart</span>
                 </div>
             </div>
         </div>
