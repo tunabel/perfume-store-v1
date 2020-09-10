@@ -30,7 +30,6 @@ public class ProductService {
         return productRepository.findOne(productId);
     }
 
-
     public boolean updateProduct(Product product) {
         try {
             productRepository.save(product);
@@ -76,6 +75,10 @@ public class ProductService {
 
     public Product findBySkuId(int skuId) {
         return productRepository.findBySkuId(skuId);
+    }
+
+    public Page<Product> getPageWithSearch(Pageable pageable, String search) {
+        return productRepository.findAllWithSearch(pageable, search);
     }
 
 

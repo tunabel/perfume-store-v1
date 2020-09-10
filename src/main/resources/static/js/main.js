@@ -308,13 +308,15 @@ $(document).ready(function () {
         var linkPost = "/api/cart-sku/add";
 
         axios.post(linkPost, dataCart).then(function (res) {
-            if (res.data.success) {
+            console.log(res.data);
+            if (res.data.successful) {
                 swal(
                     'Success',
                     res.data.message,
                     'success'
                 ).then(function () {
-                    location.reload();
+                    // location.reload();
+                    $("#cart-count").load(window.location.href + " #cart-count");
                 });
             } else {
                 swal(
@@ -339,17 +341,18 @@ $(document).ready(function () {
         dataCart.qty = document.getElementById('quantity').value;
         dataCart.skuID = skuId;
         dataCart.guid = getCookie("guid");
+        console.log(dataCart);
 
         var linkPost = "/api/cart-sku/add";
 
         axios.post(linkPost, dataCart).then(function (res) {
-            if (res.data.success) {
+            if (res.data.successful) {
                 swal(
                     'Success',
                     res.data.message,
                     'success'
                 ).then(function () {
-                    location.reload();
+                    $("#cart-count").load(window.location.href + " #cart-count");
                 });
             } else {
                 swal(
@@ -379,7 +382,6 @@ $(document).ready(function () {
             dataCart.qty = el.firstElementChild.value;
             dataCart.id = el.lastElementChild.innerText;
             dataCart.guid = getCookie("guid");
-            console.log(dataCart.id);
             skuList[count] = dataCart;
             count++;
         })
@@ -387,13 +389,13 @@ $(document).ready(function () {
         var linkPost = "/api/cart-sku/update";
 
         axios.post(linkPost, skuList).then(function (res) {
-            if (res.data.success) {
+            if (res.data.successful) {
                 swal(
                     'Success',
                     res.data.message,
                     'success'
                 ).then(function () {
-                    location.reload();
+                    $("#cart-count").load(window.location.href + " #cart-count");
                 });
             } else {
                 swal(

@@ -1,5 +1,7 @@
 package com.tunabel.perfumestorev1.model.viewmodel.common;
 
+import java.util.Date;
+
 public class ProductSkuVM {
     private int id;
     private String name;
@@ -12,6 +14,7 @@ public class ProductSkuVM {
     private int volume;
     private String imageURL;
     private int status;
+    private Date createdDate;
 
     public ProductSkuVM(int id, String name, String brand, int brandId, String spec, int mainSku, String price, int quantity, int volume, String imageURL, int status) {
         this.id = id;
@@ -28,6 +31,14 @@ public class ProductSkuVM {
     }
 
     public ProductSkuVM() {
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getId() {

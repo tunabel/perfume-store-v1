@@ -16,9 +16,10 @@ $(document).ready(function() {
         var formData = new FormData();
         formData.append('file', $("#input-avatar")[0].files[0]);
         axios.post("/api/upload/upload-avatar", formData).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
+            console.log(res.data);
+            if(res.data.successful) {
                 $("#avatar").val(res.data.link);
+                console.log($("#avatar").val());
             }
         }, function(err){
 

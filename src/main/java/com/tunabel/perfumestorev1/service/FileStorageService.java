@@ -46,23 +46,23 @@ public class FileStorageService {
             String newFileName = ""
                     + unixTimestamp + "-"
                     + file.getOriginalFilename();
-//
-//            if (folder.equals(Folder.AVATAR)) {
-//                Files.copy(xfile,
-//                        this.avatarImgFolder.resolve(newFileName));
-//            } else if (folder.equals(Folder.BLOG)) {
-//                Files.copy(file.getInputStream(),
-//                        this.blogImgFolder.resolve(newFileName));
-//            } else if (folder.equals(Folder.SKU)) {
-//                Files.copy(file.getInputStream(),
-//                        this.skuImgFolder.resolve(newFileName));
-//            } else {
-//                Files.copy(file.getInputStream(),
-//                        this.rootLocation.resolve(newFileName));
-//            }
 
-            Files.copy(file.getInputStream(),
-                    this.rootLocation.resolve(newFileName));
+            if (folder.equals(Folder.AVATAR)) {
+                Files.copy(file.getInputStream(),
+                        this.avatarImgFolder.resolve(newFileName));
+            } else if (folder.equals(Folder.BLOG)) {
+                Files.copy(file.getInputStream(),
+                        this.blogImgFolder.resolve(newFileName));
+            } else if (folder.equals(Folder.SKU)) {
+                Files.copy(file.getInputStream(),
+                        this.skuImgFolder.resolve(newFileName));
+            } else {
+                Files.copy(file.getInputStream(),
+                        this.rootLocation.resolve(newFileName));
+            }
+
+//            Files.copy(file.getInputStream(),
+//                    this.rootLocation.resolve(newFileName));
 
             return newFileName;
         } catch (Exception e) {
@@ -73,17 +73,16 @@ public class FileStorageService {
     public Resource loadFile(String filename, Folder folder) {
         try {
             Path file = null;
-//            if (folder.equals(Folder.AVATAR)) {
-//                file = avatarImgFolder.resolve(filename);
-//            } else if (folder.equals(Folder.BLOG)) {
-//                file = blogImgFolder.resolve(filename);
-//            } else if (folder.equals(Folder.SKU)) {
-//                file = skuImgFolder.resolve(filename);
-//            } else {
-//                file = rootLocation.resolve(filename);
-//            }
+            if (folder.equals(Folder.AVATAR)) {
+                file = avatarImgFolder.resolve(filename);
+            } else if (folder.equals(Folder.BLOG)) {
+                file = blogImgFolder.resolve(filename);
+            } else if (folder.equals(Folder.SKU)) {
+                file = skuImgFolder.resolve(filename);
+            } else {
+                file = rootLocation.resolve(filename);
+            }
 
-            file = rootLocation.resolve(filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;

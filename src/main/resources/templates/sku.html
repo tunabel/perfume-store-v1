@@ -30,16 +30,16 @@
             <div class="col-lg-6 mb-5 ftco-animate">
                 <div class="s_product_img">
                     <div
-                        id="productCarousel"
-                        class="carousel slide"
-                        data-ride="carousel"
+                            id="productCarousel"
+                            class="carousel slide"
+                            data-ride="carousel"
                     >
                         <ol class="carousel-indicators">
                             <li
-                                th:each="image, state : ${vm.getProductImageVMList()}"
-                                data-target="#productCarousel"
-                                th:data-slide-to="${state.index}"
-                                th:classappend="(${state.index} == 0 )? 'active' : '' "
+                                    th:each="image, state : ${vm.getProductImageVMList()}"
+                                    data-target="#productCarousel"
+                                    th:data-slide-to="${state.index}"
+                                    th:classappend="(${state.index} == 0 )? 'active' : '' "
 
                             >
                                 <img
@@ -48,7 +48,7 @@
                                 />
                             </li>
                         </ol>
-                        <div class="carousel-inner" >
+                        <div class="carousel-inner">
                             <div class="carousel-item" th:classappend="${state.index} == 0 ? 'active': '' "
                                  th:each="image, state : ${vm.getProductImageVMList()}">
                                 <img
@@ -66,18 +66,18 @@
                 <div class="s_product_overview">
                     <a href="#" class="brand_link" th:text="${vm.getBrandName()}"></a>
                     <h3 th:text="${vm.getProductName()}"></h3>
-                    <span class="product_sku_size">SIZE <span  th:text="${vm.getSkuName()}"></span></span>
+                    <span class="product_sku_size">SIZE <span th:text="${vm.getSkuName()}"></span></span>
                     <h2 th:text="${vm.getPrice()}"></h2>
 
                     <div class="product_sku_list" style="margin-top: 40px">
                         <span style="margin-bottom:20px">Product family</span>
                         <div class="sku_button_list">
                             <a class="sku_button" th:href="@{'~/product/?sku='+${sku.getId()}}"
-                                 th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''"
-                                 th:each="sku, state : ${vm.getChildrenSkuList()}">
-                                <img  th:src="@{'../'+${sku.getImageURL()}}"
-                                      th:alt="${sku.getName()}+' image'"
-                                      class="sku_thumb">
+                               th:classappend="(${sku.getId()} eq ${vm.getSkuId()}) ? 'active' : ''"
+                               th:each="sku, state : ${vm.getChildrenSkuList()}">
+                                <img th:src="@{'../'+${sku.getImageURL()}}"
+                                     th:alt="${sku.getName()}+' image'"
+                                     class="sku_thumb">
                                 <span class="sku_name" th:text="${sku.getName()} + ' ' + ${sku.getSpec()}"></span>
                             </a>
                         </div>
@@ -98,7 +98,7 @@
                         </select>
 
                     </div>
-                    <button th:attr="data-skuId=${vm.getSkuId()}" class="btn btn-cart add-to-cart-sku"  >Add to Cart</button>
+                    <span type="button" th:attr="data-skuId=${vm.getSkuId()}" class="btn btn-primary add-to-cart-sku">Add to Cart</span>
                 </div>
             </div>
         </div>
@@ -241,6 +241,7 @@
 <script th:src="@{/js/jquery.animateNumber.min.js}"></script>
 <script th:src="@{/js/scrollax.min.js}"></script>
 <script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
 <script th:src="@{/js/main.js}"></script>
 
 <script th:src="@{/js/page_sku.js}"></script>

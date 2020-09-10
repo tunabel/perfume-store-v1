@@ -6,6 +6,7 @@ import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSearchVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class ProductSKUService {
 
     public List<ProductSku> getProductSKUList() {
         return productSKURepository.getProductSKUList();
+    }
+    public Page<ProductSku>  getProductSkuPageWithSearch(String search, Pageable pageable) {
+        return productSKURepository.getProductSkuPageWithSearch(pageable, search);
     }
 
     public List<ProductSku> getNewArrivalList(int limit) {
@@ -33,6 +37,10 @@ public class ProductSKUService {
     public Page<ProductSku> getPageMainSkuByQuery(ProductSearchVM searchVM, PageRequest pageRequest, String sort) {
         return null;
     }
+
+    public ProductSku getSkuByProductId(int id) {
+        return productSKURepository.getSkuByProductId(id);
+    };
 
     public Page<ProductSku> getPageMainSku(PageRequest pageRequest, String sort) {
         Page<ProductSku> productSkuPage;

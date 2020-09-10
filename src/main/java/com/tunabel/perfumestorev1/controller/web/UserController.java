@@ -50,7 +50,6 @@ public class UserController extends BaseController {
 
         userVM.setAddress(userEntity.getAddress());
         if (userEntity.getAvatarURL() != null) {
-            System.out.println("AA"+userEntity.getAvatarURL());
             userVM.setAvatar(userEntity.getAvatarURL());
         }
         userVM.setEmail(userEntity.getEmail());
@@ -76,7 +75,6 @@ public class UserController extends BaseController {
 
             userEntity.setAddress(user.getAddress());
             if (user.getAvatar() != null) {
-                System.out.println("AA"+user.getAvatar());
                 userEntity.setAvatarURL(user.getAvatar());
             }
             userEntity.setEmail(user.getEmail());

@@ -1,6 +1,7 @@
 package com.tunabel.perfumestorev1.data.repository;
 
 import com.tunabel.perfumestorev1.data.model.Product;
+import com.tunabel.perfumestorev1.data.model.ProductSku;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +28,9 @@ public interface ProductRepository extends JpaRepository<Product,Integer> , Prod
                 "WHERE s.sku_id = :skuId" +
             ")", nativeQuery = true)
     Product findBySkuId(@Param("skuId") int skuId);
+
+    @Query("SELECT p FROM Product p WHERE (:search IS NULL OR UPPER(p.name) LIKE CONCAT('%',UPPER(:search),'%'))")
+    Page<Product> findAllWithSearch(Pageable pageable,  @Param("search") String search);
 
 //    @Query("SELECT p FROM dbo_product p " +
 //            "WHERE (:brandId IS NULL OR (p.brandId = :brandId))" +

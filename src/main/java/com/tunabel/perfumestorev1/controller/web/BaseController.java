@@ -2,9 +2,11 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.Cart;
 import com.tunabel.perfumestorev1.data.model.CartSku;
+import com.tunabel.perfumestorev1.data.model.User;
 import com.tunabel.perfumestorev1.data.service.CartService;
 import com.tunabel.perfumestorev1.data.service.CartSkuService;
 import com.tunabel.perfumestorev1.data.service.UserService;
+import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuAdminVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +23,9 @@ public class BaseController {
 
     @Autowired
     private CartSkuService cartSkuService;
+
+    @Autowired
+    private UserService userService;
 
     public int checkCookieAndShowCartQty(HttpServletResponse response,
                                          HttpServletRequest request,
@@ -103,6 +108,24 @@ public class BaseController {
         headerMenuVM.setLoggedIn(principal != null);
 
         return headerMenuVM;
+    }
+
+    public HeaderMenuAdminVM getHeaderMenuAdminVM() {
+
+        HeaderMenuAdminVM vm = new HeaderMenuAdminVM();
+
+        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User userEntity = userService.findUserByUsername(username);
+
+        if(userEntity!=null) {
+            vm.setUsername(username);
+            if(userEntity.getAvatarURL() != null) {
+                vm.setAvatarURL(userEntity.getAvatarURL());
+            } else vm.setAvatarURL("/images/blank_avatar.png");
+        }
+
+        return vm;
+
     }
 
 }
