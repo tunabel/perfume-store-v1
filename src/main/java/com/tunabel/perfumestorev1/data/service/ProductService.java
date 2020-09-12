@@ -82,4 +82,7 @@ public class ProductService {
     }
 
 
+    public Product findOneByNameAndBrandId(String productName, int brandId) {
+        return productRepository.findOneByNameAndBrandId(productName.trim(), brandId);
+    }
 }

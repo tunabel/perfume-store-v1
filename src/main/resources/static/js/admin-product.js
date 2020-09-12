@@ -17,9 +17,11 @@ $(document).ready(function() {
         dataProduct = {};
         $('#input-product-name').val("");
         $('#input-product-desc').val("");
-        $("#input-product-category").val("");
-        $("#input-product-price").val("");
-        $('.product-main-image').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
+        $("#input-product-brand").val("");
+        $("#input-product-scent").val("");
+        $("#input-product-type").val("");
+        $("#input-product-gender").val("");
+        $('.product-img').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
 
     });
 
@@ -37,10 +39,12 @@ $(document).ready(function() {
                 $("#input-product-scent").val(data.scentId);
                 $("#input-product-type").val(data.typeId);
                 $("#input-product-gender").val(data.gender);
-                if(res.data.data.mainImageURL != null) {
+                if(data.mainImageURL != null) {
                     $('.product-img').attr('src', '/../'+data.mainImageURL);
+                } else {
+                    $('.product-img').attr('src', '/../images/blank_avatar.png');
                 }
-            }else {
+            } else {
                 console.log("Error");
             }
         }, function(err){
@@ -67,7 +71,6 @@ $(document).ready(function() {
         dataProduct.gender = $("#input-product-gender").val();
         dataProduct.description = $('#input-product-desc').val();
 
-        console.log(dataProduct);
         var linkPost = "/api/product/create";
         if (dataProduct.id) {
             linkPost = "/api/product/update/" + dataProduct.id;

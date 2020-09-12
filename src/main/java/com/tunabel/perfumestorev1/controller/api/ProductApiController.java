@@ -10,10 +10,7 @@ import com.tunabel.perfumestorev1.model.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/api/product")
@@ -44,6 +41,13 @@ public class ProductApiController {
 
         try {
             Product product = new Product();
+
+            if (checkDuplicateNameAndBrand(dto.getName(), dto.getBrandId())) {
+                result.setSuccessful(false);
+                result.setMessage("A product with this name and brand is already created. Please revise.");
+                return result;
+            }
+
             product.setName(dto.getName());
             product.setDescription(dto.getDescription());
             product.setBrand(brandService.findOne(dto.getBrandId()));
@@ -54,13 +58,32 @@ public class ProductApiController {
             productService.addNewProduct(product);
 
             result.setData(product.getId());
-            result.setMessage("Save product successfully: " + product.getId());
+            result.setMessage("New product created with ID: " + product.getId());
             result.setSuccessful(true);
         } catch (Exception e) {
             result.setSuccessful(false);
             result.setMessage(e.getMessage());
         }
         return result;
+    }
+
+    private boolean checkDuplicateNameAndBrand(int productId, String productName, int brandId) {
+
+        Product possibleProduct = productService.findOneByNameAndBrandId(productName, brandId);
+        if (possibleProduct != null && possibleProduct.getId() != productId) {
+            return true;
+        }
+
+        return false;
+    }
+    private boolean checkDuplicateNameAndBrand(String productName, int brandId) {
+
+        Product possibleProduct = productService.findOneByNameAndBrandId(productName, brandId);
+        if (possibleProduct != null) {
+            return true;
+        }
+
+        return false;
     }
 
     @PostMapping("/update/{productId}")
@@ -70,6 +93,13 @@ public class ProductApiController {
 
         try {
             Product product = productService.findOne(productId);
+
+            if (checkDuplicateNameAndBrand(productId, dto.getName(), dto.getBrandId())) {
+                result.setSuccessful(false);
+                result.setMessage("A product with this name and brand is already created. Please revise.");
+                return result;
+            }
+
             product.setName(dto.getName());
             product.setDescription(dto.getDescription());
             product.setBrand(brandService.findOne(dto.getBrandId()));
@@ -118,7 +148,7 @@ public class ProductApiController {
 
                 ProductSku mainSku = productSKUService.getMainSkuByProductId(dto.getId());
 
-                if (mainSku.getImageURL() != null) {
+                if (mainSku != null && mainSku.getImageURL() != null) {
                     dto.setMainImageURL(mainSku.getImageURL());
                 }
 
