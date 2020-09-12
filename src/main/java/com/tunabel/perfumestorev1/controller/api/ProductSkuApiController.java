@@ -4,16 +4,14 @@ package com.tunabel.perfumestorev1.controller.api;
 import com.tunabel.perfumestorev1.data.model.Product;
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
+import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
 import com.tunabel.perfumestorev1.model.dto.ProductDto;
 import com.tunabel.perfumestorev1.model.dto.ProductSkuDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +28,7 @@ public class ProductSkuApiController {
     public ResponseEntity getAllSKUs() {
         List<ProductSku> skuList = productSKUService.getNewArrivalList(12);
         List<ProductSkuDto> skudtoList = new ArrayList<>();
-        for(ProductSku sku: skuList) {
+        for (ProductSku sku : skuList) {
             ProductSkuDto skudto = new ProductSkuDto();
             skudto.setId(sku.getId());
 
@@ -73,6 +71,52 @@ public class ProductSkuApiController {
         }
 
         return result;
+    }
+
+
+    @PostMapping("/update/{skuId}")
+    public BaseApiResult updateProduct(@PathVariable int skuId,
+                                       @RequestBody ProductSkuDto dto) {
+        BaseApiResult result = new BaseApiResult();
+
+        try {
+            ProductSku sku = productSKUService.findById(skuId);
+
+            if (isMainSkuExisted(sku.getProductId(), skuId, dto.getMainSku())) {
+                result.setSuccessful(false);
+                result.setMessage("This product has already has a Main SKU. Please revise.");
+                return result;
+            }
+
+            sku.setId(dto.getId());
+            sku.setName(dto.getName());
+            sku.setSpec(dto.getSpec());
+            sku.setPrice(dto.getPrice());
+            sku.setQuantity(dto.getQuantity());
+            sku.setImageURL(dto.getImageURL());
+            sku.setMainSku(dto.getMainSku());
+
+
+            sku.setCreatedDate(new Date());
+
+            productSKUService.add(sku);
+            result.setSuccessful(true);
+            result.setMessage("Update product sku successfully");
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+
+        return result;
+    }
+
+    private boolean isMainSkuExisted(int productId, int skuId, int mainSku) {
+        ProductSku currentMainSku = productSKUService.getMainSkuByProductId(productId);
+        if (currentMainSku.getId() != skuId && mainSku == 1) {
+            return true;
+        }
+        return false;
+
     }
 
 }

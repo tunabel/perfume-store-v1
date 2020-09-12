@@ -75,4 +75,8 @@ public class ProductSKUService {
     public List<ProductSku> findAllByProductId(int productId) {
         return productSKURepository.findAllByProductId(productId);
     }
+
+    public void add(ProductSku sku) {
+        productSKURepository.save(sku);
+    }
 }

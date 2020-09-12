@@ -67,25 +67,25 @@ $(document).ready(function() {
 
 
     $(".btn-save-product").on("click", function () {
-        if($("#input-product-name").val() === "" || $("#input-product-desc").val() === "") {
-            swal(
-                'Error',
-                'You need to fill all values',
-                'error'
-            );
-            return;
-        }
+        // if($("#input-sku-price").val() <= 0  || $("#input-product-desc").val() === "") {
+        //     swal(
+        //         'Error',
+        //         'You need to fill all values',
+        //         'error'
+        //     );
+        //     return;
+        // }
 
-        dataProduct.name = $('#input-product-name').val();
-        dataProduct.brandId = $("#input-product-brand").val();
-        dataProduct.scentId = $("#input-product-scent").val();
-        dataProduct.typeId = $("#input-product-type").val();
-        dataProduct.gender = $("#input-product-gender").val();
-        dataProduct.description = $('#input-product-desc').val();
+        dataProduct.name = $('#input-sku-name').val();
+        dataProduct.price = $("#input-sku-price").val();
+        dataProduct.quantity = $("#input-sku-quantity").val();
+        dataProduct.imageURL = $(".sku-img").attr('src').substring(4);
+        dataProduct.mainSku = $("#input-sku-mainSku").val();
+        dataProduct.spec = $('#input-sku-spec').val();
 
-        var linkPost = "/api/product/create";
+        var linkPost = "/api/sku/create";
         if (dataProduct.id) {
-            linkPost = "/api/product/update/" + dataProduct.id;
+            linkPost = "/api/sku/update/" + dataProduct.id;
         }
 
         axios.post(linkPost, dataProduct).then(function(res){

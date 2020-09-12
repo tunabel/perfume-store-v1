@@ -72,7 +72,7 @@
                                     <td th:text="${product.getId()}"></td>
                                     <td>
                                         <img th:if="${!product.getImageURL().isEmpty()}"
-                                             style="width:100px; height:auto" th:src="@{'/'+${product.getImageURL()}}">
+                                             style="width:200px; height:auto" th:src="@{'/'+${product.getImageURL()}}">
                                         <i th:if="${product.getImageURL().isEmpty()}">No image</i>
 
                                     </td>
@@ -110,65 +110,78 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <div style="text-align: center">
-                                <img style="width:100px; height:auto" class="sku-img">
-                            </div>
-                            <div style="text-align: center; margin-top: 20px">
-                                <input type='file'  id="change-sku-image"/>
-                            </div>
+                        <div class="modal-body container">
+                            <div class="row">
+                                <div class="col">
+                                    <div style="text-align: center">
+                                        <img style="width:250px; height:auto" class="sku-img">
+                                    </div>
 
-                            <div class="form-group margin-bottom-15" style="margin-top: 20px">
-                                <label>Product name:</label>
-                                <input type="text" class="form-control" th:value="${vm.getProductNameAndBrand()}"
-                                       disabled>
-                            </div>
+                                    <div style="text-align: center; margin-top: 20px">
+                                        <input type='file' id="change-sku-image"/>
+                                    </div>
 
-                            <div class="form-group">
-                                <label>Type/Spec:</label>
-                                <select class="form-control" id="input-sku-spec">
-                                    <option value="" disabled selected>Please select a type</option>
-                                    <option value="Spray">Spray</option>
-                                    <option value="Travel Spray">Travel Spray</option>
-                                    <option value="Rollerball">Rollerball</option>
-                                </select>
+                                    <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                        <label>Product name:</label>
+                                        <input type="text" class="form-control" th:value="${vm.getProductNameAndBrand()}"
+                                               disabled>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Volume</label>
-                                <select class="form-control" id="input-sku-name">
-                                    <option value="" disabled selected>Please select a volume</option>
-                                    <option value="0.17 oz/ 5 mL">0.17 oz/ 5 mL</option>
-                                    <option value="0.33 oz/ 10 mL">0.33 oz/ 10 mL</option>
-                                    <option value="0.7 oz/ 20 mL">0.7 oz/ 20 mL</option>
-                                    <option value="1.0 oz/ 30 mL">1.0 oz/ 30 mL</option>
-                                    <option value="1.2 oz/ 35 mL">1.2 oz/ 35 mL</option>
-                                    <option value="1.7 oz/ 50 mL">1.7 oz/ 50 mL</option>
-                                    <option value="3.0 oz/ 90 mL">3.0 oz/ 90 mL</option>
-                                    <option value="3.4 oz/ 101 mL">3.4 oz/ 101 mL</option>
-                                    <option value="4.2 oz/ 124 mL">4.2 oz/ 124 mL</option>
-                                    <option value="5.0 oz/ 148 mL">5.0 oz/ 148 mL</option>
-                                </select>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Type/Spec:</label>
+                                        <select class="form-control" id="input-sku-spec">
+                                            <option value="" disabled selected>Please select a type</option>
+                                            <option value="Spray">Spray</option>
+                                            <option value="Travel Spray">Travel Spray</option>
+                                            <option value="Rollerball">Rollerball</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label>Volume</label>
+                                        <select class="form-control" id="input-sku-name">
+                                            <option value="" disabled selected>Please select a volume</option>
+                                            <option value="0.17 oz/ 5 mL">0.17 oz/ 5 mL</option>
+                                            <option value="0.33 oz/ 10 mL">0.33 oz/ 10 mL</option>
+                                            <option value="0.7 oz/ 20 mL">0.7 oz/ 20 mL</option>
+                                            <option value="1.0 oz/ 30 mL">1.0 oz/ 30 mL</option>
+                                            <option value="1.2 oz/ 35 mL">1.2 oz/ 35 mL</option>
+                                            <option value="1.7 oz/ 50 mL">1.7 oz/ 50 mL</option>
+                                            <option value="3.0 oz/ 90 mL">3.0 oz/ 90 mL</option>
+                                            <option value="3.4 oz/ 101 mL">3.4 oz/ 101 mL</option>
+                                            <option value="4.2 oz/ 124 mL">4.2 oz/ 124 mL</option>
+                                            <option value="5.0 oz/ 148 mL">5.0 oz/ 148 mL</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group margin-bottom-15" style="width: 100%">
-                                <label>Price * 1000đ :</label>
-                                <input type="number" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-sku-price" required>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group margin-bottom-15" style="width: 100%">
+                                        <label>Price * 1000đ :</label>
+                                        <input type="number" class="form-control" id="input-sku-price" required min="1">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group margin-bottom-15" style="width: 100%">
+                                        <label>Quantity:</label>
+                                        <input type="number" class="form-control" id="input-sku-quantity" required min="0">
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="form-group margin-bottom-15" style="width: 100%">
-                                <label>Quantity:</label>
-                                <input type="number" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-sku-quantity" required>
+                            <div class="row">
+                                <div class="col"><div class="form-group">
+                                    <label>Main Sku:</label>
+                                    <select class="form-control" id="input-sku-mainSku">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div></div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Main Sku:</label>
-                                <select class="form-control" id="input-sku-mainSku">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -176,11 +189,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <div th:replace="fragments/admin-footer :: footer_info"></div>
-                <!-- partial -->
+
             </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
             <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->
