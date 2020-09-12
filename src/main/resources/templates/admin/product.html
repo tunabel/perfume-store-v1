@@ -26,15 +26,16 @@
                 </div>
                 <h2 th:if="${vm.getSearch()}" th:text="${vm.getSearch()}"></h2>
 
-                <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"
-                        style="margin-bottom: 20px" data-target="#editProductModal">
-                    Add new product
-                </button>
-                <button type="button" class="btn btn-behance" onclick="printJS('a', 'html')"
-                        style="margin-bottom: 20px">
-                    Print list products
-                </button>
-                <div class="col-lg-12 grid-margin stretch-card" id="a">
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"
+                            data-target="#editProductModal">
+                        Add new product
+                    </button>
+                    <button type="button" class="btn btn-behance" onclick="printJS('productList', 'html')">
+                        Print list products
+                    </button>
+                </div>
+                <div id="productList">
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-bordered">

@@ -44,7 +44,6 @@ $(document).ready(function() {
         axios.get("/api/sku/detail/" + pdInfo).then(function(res){
             if(res.data.successful) {
                 data = res.data.data;
-                console.log(data);
                 dataProduct.id = data.id;
                 $("#input-sku-name").val(data.name);
                 $("#input-sku-spec").val(data.spec);

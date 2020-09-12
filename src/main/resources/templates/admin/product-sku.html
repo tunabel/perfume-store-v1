@@ -19,15 +19,19 @@
                     <h1>Product SKUs Management</h1>
                 </div>
 
-                <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"
-                        style="margin-bottom: 20px" data-target="#editProductSkuModal">
-                    Add new SKU
-                </button>
-                <button type="button" class="btn btn-behance" onclick="printJS('a', 'html')"
-                        style="margin-bottom: 20px">
-                    Print list SKUs
-                </button>
-                <div class="col-lg-12 grid-margin stretch-card" id="a">
+                <div class="d-flex mb-3 justify-content-between">
+                    <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"
+                            data-target="#editProductSkuModal">
+                        Add new SKU
+                    </button>
+                    <button type="button" class="btn btn-behance" onclick="printJS('skuList', 'html')">
+                        Print list SKUs
+                    </button>
+                    <a class="btn btn-primary" href="/admin/product" style="align-self: flex-end">
+                        Go back to Product List
+                    </a>
+                </div>
+                <div id="skuList">
                     <div class="card">
                         <div class="card-body">
                             <h2>Product: <span th:text="${vm.getProductNameAndBrand()}"></span></h2>
