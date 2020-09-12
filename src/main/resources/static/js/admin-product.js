@@ -13,24 +13,6 @@ $(document).ready(function() {
         }
     }
 
-
-    $("#change-product-mainImage").change(function() {
-        readURL(this);
-        var formData = new FormData();
-        NProgress.start();
-        formData.append('file', $("#change-product-mainImage")[0].files[0]);
-        axios.post("/api/upload/upload-image", formData).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
-                $('.product-main-image').attr('src', res.data.link);
-            }
-        }, function(err){
-            NProgress.done();
-        });
-    });
-
-
-
     $("#new-product").on("click", function () {
         dataProduct = {};
         $('#input-product-name').val("");
@@ -44,24 +26,25 @@ $(document).ready(function() {
 
     $(".edit-product").on("click", function () {
         var pdInfo = $(this).data("product");
-        console.log(pdInfo);
-        NProgress.start();
+
         axios.get("/api/product/detail/" + pdInfo).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
+            if(res.data.successful) {
                 dataProduct.id = res.data.data.id;
+                console.log(res.data.data);
                 $("#input-product-name").val(res.data.data.name);
-                $("#input-product-desc").val(res.data.data.shortDesc);
-                $("#input-product-category").val(res.data.data.categoryId);
-                $("#input-product-price").val(res.data.data.price);
-                if(res.data.data.mainImage != null) {
-                    $('.product-main-image').attr('src', res.data.data.mainImage);
+                $("#input-product-desc").val(res.data.data.description);
+                $("#input-product-brand").val(res.data.data.brandId);
+                $("#input-product-scent").val(res.data.data.scentId);
+                $("#input-product-type").val(res.data.data.typeId);
+                $("#input-product-gender").val(res.data.data.gender);
+                if(res.data.data.mainImageURL != null) {
+                    $('.product-img').attr('src', '/../'+res.data.data.mainImageURL);
                 }
             }else {
                 console.log("Error");
             }
         }, function(err){
-            NProgress.done();
+            console.log("Error");
         })
     });
 
@@ -83,15 +66,13 @@ $(document).ready(function() {
         dataProduct.categoryId = $("#input-product-category").val();
         dataProduct.mainImage = $('.product-main-image').attr('src');
         dataProduct.price = $("#input-product-price").val();
-        NProgress.start();
         var linkPost = "/api/product/create";
-        if(dataProduct.id) {
+        if (dataProduct.id) {
             linkPost = "/api/product/update/" + dataProduct.id;
         }
 
         axios.post(linkPost, dataProduct).then(function(res){
-            NProgress.done();
-            if(res.data.success) {
+            if(res.data.successful) {
                 swal(
                     'Good job!',
                     res.data.message,
@@ -107,7 +88,6 @@ $(document).ready(function() {
                 );
             }
         }, function(err){
-            NProgress.done();
             swal(
                 'Error',
                 'Some error when saving product',

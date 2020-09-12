@@ -83,10 +83,14 @@
                                     <td colspan="1" th:text="${product.getDesc()}"></td>
                                     <td colspan="1" th:text="${product.getCreatedDate()}"></td>
                                     <td colspan="1">
-                                        <i class="mdi mdi-brightness-7 tooltip-test edit-product"
-                                           th:attr="data-product = ${product.getId()}" data-toggle="modal"
-                                           title="Edit product" data-target="#exampleModalLong"
-                                           style="cursor: pointer"></i>
+                                        <button class="btn-primary btn-sm edit-product"
+                                                th:attr="data-product = ${product.getId()}" data-toggle="modal"
+                                                title="Edit product" data-target="#editProductModal">
+                                            Edit
+                                        </button>
+                                        <!--                                        <i class="mdi mdi-brightness-7 tooltip-test edit-product"-->
+
+                                        <!--                                           style="cursor: pointer"></i>-->
                                         <a th:href="@{'/admin/product-sku/' + ${product.getId()}}">
                                             <i class="mdi mdi-file-cabinet tooltip-test"
                                                title="List SKUs"></i>
@@ -122,24 +126,20 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editProductModalTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Add new/ update product</h5>
+                            <h5 class="modal-title" id="editProductModalTitle">Add new/ update product</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div style="text-align: center">
-<!--                                <img style="width:100px; height:auto" th:src="@{'/'+${vm.product.getImageURL()}}">-->
+                                <img style="width:100px; height:auto" class="product-img">
                             </div>
-
-<!--                            <div style="text-align: center; margin-top: 20px">-->
-<!--                                <input type='file' id="change-product-mainImage"/>-->
-<!--                            </div>-->
 
                             <div class="form-group margin-bottom-15" style="margin-top: 20px">
                                 <label>Product name:</label>
@@ -167,16 +167,18 @@
                                             th:value="${type.getId()}" th:text="${type.getName()}"></option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>Gender:</label>
+                                <select class="form-control" id="input-product-gender">
+                                    <option value="0">Both</option>
+                                    <option value="1">Female</option>
+                                    <option value="2">Male</option>
+                                </select>
+                            </div>
 
                             <div class="form-group margin-bottom-15">
                                 <label>Product description:</label>
                                 <textarea type="text" class="form-control" id="input-product-desc"></textarea>
-                            </div>
-
-                            <div class="form-group margin-bottom-15" style="width: 100%">
-                                <label>Price:</label>
-                                <input type="text" class="form-control" style="display: block; margin: 5px ;width: 100%"
-                                       id="input-product-price">
                             </div>
 
                         </div>
@@ -197,23 +199,17 @@
     </div>
     <!-- container-scroller -->
 </div>
-<!-- base:js -->
 <script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
-<!-- endinject -->
-<!-- Plugin js for this page-->
-<!-- End plugin js for this page-->
-<!-- inject:js -->
 <script th:src="@{/js/off-canvas.js}"></script>
 <script th:src="@{/js/hoverable-collapse.js}"></script>
 <script th:src="@{/js/template.js}"></script>
-<!-- endinject -->
-<!-- plugin js for this page -->
 <script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
 <script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
-<!-- End plugin js for this page -->
-<!-- Custom js for this page-->
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
 <script th:src="@{/js/dashboard.js}"></script>
-<!-- End custom js for this page-->
+
+<script th:src="@{/js/admin-product.js}"></script>
 </body>
 
 </html>
