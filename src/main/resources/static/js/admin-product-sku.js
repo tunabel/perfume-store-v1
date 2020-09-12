@@ -5,11 +5,25 @@ $(document).ready(function() {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) {
-                $('#preview-product-img').attr('src', e.target.result);
+                $('.sku-img').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $("#change-sku-image").change(function() {
+        readURL(this);
+        var formData = new FormData();
+        formData.append('file', $("#change-sku-image")[0].files[0]);
+        axios.post("/api/upload/upload-skuimg", formData).then(function(res){
+            if(res.data.success) {
+                $('.sku-img').attr('src', res.data.link);
+            }
+        }, function(err){
+            console.log("Image upload error");
+        });
+    });
+
 
     $("#new-product").on("click", function () {
         dataProduct = {};
@@ -19,7 +33,7 @@ $(document).ready(function() {
         $("#input-product-scent").val("");
         $("#input-product-type").val("");
         $("#input-product-gender").val("");
-        $('.product-img').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
+        $('.sku-img').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
 
     });
 
@@ -27,20 +41,21 @@ $(document).ready(function() {
     $(".edit-product").on("click", function () {
         var pdInfo = $(this).data("product");
 
-        axios.get("/api/product/detail/" + pdInfo).then(function(res){
+        axios.get("/api/sku/detail/" + pdInfo).then(function(res){
             if(res.data.successful) {
                 data = res.data.data;
+                console.log(data);
                 dataProduct.id = data.id;
-                $("#input-product-name").val(data.name);
-                $("#input-product-desc").val(data.description);
-                $("#input-product-brand").val(data.brandId);
-                $("#input-product-scent").val(data.scentId);
-                $("#input-product-type").val(data.typeId);
-                $("#input-product-gender").val(data.gender);
-                if(data.mainImageURL != null) {
-                    $('.product-img').attr('src', '/../'+data.mainImageURL);
+                $("#input-sku-name").val(data.name);
+                $("#input-sku-spec").val(data.spec);
+                $("#input-sku-quantity").val(data.quantity);
+                $("#input-sku-price").val(data.price);
+                $("#input-sku-mainSku").val(data.mainSku);
+
+                if(data.imageURL != null) {
+                    $('.sku-img').attr('src', '/../'+data.imageURL);
                 } else {
-                    $('.product-img').attr('src', '/../images/blank_avatar.png');
+                    $('.sku-img').attr('src', '/../images/blank_avatar.png');
                 }
             } else {
                 console.log("Error");

@@ -59,4 +59,24 @@ public class UploadApiController {
         return result;
     }
 
+    @PostMapping("/upload-skuimg")
+    public FileUploadResult uploadSkuImage(
+            @RequestParam("file") MultipartFile file) {
+        String message = "";
+        FileUploadResult result = new FileUploadResult();
+        try {
+            String newFilename = storageService.store(file, FileStorageService.Folder.SKU);
+            message = "You successfully uploaded " +
+                    file.getOriginalFilename() + "!";
+            result.setMessage(message);
+            result.setSuccessful(true);
+            result.setLink("/images/product/"+
+                    newFilename);
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
 }

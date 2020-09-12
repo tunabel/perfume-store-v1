@@ -16,7 +16,7 @@ public class ProductSkuDto {
     private Product product;
 
     private String spec;
-
+    private String name;
     private int mainSku;
 
     private int price;
@@ -28,11 +28,16 @@ public class ProductSkuDto {
     @Null
     private Date createdDate;
 
-    public ProductSkuDto(int id, Integer productId, Product product, String spec, int mainSku, int price, int quantity, int volume, String imageURL, Date createdDate) {
+
+    public ProductSkuDto() {
+    }
+
+    public ProductSkuDto(int id, Integer productId, Product product, String spec, String name, int mainSku, int price, int quantity, int volume, String imageURL, Date createdDate) {
         this.id = id;
         this.productId = productId;
         this.product = product;
         this.spec = spec;
+        this.name = name;
         this.mainSku = mainSku;
         this.price = price;
         this.quantity = quantity;
@@ -41,7 +46,12 @@ public class ProductSkuDto {
         this.createdDate = createdDate;
     }
 
-    public ProductSkuDto() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

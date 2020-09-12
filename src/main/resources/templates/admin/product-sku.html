@@ -108,7 +108,7 @@
                         </div>
                         <div class="modal-body">
                             <div style="text-align: center">
-                                <img style="width:100px; height:auto" class="product-img">
+                                <img style="width:100px; height:auto" class="sku-img">
                             </div>
                             <div style="text-align: center; margin-top: 20px">
                                 <input type='file'  id="change-sku-image"/>
@@ -132,7 +132,7 @@
 
                             <div class="form-group">
                                 <label>Volume</label>
-                                <select class="form-control" id="input-sku-volume">
+                                <select class="form-control" id="input-sku-name">
                                     <option value="" disabled selected>Please select a volume</option>
                                     <option value="0.17 oz/ 5 mL">0.17 oz/ 5 mL</option>
                                     <option value="0.33 oz/ 10 mL">0.33 oz/ 10 mL</option>
@@ -157,9 +157,12 @@
                                 <input type="number" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-sku-quantity" required>
                             </div>
 
-                            <div class="form-group margin-bottom-15 d-flex align-items-center">
-                                <input type="checkbox" value="1" id="input-sku-mainSku" required>
-                                <label class="ml-2 font-weight-bold mb-0">Main Sku</label>
+                            <div class="form-group">
+                                <label>Main Sku:</label>
+                                <select class="form-control" id="input-sku-mainSku">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
                             </div>
 
                         </div>
