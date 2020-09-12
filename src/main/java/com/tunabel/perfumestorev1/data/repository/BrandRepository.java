@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface BrandRepository extends JpaRepository<Brand,String> {
+public interface BrandRepository extends JpaRepository<Brand,Integer> {
 
     @Query("select count(b.id) from Brand b")
     long getTotalCountBrands();

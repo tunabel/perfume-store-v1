@@ -27,4 +27,7 @@ public class BrandService {
     }
 
 
+    public Brand findOne(int brandId) {
+        return brandRepository.findOne(brandId);
+    }
 }
