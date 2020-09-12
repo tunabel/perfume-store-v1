@@ -4,6 +4,7 @@ package com.tunabel.perfumestorev1.controller.api;
 import com.tunabel.perfumestorev1.data.model.Product;
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
+import com.tunabel.perfumestorev1.data.service.ProductService;
 import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
 import com.tunabel.perfumestorev1.model.dto.ProductDto;
@@ -23,6 +24,9 @@ public class ProductSkuApiController {
 
     @Autowired
     ProductSKUService productSKUService;
+
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/all")
     public ResponseEntity getAllSKUs() {
@@ -110,9 +114,56 @@ public class ProductSkuApiController {
         return result;
     }
 
+    @PostMapping(value = "/create")
+    public BaseApiResult createProductSku(@RequestBody ProductSkuDto dto) {
+        DataApiResult result = new DataApiResult();
+
+        try {
+            ProductSku sku = new ProductSku();
+
+
+            if (isMainSkuExisted(dto.getProductId(), dto.getMainSku())) {
+                result.setSuccessful(false);
+                result.setMessage("This product has already has a Main SKU. Please revise.");
+                return result;
+            }
+
+            sku.setName(dto.getName());
+            sku.setSpec(dto.getSpec());
+            sku.setPrice(dto.getPrice());
+            sku.setQuantity(dto.getQuantity());
+            sku.setImageURL(dto.getImageURL());
+            sku.setMainSku(dto.getMainSku());
+
+            sku.setProduct(productService.findOne(dto.getProductId()));
+
+            sku.setCreatedDate(new Date());
+
+            sku = productSKUService.add(sku);
+
+            result.setData(sku.getId());
+            result.setMessage("New product SKU created with ID: " + sku.getId());
+            result.setSuccessful(true);
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
+
     private boolean isMainSkuExisted(int productId, int skuId, int mainSku) {
         ProductSku currentMainSku = productSKUService.getMainSkuByProductId(productId);
         if (currentMainSku.getId() != skuId && mainSku == 1) {
+            return true;
+        }
+        return false;
+
+    }
+
+    private boolean isMainSkuExisted(int productId, int mainSku) {
+        ProductSku currentMainSku = productSKUService.getMainSkuByProductId(productId);
+        if (currentMainSku != null) {
             return true;
         }
         return false;

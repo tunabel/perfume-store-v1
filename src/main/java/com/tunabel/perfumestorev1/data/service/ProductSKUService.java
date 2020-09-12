@@ -1,5 +1,6 @@
 package com.tunabel.perfumestorev1.data.service;
 
+import com.tunabel.perfumestorev1.data.model.Product;
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.repository.ProductSKURepository;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSearchVM;
@@ -76,7 +77,7 @@ public class ProductSKUService {
         return productSKURepository.findAllByProductId(productId);
     }
 
-    public void add(ProductSku sku) {
-        productSKURepository.save(sku);
+    public ProductSku add(ProductSku sku) {
+        return productSKURepository.save(sku);
     }
 }

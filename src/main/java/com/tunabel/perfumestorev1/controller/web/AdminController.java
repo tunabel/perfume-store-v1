@@ -154,6 +154,7 @@ public class AdminController extends BaseController {
 
         if (product != null) {
             vm.setProductNameAndBrand(product.getBrand().getName() + " - " + product.getName());
+            vm.setProductId(productId);
         }
 
         List<ProductSkuVM> productSkuVMList = new ArrayList<>();

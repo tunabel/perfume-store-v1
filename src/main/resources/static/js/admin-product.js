@@ -21,7 +21,7 @@ $(document).ready(function() {
         $("#input-product-scent").val("");
         $("#input-product-type").val("");
         $("#input-product-gender").val("");
-        $('.product-img').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
+        $('.product-img').attr('src', '/../images/blank_avatar.png');
 
     });
 

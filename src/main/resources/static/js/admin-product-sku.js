@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var dataProduct = {};
+    let newImage = false;
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -16,8 +17,9 @@ $(document).ready(function() {
         var formData = new FormData();
         formData.append('file', $("#change-sku-image")[0].files[0]);
         axios.post("/api/upload/upload-skuimg", formData).then(function(res){
-            if(res.data.success) {
+            if(res.data.successful) {
                 $('.sku-img').attr('src', res.data.link);
+                newImage = true;
             }
         }, function(err){
             console.log("Image upload error");
@@ -33,7 +35,7 @@ $(document).ready(function() {
         $("#input-product-scent").val("");
         $("#input-product-type").val("");
         $("#input-product-gender").val("");
-        $('.sku-img').attr('src', 'https://www.vietnamprintpack.com/images/default.jpg');
+        $('.sku-img').attr('src', '/../images/blank_avatar.png');
 
     });
 
@@ -67,19 +69,23 @@ $(document).ready(function() {
 
 
     $(".btn-save-product").on("click", function () {
-        // if($("#input-sku-price").val() <= 0  || $("#input-product-desc").val() === "") {
-        //     swal(
-        //         'Error',
-        //         'You need to fill all values',
-        //         'error'
-        //     );
-        //     return;
-        // }
+        if(!newImage) {
+            swal(
+                'Error',
+                'You need to upload a photo',
+                'error'
+            );
+            return;
+        }
 
         dataProduct.name = $('#input-sku-name').val();
         dataProduct.price = $("#input-sku-price").val();
         dataProduct.quantity = $("#input-sku-quantity").val();
-        dataProduct.imageURL = $(".sku-img").attr('src').substring(4);
+        if ( newImage) {
+            // dataProduct.imageURL = $(".sku-img").attr('src').substring(4);
+            dataProduct.imageURL = $(".sku-img").attr('src').substring(1);
+        }
+        dataProduct.productId = $("#productId").val();
         dataProduct.mainSku = $("#input-sku-mainSku").val();
         dataProduct.spec = $('#input-sku-spec').val();
 

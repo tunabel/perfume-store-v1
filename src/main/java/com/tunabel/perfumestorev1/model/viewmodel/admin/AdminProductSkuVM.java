@@ -9,6 +9,7 @@ public class AdminProductSkuVM {
 
     private List<ProductSkuVM> productSkuVMList;
     private String productNameAndBrand;
+    private int productId;
 
     public String getProductNameAndBrand() {
         return productNameAndBrand;
@@ -34,5 +35,13 @@ public class AdminProductSkuVM {
 
     public void setHeaderMenuAdminVM(HeaderMenuAdminVM headerMenuAdminVM) {
         this.headerMenuAdminVM = headerMenuAdminVM;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }
