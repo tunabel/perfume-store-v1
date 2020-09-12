@@ -29,16 +29,16 @@ $(document).ready(function() {
 
         axios.get("/api/product/detail/" + pdInfo).then(function(res){
             if(res.data.successful) {
-                dataProduct.id = res.data.data.id;
-                console.log(res.data.data);
-                $("#input-product-name").val(res.data.data.name);
-                $("#input-product-desc").val(res.data.data.description);
-                $("#input-product-brand").val(res.data.data.brandId);
-                $("#input-product-scent").val(res.data.data.scentId);
-                $("#input-product-type").val(res.data.data.typeId);
-                $("#input-product-gender").val(res.data.data.gender);
+                data = res.data.data;
+                dataProduct.id = data.id;
+                $("#input-product-name").val(data.name);
+                $("#input-product-desc").val(data.description);
+                $("#input-product-brand").val(data.brandId);
+                $("#input-product-scent").val(data.scentId);
+                $("#input-product-type").val(data.typeId);
+                $("#input-product-gender").val(data.gender);
                 if(res.data.data.mainImageURL != null) {
-                    $('.product-img').attr('src', '/../'+res.data.data.mainImageURL);
+                    $('.product-img').attr('src', '/../'+data.mainImageURL);
                 }
             }else {
                 console.log("Error");
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 
     $(".btn-save-product").on("click", function () {
-        if($("#input-product-name").val() === "" || $("#input-product-desc").val() === "" || $("#input-product-price").val()==="") {
+        if($("#input-product-name").val() === "" || $("#input-product-desc").val() === "") {
             swal(
                 'Error',
                 'You need to fill all values',
@@ -60,12 +60,14 @@ $(document).ready(function() {
             return;
         }
 
-
         dataProduct.name = $('#input-product-name').val();
-        dataProduct.shortDesc = $('#input-product-desc').val();
-        dataProduct.categoryId = $("#input-product-category").val();
-        dataProduct.mainImage = $('.product-main-image').attr('src');
-        dataProduct.price = $("#input-product-price").val();
+        dataProduct.brandId = $("#input-product-brand").val();
+        dataProduct.scentId = $("#input-product-scent").val();
+        dataProduct.typeId = $("#input-product-type").val();
+        dataProduct.gender = $("#input-product-gender").val();
+        dataProduct.description = $('#input-product-desc').val();
+
+        console.log(dataProduct);
         var linkPost = "/api/product/create";
         if (dataProduct.id) {
             linkPost = "/api/product/update/" + dataProduct.id;
