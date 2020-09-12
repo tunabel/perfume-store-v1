@@ -9,8 +9,9 @@ import java.util.List;
 public class AdminProductImageVM {
 
     private HeaderMenuAdminVM headerMenuAdminVM;
-    private List<ProductImageVM> productImageVMS;
+    private List<ProductImageVM> productImageVMList;
     private int productId;
+    private String productNameAndBrand;
 
     public HeaderMenuAdminVM getHeaderMenuAdminVM() {
         return headerMenuAdminVM;
@@ -20,12 +21,12 @@ public class AdminProductImageVM {
         this.headerMenuAdminVM = headerMenuAdminVM;
     }
 
-    public List<ProductImageVM> getProductImageVMS() {
-        return productImageVMS;
+    public List<ProductImageVM> getProductImageVMList() {
+        return productImageVMList;
     }
 
-    public void setProductImageVMS(List<ProductImageVM> productImageVMS) {
-        this.productImageVMS = productImageVMS;
+    public void setProductImageVMList(List<ProductImageVM> productImageVMList) {
+        this.productImageVMList = productImageVMList;
     }
 
     public int getProductId() {
@@ -34,5 +35,13 @@ public class AdminProductImageVM {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getProductNameAndBrand() {
+        return productNameAndBrand;
+    }
+
+    public void setProductNameAndBrand(String productNameAndBrand) {
+        this.productNameAndBrand = productNameAndBrand;
     }
 }

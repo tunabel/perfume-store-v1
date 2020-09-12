@@ -1,5 +1,6 @@
 package com.tunabel.perfumestorev1.data.service;
 
+import com.tunabel.perfumestorev1.data.model.Product;
 import com.tunabel.perfumestorev1.data.model.ProductImage;
 import com.tunabel.perfumestorev1.data.repository.ProductImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,4 +66,7 @@ public class ProductImageService {
         return productImageRepository.getTotalProductImages();
     }
 
+    public List<ProductImage> findAllByProduct(Product product) {
+        return productImageRepository.findAllByProduct(product);
+    }
 }

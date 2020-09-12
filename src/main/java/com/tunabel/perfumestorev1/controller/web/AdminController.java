@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
+import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductImageVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.HomeAdminVM;
@@ -33,6 +34,8 @@ public class AdminController extends BaseController {
     private ProductService productService;
     @Autowired
     private ProductSKUService productSKUService;
+    @Autowired
+    private ProductImageService productImageService;
 
 
     @GetMapping("")
@@ -145,7 +148,6 @@ public class AdminController extends BaseController {
         return "/admin/product";
     }
 
-
     @GetMapping("/product-sku/{productId}")
     public String productSku(Model model, @PathVariable int productId) {
         AdminProductSkuVM vm = new AdminProductSkuVM();
@@ -162,7 +164,6 @@ public class AdminController extends BaseController {
         List<ProductSku> productSkuList = productSKUService.findAllByProductId(productId);
 
 
-
         if (productSkuList.size() > 0) {
 
             for (ProductSku productSku : productSkuList) {
@@ -176,13 +177,6 @@ public class AdminController extends BaseController {
                 skuVM.setImageURL(productSku.getImageURL());
                 skuVM.setMainSku(productSku.getMainSku());
                 skuVM.setCreatedDate(productSku.getCreatedDate());
-
-//                if (productSku != null) {
-//                    skuVM.setImageURL(productSku.getImageURL());
-//                } else {
-//                    skuVM.setImageURL("");
-//                }
-
                 productSkuVMList.add(skuVM);
             }
         }
@@ -193,6 +187,42 @@ public class AdminController extends BaseController {
 
         return "/admin/product-sku";
     }
+
+    @GetMapping("/product-image/{productId}")
+    public String getProductImages(Model model, @PathVariable int productId) {
+        AdminProductImageVM vm = new AdminProductImageVM();
+
+        Product product = productService.findOne(productId);
+
+        if (product != null) {
+            vm.setProductNameAndBrand(product.getBrand().getName() + " - " + product.getName());
+            vm.setProductId(productId);
+        }
+
+        List<ProductImageVM> productImageVMList = new ArrayList<>();
+
+        List<ProductImage> productImageList = productImageService.findAllByProduct(product);
+
+
+        if (productImageList.size() > 0) {
+
+            for (ProductImage productImage : productImageList) {
+                ProductImageVM imageVM = new ProductImageVM();
+                imageVM.setId(productImage.getId());
+                imageVM.setImageURL(productImage.getImageUrl());
+
+                imageVM.setCreatedDate(productImage.getCreatedDate());
+                productImageVMList.add(imageVM);
+            }
+        }
+
+
+        vm.setProductImageVMList(productImageVMList);
+        model.addAttribute("vm", vm);
+
+        return "/admin/product-image";
+    }
+
 
 //
 //

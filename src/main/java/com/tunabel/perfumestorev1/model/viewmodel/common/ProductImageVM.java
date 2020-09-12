@@ -1,13 +1,11 @@
 package com.tunabel.perfumestorev1.model.viewmodel.common;
 
+import java.util.Date;
+
 public class ProductImageVM {
     private int id;
     private String imageURL;
-
-    public ProductImageVM(int id, String imageURL) {
-        this.id = id;
-        this.imageURL = imageURL;
-    }
+    private Date createdDate;
 
     public ProductImageVM() {
     }
@@ -26,5 +24,13 @@ public class ProductImageVM {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }
