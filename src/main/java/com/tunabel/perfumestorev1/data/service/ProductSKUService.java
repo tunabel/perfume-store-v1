@@ -3,6 +3,7 @@ package com.tunabel.perfumestorev1.data.service;
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.repository.ProductSKURepository;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSearchVM;
+import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -71,4 +72,7 @@ public class ProductSKUService {
         return productSKURepository.findOne(skuId);
     }
 
+    public List<ProductSku> findAllByProductId(int productId) {
+        return productSKURepository.findAllByProductId(productId);
+    }
 }

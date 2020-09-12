@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.data.repository;
 
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ChartDataVM;
+import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,10 @@ public interface ProductSKURepository extends JpaRepository<ProductSku, Integer>
     @Query("SELECT s FROM ProductSku s " +
             "WHERE s.productId = :id AND s.mainSku = 1")
     ProductSku getMainSkuByProductId(@Param("id") int id);
+
+    @Query("SELECT s FROM ProductSku s " +
+            "WHERE s.productId = :productId")
+    List<ProductSku> findAllByProductId(@Param("productId") int productId);
 
 //    @Query(nativeQuery = true, value = "SELECT ps.sku_id, b.name, p.name, ps.name FROM dbo_product_sku ps " +
 //            "JOIN dbo_product p " +

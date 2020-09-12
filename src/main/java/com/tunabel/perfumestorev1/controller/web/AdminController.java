@@ -2,6 +2,7 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
+import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.HomeAdminVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -142,6 +144,55 @@ public class AdminController extends BaseController {
 
         return "/admin/product";
     }
+
+
+    @GetMapping("/product-sku/{productId}")
+    public String productSku(Model model, @PathVariable int productId) {
+        AdminProductSkuVM vm = new AdminProductSkuVM();
+
+        Product product = productService.findOne(productId);
+
+        if (product != null) {
+            vm.setProductNameAndBrand(product.getBrand().getName() + " - " + product.getName());
+        }
+
+        List<ProductSkuVM> productSkuVMList = new ArrayList<>();
+
+        List<ProductSku> productSkuList = productSKUService.findAllByProductId(productId);
+
+
+
+        if (productSkuList.size() > 0) {
+
+            for (ProductSku productSku : productSkuList) {
+                ProductSkuVM skuVM = new ProductSkuVM();
+                skuVM.setId(productSku.getId());
+                skuVM.setName(productSku.getName());
+
+                skuVM.setSpec(productSku.getSpec());
+                skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSku.getPrice()));
+                skuVM.setQuantity(productSku.getQuantity());
+                skuVM.setImageURL(productSku.getImageURL());
+                skuVM.setMainSku(productSku.getMainSku());
+                skuVM.setCreatedDate(productSku.getCreatedDate());
+
+//                if (productSku != null) {
+//                    skuVM.setImageURL(productSku.getImageURL());
+//                } else {
+//                    skuVM.setImageURL("");
+//                }
+
+                productSkuVMList.add(skuVM);
+            }
+        }
+
+
+        vm.setProductSkuVMList(productSkuVMList);
+        model.addAttribute("vm", vm);
+
+        return "/admin/product-sku";
+    }
+
 //
 //
 //    @GetMapping("/category")

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Product SKUs Management</h1>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"
+                        style="margin-bottom: 20px" data-target="#editProductSkuModal">
+                    Add new SKU
+                </button>
+                <button type="button" class="btn btn-behance" onclick="printJS('a', 'html')"
+                        style="margin-bottom: 20px">
+                    Print list SKUs
+                </button>
+                <div class="col-lg-12 grid-margin stretch-card" id="a">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Product: <span th:text="${vm.getProductNameAndBrand()}"></span></h2>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span style="font-weight:bold;">Index</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Image</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Sku Type/Spec</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Volume</span>
+                                    </th>
+                                    <th style="width: 250px">
+                                        <span style="font-weight:bold;">Price</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Quantity</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Main Sku</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Created Date</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Options</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="product : ${vm.getProductSkuVMList()}">
+                                    <td th:text="${product.getId()}"></td>
+                                    <td>
+                                        <img th:if="${!product.getImageURL().isEmpty()}"
+                                             style="width:100px; height:auto" th:src="@{'/'+${product.getImageURL()}}">
+                                        <i th:if="${product.getImageURL().isEmpty()}">No image</i>
+
+                                    </td>
+                                    <td th:text="${product.getSpec()}"></td>
+                                    <td th:text="${product.getName()}"></td>
+                                    <td th:text="${product.getPrice()}"></td>
+                                    <td th:text="${product.getQuantity()}"></td>
+                                    <td th:text="${product.getMainSku() == 1 ? 'Main SKU' : ''}"></td>
+                                    <td th:text="${product.getCreatedDate()}"></td>
+                                    <td>
+                                        <button class="btn-primary btn-sm edit-product"
+                                                th:attr="data-product = ${product.getId()}" data-toggle="modal"
+                                                title="Edit product" data-target="#editProductSkuModal">
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="editProductSkuModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editProductSkuModalTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editProductSkuModalTitle">Add new/ update Product Sku</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: center">
+                                <img style="width:100px; height:auto" class="product-img">
+                            </div>
+                            <div style="text-align: center; margin-top: 20px">
+                                <input type='file'  id="change-sku-image"/>
+                            </div>
+
+                            <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                <label>Product name:</label>
+                                <input type="text" class="form-control" th:value="${vm.getProductNameAndBrand()}"
+                                       disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Type/Spec:</label>
+                                <select class="form-control" id="input-sku-spec">
+                                    <option value="" disabled selected>Please select a type</option>
+                                    <option value="Spray">Spray</option>
+                                    <option value="Travel Spray">Travel Spray</option>
+                                    <option value="Rollerball">Rollerball</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Volume</label>
+                                <select class="form-control" id="input-sku-volume">
+                                    <option value="" disabled selected>Please select a volume</option>
+                                    <option value="0.17 oz/ 5 mL">0.17 oz/ 5 mL</option>
+                                    <option value="0.33 oz/ 10 mL">0.33 oz/ 10 mL</option>
+                                    <option value="0.7 oz/ 20 mL">0.7 oz/ 20 mL</option>
+                                    <option value="1.0 oz/ 30 mL">1.0 oz/ 30 mL</option>
+                                    <option value="1.2 oz/ 35 mL">1.2 oz/ 35 mL</option>
+                                    <option value="1.7 oz/ 50 mL">1.7 oz/ 50 mL</option>
+                                    <option value="3.0 oz/ 90 mL">3.0 oz/ 90 mL</option>
+                                    <option value="3.4 oz/ 101 mL">3.4 oz/ 101 mL</option>
+                                    <option value="4.2 oz/ 124 mL">4.2 oz/ 124 mL</option>
+                                    <option value="5.0 oz/ 148 mL">5.0 oz/ 148 mL</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group margin-bottom-15" style="width: 100%">
+                                <label>Price * 1000đ :</label>
+                                <input type="number" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-sku-price" required>
+                            </div>
+
+                            <div class="form-group margin-bottom-15" style="width: 100%">
+                                <label>Quantity:</label>
+                                <input type="number" class="form-control" style="display: block; margin: 5px ;width: 100%" id="input-sku-quantity" required>
+                            </div>
+
+                            <div class="form-group margin-bottom-15 d-flex align-items-center">
+                                <input type="checkbox" value="1" id="input-sku-mainSku" required>
+                                <label class="ml-2 font-weight-bold mb-0">Main Sku</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-save-product">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <div th:replace="fragments/admin-footer :: footer_info"></div>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/admin-product-sku.js}"></script>
+</body>
+
+</html>
