@@ -20,13 +20,14 @@
                 </div>
 
                 <div class="d-flex mb-3 justify-content-between">
-<!--                    <button type="button" class="btn btn-primary" id="new-product" data-toggle="modal"-->
-<!--                            data-target="#editProductSkuModal">-->
-<!--                        Add new Image-->
-<!--                    </button>-->
-<!--                    <button type="button" class="btn btn-behance" onclick="printJS('skuList', 'html')">-->
-<!--                        Print list SKUs-->
-<!--                    </button>-->
+                    <label class="custom-file-upload btn btn-primary"
+                           style="padding: 11px 12px;cursor: pointer; margin-bottom: 0">
+                        <input type="file"
+                               style="display: none;"
+                               id="new-image-btn"
+                        />
+                        <span>Add new image</span>
+                    </label>
                     <a class="btn btn-primary" href="/admin/product" style="align-self: flex-end">
                         Go back to Product List
                     </a>
@@ -35,6 +36,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h2>Product: <span th:text="${vm.getProductNameAndBrand()}"></span></h2>
+                            <input type="text" id="productId" hidden="true" disabled th:value="${vm.getProductId()}">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -53,21 +55,39 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="image : ${vm.getProductImageVMList()}">
-                                    <td th:text="${image.getId()}"></td>
+                                <tr th:each="image, counter : ${vm.getProductImageVMList()}">
+                                    <td th:text="${counter.index+1}"></td>
                                     <td>
                                         <img th:if="${!image.getImageURL().isEmpty()}"
-                                             style="width:200px; height:auto; border-radius: 0" th:src="@{'/'+${image.getImageURL()}}">
+                                             th:src="@{'/'+${image.getImageURL()}}"
+                                             style="width:200px; height:auto; border-radius: 0"
+                                             class="product-img"
+                                             th:id="${'image'+image.getId()}"
+                                        >
                                         <i th:if="${image.getImageURL().isEmpty()}">No image</i>
 
                                     </td>
                                     <td th:text="${image.getCreatedDate()}"></td>
                                     <td>
-                                        <label class="custom-file-upload btn btn-primary edit-product-image" style="border: 1px solid #ccc;display: inline-block;padding: 6px 12px;cursor: pointer;">
-                                            <input type="file" style="display: none;"/>
-                                            Change image
+                                        <label class="custom-file-upload btn btn-primary"
+                                               style="padding: 11px 12px;cursor: pointer; margin-bottom: 0">
+                                            <input type="file"
+                                                   style="display: none;"
+                                                   class="edit-product-image"
+                                                   th:id="${image.getId()}"
+                                            />
+                                            <span class="id-indicator" th:text="${image.getId()}" hidden></span>
+                                            <span>Change image</span>
                                         </label>
-                                        <button>
+                                        <button class="btn btn-info save-image-btn"
+                                                th:attr="data-image = ${image.getId()}"
+                                        >
+                                            Save change
+                                        </button>
+                                        <button class="btn btn-danger" data-toggle="modal"
+                                                data-target="#deleteImageModal"
+                                                th:attr="data-image = ${image.getId()}"
+                                        >
                                             Delete
                                         </button>
                                     </td>
@@ -81,6 +101,32 @@
 
             </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="deleteImageModal" tabindex="-1" role="dialog"
+                 aria-labelledby="deleteImageModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteImageModalTitle">Delete Image</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body container">
+                            <div style="text-align: center">
+                                <img style="width:250px; height:auto" class="product-img">
+                            </div>
+                            <p>Are you sure to delete this image?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger delete-image-btn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
             <div th:replace="fragments/admin-footer :: footer_info"></div>
             <!-- partial -->

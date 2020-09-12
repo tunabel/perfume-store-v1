@@ -107,4 +107,9 @@ public class FileStorageService {
         }
     }
 
+    public void deleteOne(String imageUrl) {
+
+    }
+
+
 }
