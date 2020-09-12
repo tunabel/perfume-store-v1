@@ -40,50 +40,50 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Index</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Image</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Product</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Brand</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Scent</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Type</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th style="width: 250px">
                                         <span style="font-weight:bold;">Description</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Created Date</span>
                                     </th>
-                                    <th colspan="1">
+                                    <th >
                                         <span style="font-weight:bold;">Options</span>
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="product : ${vm.getProductVMList()}">
-                                    <td colspan="1" th:text="${product.getId()}"></td>
-                                    <td colspan="1">
+                                    <td  th:text="${product.getId()}"></td>
+                                    <td >
                                         <img th:if="${!product.getImageURL().isEmpty()}" style="width:100px; height:auto" th:src="@{'/'+${product.getImageURL()}}">
                                         <i th:if="${product.getImageURL().isEmpty()}">Main SKU has no image</i>
 
                                     </td>
-                                    <td colspan="1" th:text="${product.getName()}"></td>
-                                    <td colspan="1" th:text="${product.getBrand()}"></td>
-                                    <td colspan="1" th:text="${product.getScent()}"></td>
-                                    <td colspan="1" th:text="${product.getType()}"></td>
-                                    <td colspan="1" th:text="${product.getDesc()}"></td>
-                                    <td colspan="1" th:text="${product.getCreatedDate()}"></td>
-                                    <td colspan="1">
+                                    <td  th:text="${product.getName()}"></td>
+                                    <td  th:text="${product.getBrand()}"></td>
+                                    <td  th:text="${product.getScent()}"></td>
+                                    <td  th:text="${product.getType()}"></td>
+                                    <td  th:text="${product.getDesc()}"></td>
+                                    <td  th:text="${product.getCreatedDate()}"></td>
+                                    <td >
                                         <button class="btn-primary btn-sm edit-product"
                                                 th:attr="data-product = ${product.getId()}" data-toggle="modal"
                                                 title="Edit product" data-target="#editProductModal">
