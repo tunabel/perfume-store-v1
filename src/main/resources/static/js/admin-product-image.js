@@ -93,4 +93,34 @@ $(document).ready(function () {
             console.log("Image upload error");
         });
     });
+
+    $(".delete-modal-btn").on("click", function () {
+        imageId = $(this).data("image");
+    })
+
+    $(".delete-image-btn").on("click", function () {
+        axios.delete("/api/product-image/delete/" + imageId).then(function(res){
+            if (res.data.successful) {
+                swal(
+                    'Good job!',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Error',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Some error when deleting image',
+                'error'
+            );
+        })
+    })
 });

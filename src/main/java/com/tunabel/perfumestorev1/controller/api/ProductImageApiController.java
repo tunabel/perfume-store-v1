@@ -94,7 +94,7 @@ public class ProductImageApiController {
 
             productImageService.deleteProductImage(imageId);
 
-            fileStorageService.deleteOne("/../" + image.getImageUrl());
+            fileStorageService.deleteOne("./src/main/resources/static/" + image.getImageUrl());
 
             result.setSuccessful(true);
             result.setMessage("Image deleted successfully");

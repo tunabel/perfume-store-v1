@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 
 
@@ -109,6 +110,11 @@ public class FileStorageService {
 
     public void deleteOne(String imageUrl) {
 
+        try {
+            Files.delete(Paths.get(imageUrl));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
