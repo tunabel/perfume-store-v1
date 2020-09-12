@@ -3,13 +3,11 @@ package com.tunabel.perfumestorev1.controller.web;
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductVM;
-import com.tunabel.perfumestorev1.model.viewmodel.admin.ChartVM;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.HomeAdminVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -118,9 +115,11 @@ public class AdminController extends BaseController {
             productVM.setScent(product.getScent().getName());
             productVM.setType(product.getType().getName());
             productVM.setDesc(product.getDescription());
-            ProductSku sku = productSKUService.getSkuByProductId(product.getId());
+            ProductSku sku = productSKUService.getMainSkuByProductId(product.getId());
             if (sku != null) {
                 productVM.setImageURL(sku.getImageURL());
+            } else {
+                productVM.setImageURL("");
             }
 //            productVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", product.getPrice()));
 //            productVM.setImageURL(product.getImageURL());

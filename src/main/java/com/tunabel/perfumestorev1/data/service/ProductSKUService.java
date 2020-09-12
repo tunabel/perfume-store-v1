@@ -38,8 +38,8 @@ public class ProductSKUService {
         return null;
     }
 
-    public ProductSku getSkuByProductId(int id) {
-        return productSKURepository.getSkuByProductId(id);
+    public ProductSku getMainSkuByProductId(int id) {
+        return productSKURepository.getMainSkuByProductId(id);
     };
 
     public Page<ProductSku> getPageMainSku(PageRequest pageRequest, String sort) {
@@ -70,4 +70,5 @@ public class ProductSKUService {
     public ProductSku findById(int skuId) {
         return productSKURepository.findOne(skuId);
     }
+
 }
