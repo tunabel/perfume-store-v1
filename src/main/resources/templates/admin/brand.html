@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Brands Management</h1>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/admin/brand}" th:object="${search}"
+                          method="get">
+                        <input class="form-control mr-sm-2" th:field="*{name}" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+                <h2 th:if="${vm.getSearch()}" th:text="${vm.getSearch()}"></h2>
+
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" id="new-brand" data-toggle="modal"
+                            data-target="#editBrandModal">
+                        Add new Brand
+                    </button>
+                </div>
+                <div id="brandList">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span style="font-weight:bold;">Index</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Brand Name</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Description</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Product count</span>
+                                    </th>
+                                    <!--                                    <th>-->
+                                    <!--                                        <span style="font-weight:bold;">Created Date</span>-->
+                                    <!--                                    </th>-->
+                                    <th>
+                                        <span style="font-weight:bold;">Options</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="brand, counter : ${vm.getBrandVMList()}">
+                                    <td th:text="${counter.index+1}"></td>
+                                    <td th:text="${brand.getName()}"></td>
+                                    <td th:text="${brand.getDescription()}"></td>
+                                    <td th:text="${brand.getProductCount()}"></td>
+                                    <!--                                    <td th:text="${brand.getCreatedDate()}"></td>-->
+                                    <td>
+                                        <button class="btn btn-primary edit-product"
+                                                th:attr="data-product = ${brand.getId()}" data-toggle="modal"
+                                                title="Edit product" data-target="#editBrandModal">
+                                            Edit
+                                        </button>
+                                        <a th:href="@{'/admin/product?brand=' + ${brand.getId()}}"
+                                           class="btn btn-success">Products</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getBrandVMList().size()>0}">
+                    <ul class="pagination">
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item" th:unless="${page.number == i}">
+                                <a class="page-link" th:text="${i+1}"
+                                   th:href="${'?'
+                                   +('&page='+i)
+                                   +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                   +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}">
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="editBrandModal" tabindex="-1" role="dialog"
+                 aria-labelledby="editBrandModalTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                       <form>
+                           <div class="modal-header">
+                               <h5 class="modal-title" id="editBrandModalTitle">Add new/update Brand</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                               <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                   <label>Brand name:</label>
+                                   <input type="text" class="form-control" id="input-brand-name" required>
+                               </div>
+
+                               <div class="form-group margin-bottom-15">
+                                   <label>Brand description:</label>
+                                   <textarea name="input-brand-desc" class="form-control" id="input-brand-desc"
+                                             required></textarea>
+
+                               </div>
+                           </div>
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                               <button type="submit" class="btn btn-primary btn-save-brand">Save</button>
+                           </div>
+                       </form>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+            </div>
+            <!-- main-panel ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/summernote-bs4.min.js}"></script>
+
+<script th:src="@{/js/admin-brand.js}"></script>
+</body>
+
+</html>

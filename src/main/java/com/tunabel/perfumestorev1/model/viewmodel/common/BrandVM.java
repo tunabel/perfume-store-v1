@@ -6,6 +6,7 @@ public class BrandVM {
     private String name;
     private String description;
     private String imageURL;
+    private int productCount;
 
     public BrandVM(int id, String name, String description, String imageURL) {
         this.id = id;
@@ -47,5 +48,13 @@ public class BrandVM {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
 }

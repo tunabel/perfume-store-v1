@@ -2,14 +2,12 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
-import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductImageVM;
-import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductSkuVM;
-import com.tunabel.perfumestorev1.model.viewmodel.admin.AdminProductVM;
-import com.tunabel.perfumestorev1.model.viewmodel.admin.HomeAdminVM;
+import com.tunabel.perfumestorev1.model.viewmodel.admin.*;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +54,6 @@ public class AdminController extends BaseController {
         model.addAttribute("vm", vm);
         return "/admin/home";
     }
-
 
     @GetMapping("/product")
     public String product(Model model,
@@ -126,22 +123,19 @@ public class AdminController extends BaseController {
             } else {
                 productVM.setImageURL("");
             }
-//            productVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", product.getPrice()));
-//            productVM.setImageURL(product.getImageURL());
             productVM.setCreatedDate(product.getCreatedDate());
             productVMList.add(productVM);
         }
-//
+
         if (productVMList.size() == 0) {
             vm.setSearch("As the fragrance vanishes, the sensation tingles...");
         }
-//
+
         vm.setProductVMList(productVMList);
         vm.setBrandVMList(brandVMList);
         vm.setScentVMList(scentVMList);
         vm.setTypeVMList(typeVMList);
-//
-//
+
         model.addAttribute("vm", vm);
         model.addAttribute("page", productPage);
 
@@ -181,7 +175,6 @@ public class AdminController extends BaseController {
             }
         }
 
-
         vm.setProductSkuVMList(productSkuVMList);
         model.addAttribute("vm", vm);
 
@@ -216,61 +209,54 @@ public class AdminController extends BaseController {
             }
         }
 
-
         vm.setProductImageVMList(productImageVMList);
         model.addAttribute("vm", vm);
 
         return "/admin/product-image";
     }
 
+    @GetMapping("/brand")
+    public String getBrands(Model model,
+                          @Valid @ModelAttribute("search") BrandVM brandSearch,
+                          @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size
+    ) {
+        AdminBrandVM vm = new AdminBrandVM();
 
-//
-//
-//    @GetMapping("/category")
-//    public String category(Model model,
-//                          @Valid @ModelAttribute("categoryname") CategoryVM categoryName,
-//                          @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-//                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size
-//    ) {
-//        AdminCategoryVM vm = new AdminCategoryVM();
-//
-//
-//        Pageable pageable = new PageRequest(page, size);
-//
-//        Page<Category> categoryPage =  null;
-//
-//
-//        if (categoryName.getName() != null && !categoryName.getName().isEmpty()) {
-//            categoryPage = brandService.getListCategoryByCategoryNameContaining(pageable, categoryName.getName().trim());
-//            vm.setKeyWord("Find with key: " + categoryName.getName());
-//        } else categoryPage = brandService.getListCategoryByCategoryNameContaining(pageable, null);
-//
-//
-//        List<CategoryVM> categoryVMList = new ArrayList<>();
-//
-//        for (Category category : categoryPage.getContent()) {
-//            CategoryVM categoryVM = new CategoryVM();
-//
-//            categoryVM.setId(category.getId());
-//            categoryVM.setName(category.getName());
-//            categoryVM.setShortDesc(category.getShortDesc());
-//            categoryVM.setCreatedDate(category.getCreatedDate());
-//
-//            categoryVMList.add(categoryVM);
-//        }
-//
-//        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
-//        vm.setCategoryVMList(categoryVMList);
-//        if (categoryVMList.size() == 0) {
-//            vm.setKeyWord("Not found any category");
-//        }
-//
-//
-//        model.addAttribute("vm", vm);
-//        model.addAttribute("page", categoryPage);
-//
-//        return "/admin/category";
-//    }
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Brand> brandPage =  null;
+
+        if (brandSearch.getName() != null && !brandSearch.getName().isEmpty()) {
+            brandPage = brandService.getBrandListByNameContaining(pageable, brandSearch.getName().trim());
+            vm.setSearch("Find with key: " + brandSearch.getName());
+        } else brandPage = brandService.getBrandListByNameContaining(pageable, null);
+
+        List<BrandVM> brandVMList = new ArrayList<>();
+
+        for (Brand brand : brandPage.getContent()) {
+            BrandVM brandVM = new BrandVM();
+
+            brandVM.setId(brand.getId());
+            brandVM.setName(brand.getName());
+            brandVM.setDescription(brand.getDescription());
+            brandVM.setProductCount(brand.getListProducts().size());
+//            brandVM.setCreatedDate(brand.getCreatedDate());
+
+            brandVMList.add(brandVM);
+        }
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setBrandVMList(brandVMList);
+        if (brandVMList.size() == 0) {
+            vm.setSearch("No brand found");
+        }
+
+        model.addAttribute("vm", vm);
+        model.addAttribute("page", brandPage);
+
+        return "/admin/brand";
+    }
 //
 //    @GetMapping("/chart")
 //    public String chart(Model model) {
