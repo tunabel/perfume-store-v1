@@ -69,7 +69,9 @@ $(document).ready(function() {
 
 
     $(".btn-save-product").on("click", function () {
-        if(!newImage) {
+
+        //if there isn't new image and the photo is the default blank photo
+        if(!newImage && $('.sku-img').attr('src') == "/../images/blank_avatar.png") {
             swal(
                 'Error',
                 'You need to upload a photo',
@@ -81,10 +83,16 @@ $(document).ready(function() {
         dataProduct.name = $('#input-sku-name').val();
         dataProduct.price = $("#input-sku-price").val();
         dataProduct.quantity = $("#input-sku-quantity").val();
+        //If a new image is uploaded, then the URL string is like //images/abcxyz
         if ( newImage) {
-            // dataProduct.imageURL = $(".sku-img").attr('src').substring(4);
             dataProduct.imageURL = $(".sku-img").attr('src').substring(1);
         }
+
+        //if the image is not changed then the URL string is /../images/abcxyz
+        if (!newImage && $('.sku-img').attr('src') != null){
+            dataProduct.imageURL = $(".sku-img").attr('src').substring(4);
+        }
+
         dataProduct.productId = $("#productId").val();
         dataProduct.mainSku = $("#input-sku-mainSku").val();
         dataProduct.spec = $('#input-sku-spec').val();
