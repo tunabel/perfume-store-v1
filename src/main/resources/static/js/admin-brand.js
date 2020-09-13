@@ -18,10 +18,14 @@ $(document).ready(function() {
     $("#new-brand").on("click", function () {
         dataUpload = {};
         $('#input-brand-name').val("");
-        $('#input-brand-desc').val("");
+        $('#input-brand-desc').summernote('reset');
+
     });
 
     $(".edit-brand").on("click", function () {
+        //clean state
+        $('#input-brand-desc').summernote('reset');
+
         var pdInfo = $(this).data("brand");
 
         axios.get("/api/brand/detail/" + pdInfo).then(function(res){
@@ -29,10 +33,7 @@ $(document).ready(function() {
                 data = res.data.data;
                 dataUpload.id = data.id;
                 $("#input-brand-name").val(data.name);
-
-                // $(".note-editable").val(data.description);
-
-                $('#input-brand-desc').summernote('insertText', data.description);
+                $('#input-brand-desc').summernote('pasteHTML', data.description);
             } else {
                 console.log("Error getting brand data");
             }
@@ -66,7 +67,7 @@ $(document).ready(function() {
                     res.data.message,
                     'success'
                 ).then(function() {
-                    location.reload();
+                    location.replace(window.location = window.location.pathname)
                 });
             } else {
                 swal(

@@ -28,6 +28,7 @@ public class BrandApiController {
             brand.setName(dto.getName());
             brand.setDescription(dto.getDescription());
             brand.setCreatedDate(new Date());
+
             brand = brandService.add(brand);
             result.setData(brand.getId());
             result.setMessage("Brand "+brand.getName()+" created successfully with ID:  " + brand.getId());
@@ -53,6 +54,8 @@ public class BrandApiController {
                 brand.setName(dto.getName());
                 brand.setDescription(dto.getDescription());
                 brand.setCreatedDate(new Date());
+                brand.setImageURL("");
+
                 brandService.add(brand);
                 result.setSuccessful(true);
                 result.setMessage("Brand updated successfully");

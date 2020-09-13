@@ -59,7 +59,9 @@ public class AdminController extends BaseController {
     public String product(Model model,
                           @Valid @ModelAttribute("productname") ProductSearchVM searchVM,
                           @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size
+                          @RequestParam(name = "size", required = false, defaultValue = "2") Integer size,
+                          @RequestParam(name = "brandId", required = false) Integer brandId
+
     ) {
         AdminProductVM vm = new AdminProductVM();
 
@@ -219,7 +221,7 @@ public class AdminController extends BaseController {
     public String getBrands(Model model,
                           @Valid @ModelAttribute("search") BrandVM brandSearch,
                           @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                          @RequestParam(name = "size", required = false, defaultValue = "8") Integer size
+                          @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
     ) {
         AdminBrandVM vm = new AdminBrandVM();
 

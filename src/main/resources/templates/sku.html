@@ -113,7 +113,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a
-                        class="nav-link active"
+                        class="nav-link"
                         id="home-tab"
                         data-toggle="tab"
                         href="#desc"
@@ -150,19 +150,18 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div
-                    class="tab-pane fade "
+                    class="tab-pane fade active"
                     id="desc"
                     role="tabpanel"
                     aria-labelledby="home-tab"
             >
-
                 <p>
                     <span style="font-weight: bold">Scent Family: </span>
-                    <a th:href="@{'/shop?scent='{id}(id=${vm.getScentId()})}" th:text="${vm.getScentName()}"></a>
+                    <a th:href="${'/../shop?scent='+vm.getScentId()}" th:text="${vm.getScentName()}"></a>
                 </p>
                 <p>
                     <span style="font-weight: bold">Type Family: </span>
-                    <a th:href="@{'/shop?type='{id}(id=${vm.getTypeId()})}" th:text="${vm.getTypeName()}"></a>
+                    <a th:href="${'/../shop?type='+vm.getTypeId()}" th:text="${vm.getTypeName()}"></a>
                 </p>
             </div>
             <div
@@ -174,12 +173,12 @@
                 <div>
                     <p>
                         <span style="font-weight: bold">Brand: </span>
-                        <a th:href="@{'/shop?brand='{id}(id=${vm.getBrandId()})}" th:text="${vm.getBrandName()}"></a>
+                        <a th:href="${'/../shop?brand='+vm.getBrandId()}"  th:text="${vm.getBrandName()}"></a>
                     </p>
                     <p>
                         <span style="font-weight: bold">Brand Description: </span>
                     </p>
-                    <p th:text="${vm.getBrandDesc()}"></p>
+                    <p th:utext="${vm.getBrandDesc()}"></p>
                 </div>
             </div>
             <div

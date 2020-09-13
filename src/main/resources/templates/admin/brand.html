@@ -62,7 +62,12 @@
                                 <tr th:each="brand, counter : ${vm.getBrandVMList()}">
                                     <td th:text="${counter.index+1}"></td>
                                     <td th:text="${brand.getName()}"></td>
-                                    <td th:text="${brand.getDescription()}"></td>
+                                    <td>
+                                        <div th:utext="${brand.getDescription()}"
+                                             style="max-height: 300px; overflow-y: auto">
+
+                                        </div>
+                                    </td>
                                     <td th:text="${brand.getProductCount()}"></td>
                                     <!--                                    <td th:text="${brand.getCreatedDate()}"></td>-->
                                     <td>
@@ -106,31 +111,31 @@
                  aria-labelledby="editBrandModalTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                       <form>
-                           <div class="modal-header">
-                               <h5 class="modal-title" id="editBrandModalTitle">Add new/update Brand</h5>
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">&times;</span>
-                               </button>
-                           </div>
-                           <div class="modal-body">
-                               <div class="form-group margin-bottom-15" style="margin-top: 20px">
-                                   <label>Brand name:</label>
-                                   <input type="text" class="form-control" id="input-brand-name" required>
-                               </div>
+                        <form>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editBrandModalTitle">Add new/update Brand</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group margin-bottom-15" style="margin-top: 20px">
+                                    <label>Brand name:</label>
+                                    <input type="text" class="form-control" id="input-brand-name" required>
+                                </div>
 
-                               <div class="form-group margin-bottom-15">
-                                   <label>Brand description:</label>
-                                   <textarea name="input-brand-desc" class="form-control" id="input-brand-desc"
-                                             required></textarea>
+                                <div class="form-group margin-bottom-15">
+                                    <label>Brand description:</label>
+                                    <textarea name="input-brand-desc" class="form-control" id="input-brand-desc"
+                                              required></textarea>
 
-                               </div>
-                           </div>
-                           <div class="modal-footer">
-                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                               <button type="submit" class="btn btn-primary btn-save-brand">Save</button>
-                           </div>
-                       </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-save-brand">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <!-- content-wrapper ends -->
