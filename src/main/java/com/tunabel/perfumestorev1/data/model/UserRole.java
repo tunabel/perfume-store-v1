@@ -2,7 +2,8 @@ package com.tunabel.perfumestorev1.data.model;
 
 import javax.persistence.*;
 
-@Entity(name = "dbo_user_role")
+@Entity
+@Table(name = "dbo_user_role")
 public class UserRole {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

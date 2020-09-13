@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>User Management</h1>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/admin/user}" th:object="${name}"
+                          method="get">
+                        <input class="form-control mr-sm-2" th:field="*{name}" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+                <h2 th:if="${vm.getSearch()}" th:text="${vm.getSearch()}"></h2>
+
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-primary" id="new-user" data-toggle="modal"
+                            data-target="#editUserModal">
+                        Add new user
+                    </button>
+                    <button type="button" class="btn btn-behance" onclick="printJS('userList', 'html')">
+                        Print list users
+                    </button>
+                </div>
+                <div id="userList">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th >
+                                        <span style="font-weight:bold;">#</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Id</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Username</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Avatar</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Email</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Name</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Address</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Phone</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Gender</span>
+                                    </th>
+                                    <th style="width: 250px">
+                                        <span style="font-weight:bold;">Total Spending</span>
+                                    </th>
+                                    <th style="width: 250px">
+                                        <span style="font-weight:bold;">Roles</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Status</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Created Date</span>
+                                    </th>
+                                    <th >
+                                        <span style="font-weight:bold;">Options</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user, counter : ${vm.getUserVMList()}">
+                                    <td th:text="${counter.index+1}"/>
+                                    <td th:text="${user.getId()}"></td>
+                                    <td th:text="${user.getUsername()}"></td>
+                                    <td >
+                                        <img th:if="${user.getAvatar() != '' && user.getAvatar() != null}" style="width:100px; height:auto; border-radius: 0" th:src="@{${user.getAvatar()}}">
+                                        <i th:if="${user.getAvatar() == '' || user.getAvatar() == null}">No avatar</i>
+                                    </td>
+                                    <td th:text="${user.getEmail()}"></td>
+                                    <td th:text="${user.getName()}"></td>
+                                    <td th:text="${user.getAddress()}"></td>
+                                    <td th:text="${user.getPhone()}"></td>
+                                    <td th:switch="${user.getGender()}">
+                                        <span th:case="'0'">Undefined</span>
+                                        <span th:case="'1'">Male</span>
+                                        <span th:case="'2'">Female</span>
+                                    </td>
+                                    <td th:if="${user.getTotalSpending()} > 0" th:text="${#numbers.formatInteger(user.getTotalSpending(),3,'POINT')}+'.000đ'"></td>
+                                    <td th:if="${user.getTotalSpending()} == 0">0đ </td>
+                                    <td th:each="role: ${user.getRoles()}">
+                                        <span class="btn btn-info mr-2" th:text="${role}"></span>
+                                    </td>
+                                    <td th:switch="${user.getStatus()}">
+                                        <span th:case="'0'">Active</span>
+                                        <span th:case="'1'">Inactive</span>
+                                    </td>
+                                    <td th:text="${user.getCreatedDate()}"></td>
+                                    <td >
+                                        <button class="btn btn-primary edit-product"
+                                                th:attr="data-user = ${user.getId()}" data-toggle="modal"
+                                                title="Edit product" data-target="#editUserModal">
+                                            Edit
+                                        </button>
+                                        <a th:href="@{'/admin/user-order/' + ${user.getId()}}"
+                                            class="btn btn-success">Details</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getUserVMList().size()>0}">
+                    <ul class="pagination">
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item" th:unless="${page.number == i}"><a class="page-link" th:text="${i+1}"
+                                                                                     th:href="${'?'
+                                                                                       +('&page='+i)
+                                                                                       +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                                                                       +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}"></a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
+            </div>
+            <!-- main-panel ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/admin-product.js}"></script>
+</body>
+
+</html>

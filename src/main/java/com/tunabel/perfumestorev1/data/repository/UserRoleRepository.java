@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 
     @Transactional(readOnly = true)
-    @Query("select u from dbo_user_role u where u.userId = :id")
+    @Query("select u from UserRole u where u.userId = :id")
     Iterable<UserRole> findRolesOfUser(@Param("id") int userId);
 }

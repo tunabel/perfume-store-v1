@@ -62,6 +62,6 @@ public class OrderService {
     }
 
     public List<Order> findAllByUsername(String username) {
-        return orderRepository.findOrderByGuidOrUserName("", username);
+        return orderRepository.findOrderByGuidOrUserName(null, username);
     }
 }

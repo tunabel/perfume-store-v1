@@ -391,12 +391,19 @@ public class AdminController extends BaseController {
             List<Order> userOrderList = orderService.findAllByUsername(user.getUsername());
 
             if (userOrderList.size() > 0) {
-                userVM.setTotalSpending(
-                        userOrderList.stream()
-                                .map(item -> item.getTotalPrice())
-                                .reduce(0L, (subtotal, item) ->
-                                        subtotal + item
-                                ));
+                long totalSpending = 0L;
+
+                for(Order order: userOrderList) {
+                    totalSpending += order.getTotalPrice();
+                }
+                userVM.setTotalSpending(totalSpending);
+//
+//                userVM.setTotalSpending(
+//                        userOrderList.stream()
+//                                .map(item -> item.getTotalPrice())
+//                                .reduce(0L, (subtotal, item) ->
+//                                        subtotal + item
+//                                ));
             }
 
             List<Role> userRoles = roleService.findAllByUserId(user.getId());
