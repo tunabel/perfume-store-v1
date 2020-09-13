@@ -85,22 +85,15 @@
                                     <td  th:text="${product.getDesc()}"></td>
                                     <td  th:text="${product.getCreatedDate()}"></td>
                                     <td >
-                                        <button class="btn-primary btn-sm edit-product"
+                                        <button class="btn btn-primary edit-product"
                                                 th:attr="data-product = ${product.getId()}" data-toggle="modal"
                                                 title="Edit product" data-target="#editProductModal">
                                             Edit
                                         </button>
-                                        <!--                                        <i class="mdi mdi-brightness-7 tooltip-test edit-product"-->
-
-                                        <!--                                           style="cursor: pointer"></i>-->
-                                        <a th:href="@{'/admin/product-sku/' + ${product.getId()}}">
-                                            <i class="mdi mdi-file-cabinet tooltip-test"
-                                               title="List SKUs"></i>
-                                        </a>
-                                        <a th:href="@{'/admin/product-image/' + ${product.getId()}}">
-                                            <i class="mdi mdi-folder-multiple-image tooltip-test"
-                                               title="List images"></i>
-                                        </a>
+                                        <a th:href="@{'/admin/product-sku/' + ${product.getId()}}"
+                                            class="btn btn-success">SKUs</a>
+                                        <a th:href="@{'/admin/product-image/' + ${product.getId()}}"
+                                           class="btn btn-info">Images</a>
                                     </td>
                                 </tr>
                                 </tbody>
