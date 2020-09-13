@@ -6,6 +6,7 @@ public class OrderSkuVM {
     private String mainImage;
     private int quantity;
     private long price;
+    private int unitPrice;
     private String skuName;
 
     public int getSkuId() {
@@ -46,5 +47,13 @@ public class OrderSkuVM {
 
     public void setSkuName(String skuName) {
         this.skuName = skuName;
+    }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
     }
 }

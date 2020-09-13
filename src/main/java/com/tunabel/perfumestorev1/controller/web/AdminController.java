@@ -4,6 +4,7 @@ import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.*;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
+import com.tunabel.perfumestorev1.model.viewmodel.order.OrderSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.OrderVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,8 @@ public class AdminController extends BaseController {
     private OrderService orderService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrderSkuService orderSkuService;
 
     @GetMapping("")
     public String admin(Model model) {
@@ -312,39 +315,32 @@ public class AdminController extends BaseController {
         if (order != null) {
             vm.setUsername(order.getUsername());
             vm.setAddress(
-                    "Receiver: "+order.getName()
-                    +"\nAddress: "+order.getAddress()
-                    +"\nPhone: "+order.getPhone()
-                    +"\nEmail: "+order.getEmail()
+                    "Receiver: " + order.getName()
+                            + "\nAddress: " + order.getAddress()
+                            + "\nPhone: " + order.getPhone()
+                            + "\nEmail: " + order.getEmail()
             );
             vm.setOrderStatus(order.getStatus());
             vm.setOrderId(orderId);
             vm.setCreatedDate(order.getCreatedDate());
-        }
+            vm.setTotalPrice(order.getTotalPrice());
 
-        List<ProductSkuVM> productSkuVMList = new ArrayList<>();
+            List<OrderSkuVM> orderSkuVMList = new ArrayList<>();
 
-        List<ProductSku> productSkuList = productSKUService.findSkuListByOrderId(orderId);
+            for (OrderSku orderSku : order.getOrderSkuList()) {
+                OrderSkuVM orderSkuVM = new OrderSkuVM();
 
-
-        if (productSkuList.size() > 0) {
-
-            for (ProductSku productSku : productSkuList) {
-                ProductSkuVM skuVM = new ProductSkuVM();
-                skuVM.setId(productSku.getId());
-                skuVM.setName(productSku.getName());
-
-                skuVM.setSpec(productSku.getSpec());
-                skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSku.getPrice()));
-                skuVM.setQuantity(productSku.getQuantity());
-                skuVM.setImageURL(productSku.getImageURL());
-                skuVM.setMainSku(productSku.getMainSku());
-                skuVM.setCreatedDate(productSku.getCreatedDate());
-                productSkuVMList.add(skuVM);
+                orderSkuVM.setSkuId(orderSku.getProductSKU().getId());
+                orderSkuVM.setMainImage(orderSku.getProductSKU().getImageURL());
+                orderSkuVM.setQuantity(orderSku.getQuantity());
+                orderSkuVM.setSkuName(orderSku.getProductSKU().getProduct().getBrand().getName() + " - " + orderSku.getProductSKU().getProduct().getName() + " - " + orderSku.getProductSKU().getName());
+                orderSkuVM.setPrice(orderSku.getPrice());
+                orderSkuVM.setUnitPrice(orderSku.getProductSKU().getPrice());
+                orderSkuVMList.add(orderSkuVM);
             }
+            vm.setOrderSkuVMList(orderSkuVMList);
         }
 
-        vm.setProductSkuVMList(productSkuVMList);
         model.addAttribute("vm", vm);
 
         return "/admin/order-sku";

@@ -1,8 +1,8 @@
 package com.tunabel.perfumestorev1.model.viewmodel.admin;
 
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
+import com.tunabel.perfumestorev1.model.viewmodel.order.OrderSkuVM;
 
-import java.util.Date;
 import java.util.List;
 
 public class AdminProductSkuVM {
@@ -10,14 +10,6 @@ public class AdminProductSkuVM {
     private List<ProductSkuVM> productSkuVMList;
     private String productNameAndBrand;
     private int productId;
-
-    public String getProductNameAndBrand() {
-        return productNameAndBrand;
-    }
-
-    public void setProductNameAndBrand(String productNameAndBrand) {
-        this.productNameAndBrand = productNameAndBrand;
-    }
 
     private HeaderMenuAdminVM headerMenuAdminVM;
 
@@ -29,12 +21,12 @@ public class AdminProductSkuVM {
         this.productSkuVMList = productSkuVMList;
     }
 
-    public HeaderMenuAdminVM getHeaderMenuAdminVM() {
-        return headerMenuAdminVM;
+    public String getProductNameAndBrand() {
+        return productNameAndBrand;
     }
 
-    public void setHeaderMenuAdminVM(HeaderMenuAdminVM headerMenuAdminVM) {
-        this.headerMenuAdminVM = headerMenuAdminVM;
+    public void setProductNameAndBrand(String productNameAndBrand) {
+        this.productNameAndBrand = productNameAndBrand;
     }
 
     public int getProductId() {
@@ -43,5 +35,13 @@ public class AdminProductSkuVM {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public HeaderMenuAdminVM getHeaderMenuAdminVM() {
+        return headerMenuAdminVM;
+    }
+
+    public void setHeaderMenuAdminVM(HeaderMenuAdminVM headerMenuAdminVM) {
+        this.headerMenuAdminVM = headerMenuAdminVM;
     }
 }

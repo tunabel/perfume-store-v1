@@ -2,27 +2,38 @@ package com.tunabel.perfumestorev1.model.viewmodel.admin;
 
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuAdminVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
+import com.tunabel.perfumestorev1.model.viewmodel.order.OrderSkuVM;
 
 import java.util.Date;
 import java.util.List;
 
 public class AdminOrderSkuVM {
 
-    private List<ProductSkuVM> productSkuVMList;
+    private List<OrderSkuVM> orderSkuVMList;
     private int orderId;
     private int orderStatus;
     private String username;
     private String address;
+    private long totalPrice;
     private Date createdDate;
 
     private HeaderMenuAdminVM headerMenuAdminVM;
 
-    public List<ProductSkuVM> getProductSkuVMList() {
-        return productSkuVMList;
+
+    public List<OrderSkuVM> getOrderSkuVMList() {
+        return orderSkuVMList;
     }
 
-    public void setProductSkuVMList(List<ProductSkuVM> productSkuVMList) {
-        this.productSkuVMList = productSkuVMList;
+    public void setOrderSkuVMList(List<OrderSkuVM> orderSkuVMList) {
+        this.orderSkuVMList = orderSkuVMList;
+    }
+
+    public long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public HeaderMenuAdminVM getHeaderMenuAdminVM() {
