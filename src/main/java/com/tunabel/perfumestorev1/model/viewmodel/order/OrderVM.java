@@ -5,12 +5,22 @@ import java.util.Date;
 public class OrderVM {
 
     private int id;
+    private String username;
     private String customerName;
     private String phone;
     private String address;
     private String email;
+    private int status;
     private Date createdDate;
     private long price;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getId() {
         return id;
@@ -66,5 +76,13 @@ public class OrderVM {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

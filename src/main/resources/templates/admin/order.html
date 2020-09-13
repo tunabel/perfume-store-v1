@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Order Management</h1>
+                </div>
+                <div class="mb-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-behance" onclick="printJS('orderList', 'html')">
+                        Print list orders
+                    </button>
+                </div>
+                <div id="orderList">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span style="font-weight:bold;">#</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Order ID</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Username</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Receiving address</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Order Value</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Order Date</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Order Status</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Options</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Change Status</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="order, counter : ${vm.getOrderVMList()}">
+                                    <td th:text="${counter.index+1}"></td>
+                                    <td th:text="${order.getId()}"></td>
+                                    <td>
+                                        <a th:href="${'/admin/user-detail/'+order.getUsername()}"
+                                           th:text="${order.getUsername()}" />
+                                    </td>
+                                    <td>
+                                        <p>Name: <span th:text="${order.getCustomerName()}"></span></p>
+                                        <p>Address: <span th:text="${order.getAddress()}"></span></p>
+                                        <p>Phone: <span th:text="${order.getPhone()}"></span></p>
+                                        <p>Email: <span th:text="${order.getEmail()}"></span></p>
+                                    </td>
+                                    <td th:text="${#numbers.formatInteger(order.getPrice(),3,'POINT')}+'.000đ'"></td>
+                                    <td th:text="${order.getCreatedDate()}"></td>
+                                    <td th:switch="${order.getStatus()}">
+
+                                        <!--                                        <span th:case="'0'">Order Placed</span>-->
+                                        <span th:case="'0'">Order Paid</span>
+                                        <span th:case="'2'">Order Delivered</span>
+                                        <!--                                        <span th:case="'3'">Order Returned</span>-->
+                                        <span th:case="'4'">Order Cancelled</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/admin/order-sku/' + ${order.getId()}}"
+                                           class="btn btn-success">Order SKUs</a>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" th:id="${'select-'+order.getId()}">
+                                            <!--                                            <option value="0">Order Placed</option>-->
+                                            <option value="0"
+                                                    th:selected="${order.getStatus() == 0}"
+                                                    th:disabled="${order.getStatus() > 0}"
+                                            >Order Paid
+                                            </option>
+                                            <option value="2"
+                                                    th:selected="${order.getStatus() == 2}"
+                                                    th:disabled="${order.getStatus() > 2}"
+                                            >Order Delivered
+                                            </option>
+                                            <!--                                            <option value="3" th:selected="${order.getStatus() == 3}">Order Returned-->
+                                            <!--                                            </option>-->
+                                            <option value="4"
+                                                    th:selected="${order.getStatus() == 4}"
+                                                    th:disabled="${order.getStatus() == 2}"
+                                            >Order Cancelled
+                                            </option>
+                                        </select>
+                                        <hr>
+                                        <button class="apply-status-btn btn btn-primary" th:id="${'btn-'+order.getId()}">
+                                            Apply Status
+                                        </button>
+                                        <input disabled hidden="true" th:id="${'status-'+order.getId()}" th:value="${order.getStatus()}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getOrderVMList().size()>0}">
+                    <ul class="pagination">
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item" th:unless="${page.number == i}">
+                                <a class="page-link" th:text="${i+1}"
+                                   th:href="${'?'
+                                   +('&page='+i)
+                                   +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                   +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}"></a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
+            </div>
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/admin-order.js}"></script>
+</body>
+
+</html>

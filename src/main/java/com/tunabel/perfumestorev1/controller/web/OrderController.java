@@ -2,7 +2,6 @@ package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
-import com.tunabel.perfumestorev1.model.viewmodel.cart.CartSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,7 +151,7 @@ public class OrderController extends BaseController {
                 order.setOrderSkuList(orderSkus);
                 order.setTotalPrice((int) totalPrice);
 
-                orderService.addNewOrder(order);
+                orderService.add(order);
                 //delete cart
                 cartService.deleteCart(cartEntity.getId());
             }

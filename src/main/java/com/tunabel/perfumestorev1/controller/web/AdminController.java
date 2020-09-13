@@ -4,6 +4,7 @@ import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.service.*;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.*;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
+import com.tunabel.perfumestorev1.model.viewmodel.order.OrderVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,10 @@ public class AdminController extends BaseController {
     private ProductSKUService productSKUService;
     @Autowired
     private ProductImageService productImageService;
-
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("")
     public String admin(Model model) {
@@ -219,15 +223,15 @@ public class AdminController extends BaseController {
 
     @GetMapping("/brand")
     public String getBrands(Model model,
-                          @Valid @ModelAttribute("search") BrandVM brandSearch,
-                          @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                          @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+                            @Valid @ModelAttribute("search") BrandVM brandSearch,
+                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
     ) {
         AdminBrandVM vm = new AdminBrandVM();
 
         Pageable pageable = new PageRequest(page, size);
 
-        Page<Brand> brandPage =  null;
+        Page<Brand> brandPage = null;
 
         if (brandSearch.getName() != null && !brandSearch.getName().isEmpty()) {
             brandPage = brandService.getBrandListByNameContaining(pageable, brandSearch.getName().trim());
@@ -259,6 +263,45 @@ public class AdminController extends BaseController {
 
         return "/admin/brand";
     }
+
+
+    @GetMapping("/order")
+    public String getOrders(Model model,
+                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+    ) {
+        AdminOrderVM vm = new AdminOrderVM();
+
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Order> orderPage = orderService.getPage(pageable);
+
+        List<OrderVM> orderVMList = new ArrayList<>();
+
+        for (Order order : orderPage.getContent()) {
+            OrderVM orderVM = new OrderVM();
+
+            orderVM.setId(order.getId());
+            orderVM.setUsername(order.getUsername());
+            orderVM.setCustomerName(order.getName());
+            orderVM.setAddress(order.getAddress());
+            orderVM.setPhone(order.getPhone());
+            orderVM.setEmail(order.getEmail());
+            orderVM.setPrice(order.getTotalPrice());
+            orderVM.setStatus(order.getStatus());
+            orderVM.setCreatedDate(order.getCreatedDate());
+
+            orderVMList.add(orderVM);
+        }
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setOrderVMList(orderVMList);
+
+        model.addAttribute("vm", vm);
+        model.addAttribute("page", orderPage);
+
+        return "/admin/order";
+    }
 //
 //    @GetMapping("/chart")
 //    public String chart(Model model) {
@@ -280,33 +323,6 @@ public class AdminController extends BaseController {
 //        model.addAttribute("vm", vm);
 //
 //        return "/admin/chart";
-//    }
-//
-//    @GetMapping("/product-image/{productId}")
-//    public String product(Model model, @PathVariable int productId) {
-//        AdminProductImageVM vm = new AdminProductImageVM();
-//
-//        Product productEntity = productService.findOne(productId);
-//
-//
-//        List<ProductImageVM> productImageVMS = new ArrayList<>();
-//
-//        for (ProductImage productImage : productEntity.getProductImageList()) {
-//            ProductImageVM productImageVM = new ProductImageVM();
-//            productImageVM.setId(productImage.getId());
-//            productImageVM.setLink(productImage.getLink());
-//            productImageVM.setCreatedDate(productImage.getCreatedDate());
-//            productImageVMS.add(productImageVM);
-//        }
-//
-//        vm.setLayoutHeaderAdminVM(this.getLayoutHeaderAdminVM());
-//        vm.setProductImageVMS(productImageVMS);
-//        vm.setProductId(productId);
-//
-//
-//        model.addAttribute("vm", vm);
-//
-//        return "/admin/product-image";
 //    }
 
 }
