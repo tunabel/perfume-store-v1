@@ -21,4 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT o FROM Order o")
     Page<Order> getPage(Pageable pageable);
 
+    @Query("SELECT o FROM Order o " +
+            "WHERE o.username = :username")
+    Page<Order> getPageByUsername(Pageable pageable, @Param("username") String username);
 }

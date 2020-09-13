@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -279,13 +278,18 @@ public class AdminController extends BaseController {
     @GetMapping("/order")
     public String getOrders(Model model,
                             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+                            @RequestParam(name = "user", required = false) String username
     ) {
         AdminOrderVM vm = new AdminOrderVM();
 
         Pageable pageable = new PageRequest(page, size);
-
-        Page<Order> orderPage = orderService.getPage(pageable);
+        Page<Order> orderPage;
+        if (username != null && !username.isEmpty()) {
+            orderPage = orderService.getPageByUsername(pageable, username);
+        } else {
+            orderPage = orderService.getPage(pageable);
+        }
 
         List<OrderVM> orderVMList = new ArrayList<>();
 

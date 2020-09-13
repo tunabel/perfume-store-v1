@@ -41,31 +41,31 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">#</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Id</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Username</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Avatar</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Email</span>
                                     </th>
                                     <th>
                                         <span style="font-weight:bold;">Name</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Address</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Phone</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Gender</span>
                                     </th>
                                     <th style="width: 250px">
@@ -74,13 +74,13 @@
                                     <th style="width: 250px">
                                         <span style="font-weight:bold;">Roles</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Status</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Created Date</span>
                                     </th>
-                                    <th >
+                                    <th>
                                         <span style="font-weight:bold;">Options</span>
                                     </th>
                                 </tr>
@@ -90,8 +90,10 @@
                                     <td th:text="${counter.index+1}"/>
                                     <td th:text="${user.getId()}"></td>
                                     <td th:text="${user.getUsername()}"></td>
-                                    <td >
-                                        <img th:if="${user.getAvatar() != '' && user.getAvatar() != null}" style="width:100px; height:auto; border-radius: 0" th:src="@{${user.getAvatar()}}">
+                                    <td>
+                                        <img th:if="${user.getAvatar() != '' && user.getAvatar() != null}"
+                                             style="width:100px; height:auto; border-radius: 0"
+                                             th:src="@{${user.getAvatar()}}">
                                         <i th:if="${user.getAvatar() == '' || user.getAvatar() == null}">No avatar</i>
                                     </td>
                                     <td th:text="${user.getEmail()}"></td>
@@ -103,8 +105,9 @@
                                         <span th:case="'1'">Male</span>
                                         <span th:case="'2'">Female</span>
                                     </td>
-                                    <td th:if="${user.getTotalSpending()} > 0" th:text="${#numbers.formatInteger(user.getTotalSpending(),3,'POINT')}+'.000đ'"></td>
-                                    <td th:if="${user.getTotalSpending()} == 0">0đ </td>
+                                    <td th:if="${user.getTotalSpending()} > 0"
+                                        th:text="${#numbers.formatInteger(user.getTotalSpending(),3,'POINT')}+'.000đ'"></td>
+                                    <td th:if="${user.getTotalSpending()} == 0">0đ</td>
                                     <td th:each="role: ${user.getRoles()}">
                                         <span class="btn btn-info mr-2" th:text="${role}"></span>
                                     </td>
@@ -113,14 +116,22 @@
                                         <span th:case="'1'">Inactive</span>
                                     </td>
                                     <td th:text="${user.getCreatedDate()}"></td>
-                                    <td >
-                                        <button class="btn btn-primary edit-product"
-                                                th:attr="data-user = ${user.getId()}" data-toggle="modal"
-                                                title="Edit product" data-target="#editUserModal">
-                                            Edit
+                                    <td>
+                                        <!--                                        <button class="btn btn-primary edit-product"-->
+                                        <!--                                                th:attr="data-user = ${user.getId()}" data-toggle="modal"-->
+                                        <!--                                                title="Edit product" data-target="#editUserModal">-->
+                                        <!--                                            Edit-->
+                                        <!--                                        </button>-->
+                                        <button th:if="${user.getStatus()} == 0" class="btn btn-danger switch-status-btn"
+                                                th:attr="data-user = ${user.getId()}">
+                                            Deactivate
                                         </button>
-                                        <a th:href="@{'/admin/user-order/' + ${user.getId()}}"
-                                            class="btn btn-success">Details</a>
+                                        <button th:if="${user.getStatus()} == 1" class="btn btn-success switch-status-btn"
+                                                th:attr="data-user = ${user.getId()}">
+                                            Activate
+                                        </button>
+                                        <a th:href="@{'/admin/order/?user=' + ${user.getUsername()}}"
+                                           class="btn btn-info">Order List</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -128,7 +139,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getUserVMList().size()>0}">
                     <ul class="pagination">
@@ -165,7 +175,7 @@
 <script th:src="@{/js/sweetalert2.min.js}"></script>
 <script th:src="@{/js/dashboard.js}"></script>
 
-<script th:src="@{/js/admin-product.js}"></script>
+<script th:src="@{/js/admin-user.js}"></script>
 </body>
 
 </html>

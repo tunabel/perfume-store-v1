@@ -2,9 +2,7 @@ package com.tunabel.perfumestorev1.data.service;
 
 import com.tunabel.perfumestorev1.constant.RoleIdConstant;
 import com.tunabel.perfumestorev1.constant.StatusRegisterUserEnum;
-import com.tunabel.perfumestorev1.data.model.Role;
-import com.tunabel.perfumestorev1.data.model.User;
-import com.tunabel.perfumestorev1.data.model.UserRole;
+import com.tunabel.perfumestorev1.data.model.*;
 import com.tunabel.perfumestorev1.data.repository.RoleRepository;
 import com.tunabel.perfumestorev1.data.repository.UserRepository;
 import com.tunabel.perfumestorev1.data.repository.UserRoleRepository;
@@ -136,5 +134,20 @@ public class UserService {
 
     public Page<User> getUserListByNameContaining(Pageable pageable, String name) {
         return userRepository.getUserListByNameContaining(pageable, name);
+    }
+
+    public boolean switchStatus(int userId) {
+        User user = findOne(userId);
+
+        if (user != null) {
+            int currStatus = user.getStatus();
+            int newStatus = (currStatus == 0) ? 1 : 0;
+
+            user.setCreatedDate(new Date());
+            user.setStatus(newStatus);
+            addNewUser(user);
+            return true;
+        }
+        return false;
     }
 }

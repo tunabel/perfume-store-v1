@@ -41,9 +41,9 @@ public class OrderService {
     @Transactional
     public boolean updateStatus(int orderId, int newStatus) {
         Order order = findOne(orderId);
-        int currStatus = order.getStatus();
-        List<OrderSku> orderSkuList = order.getOrderSkuList();
         if (order != null) {
+            int currStatus = order.getStatus();
+            List<OrderSku> orderSkuList = order.getOrderSkuList();
 
             if (currStatus == 0 && newStatus == 2) {
                 for (OrderSku orderSku : orderSkuList) {
@@ -63,5 +63,9 @@ public class OrderService {
 
     public List<Order> findAllByUsername(String username) {
         return orderRepository.findOrderByGuidOrUserName(null, username);
+    }
+
+    public Page<Order> getPageByUsername(Pageable pageable, String username) {
+        return orderRepository.getPageByUsername(pageable, username);
     }
 }
