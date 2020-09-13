@@ -1,5 +1,8 @@
 package com.tunabel.perfumestorev1.model.viewmodel.user;
 
+import java.util.Date;
+import java.util.List;
+
 public class UserVM {
     private int id;
     private String avatar;
@@ -9,6 +12,10 @@ public class UserVM {
     private String address;
     private String phone;
     private int gender;
+    private int status;
+    private long totalSpending;
+    private List<String> roles;
+    private Date createdDate;
 
     public UserVM() {
     }
@@ -75,6 +82,38 @@ public class UserVM {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public long getTotalSpending() {
+        return totalSpending;
+    }
+
+    public void setTotalSpending(long totalSpending) {
+        this.totalSpending = totalSpending;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String toString() {

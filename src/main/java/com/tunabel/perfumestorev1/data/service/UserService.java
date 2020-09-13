@@ -9,6 +9,8 @@ import com.tunabel.perfumestorev1.data.repository.RoleRepository;
 import com.tunabel.perfumestorev1.data.repository.UserRepository;
 import com.tunabel.perfumestorev1.data.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -132,4 +134,7 @@ public class UserService {
     }
 
 
+    public Page<User> getUserListByNameContaining(Pageable pageable, String name) {
+        return userRepository.getUserListByNameContaining(pageable, name);
+    }
 }

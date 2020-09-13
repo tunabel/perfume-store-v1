@@ -60,4 +60,8 @@ public class OrderService {
         return false;
 
     }
+
+    public List<Order> findAllByUsername(String username) {
+        return orderRepository.findOrderByGuidOrUserName("", username);
+    }
 }

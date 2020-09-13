@@ -56,4 +56,8 @@ public class RoleService {
             return new ArrayList<>();
         }
     }
+
+    public List<Role> findAllByUserId(int userId) {
+        return roleRepository.findAllByUserId(userId);
+    }
 }

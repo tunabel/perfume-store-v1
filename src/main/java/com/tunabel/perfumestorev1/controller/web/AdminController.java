@@ -6,6 +6,7 @@ import com.tunabel.perfumestorev1.model.viewmodel.admin.*;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 import com.tunabel.perfumestorev1.model.viewmodel.order.OrderSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.OrderVM;
+import com.tunabel.perfumestorev1.model.viewmodel.user.UserVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "/admin")
@@ -42,6 +45,8 @@ public class AdminController extends BaseController {
     private UserService userService;
     @Autowired
     private OrderSkuService orderSkuService;
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("")
     public String admin(Model model) {
@@ -112,8 +117,12 @@ public class AdminController extends BaseController {
         }
 
         PageRequest pageRequest = new PageRequest(page, size);
-        Page<Product> productPage = productService.getPageWithSearch(pageRequest, searchVM.getName());
+        Page<Product> productPage;
 
+        if (searchVM.getName() != null && !searchVM.getName().isEmpty()) {
+            productPage = productService.getPageWithSearch(pageRequest, searchVM.getName().trim());
+            vm.setSearch("Find with key: " + searchVM.getName());
+        } else productPage = productService.getPageWithSearch(pageRequest, null);
 
         List<ProductVM> productVMList = new ArrayList<>();
 
@@ -344,6 +353,67 @@ public class AdminController extends BaseController {
         model.addAttribute("vm", vm);
 
         return "/admin/order-sku";
+    }
+
+    @GetMapping("/user")
+    public String getUsers(Model model,
+                           @Valid @ModelAttribute("name") UserVM searchVM,
+                           @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                           @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+    ) {
+        AdminUserVM vm = new AdminUserVM();
+
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<User> userPage;
+
+        if (searchVM.getName() != null && !searchVM.getName().isEmpty()) {
+            userPage = userService.getUserListByNameContaining(pageable, searchVM.getName().trim());
+            vm.setSearch("Find with key: " + searchVM.getName());
+        } else userPage = userService.getUserListByNameContaining(pageable, null);
+
+        List<UserVM> userVMList = new ArrayList<>();
+
+        for (User user : userPage.getContent()) {
+            UserVM userVM = new UserVM();
+
+            userVM.setId(user.getId());
+            userVM.setUsername(user.getUsername());
+            userVM.setAvatar(user.getAvatarURL());
+            userVM.setEmail(user.getEmail());
+
+            userVM.setName(user.getName());
+            userVM.setAddress(user.getAddress());
+            userVM.setPhone(user.getPhone());
+            userVM.setGender(user.getGender());
+            userVM.setStatus(user.getStatus());
+
+            List<Order> userOrderList = orderService.findAllByUsername(user.getUsername());
+
+            if (userOrderList.size() > 0) {
+                userVM.setTotalSpending(
+                        userOrderList.stream()
+                                .map(item -> item.getTotalPrice())
+                                .reduce(0L, (subtotal, item) ->
+                                        subtotal + item
+                                ));
+            }
+
+            List<Role> userRoles = roleService.findAllByUserId(user.getId());
+
+            userVM.setRoles(userRoles.stream().map(role -> role.getName()).collect(Collectors.toList()));
+            userVM.setCreatedDate(user.getCreatedDate());
+
+            userVMList.add(userVM);
+        }
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setUserVMList(userVMList);
+
+        model.addAttribute("vm", vm);
+        model.addAttribute("page", userPage);
+
+        return "/admin/user";
     }
 
 //
