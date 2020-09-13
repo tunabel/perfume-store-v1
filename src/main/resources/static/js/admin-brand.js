@@ -1,61 +1,48 @@
 $(document).ready(function() {
-
-    var dataProduct = {};
-
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#preview-product-img').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#new-product").on("click", function () {
-        dataProduct = {};
-        $('#input-product-name').val("");
-        $('#input-product-desc').val("");
-        $("#input-product-brand").val("");
-        $("#input-product-scent").val("");
-        $("#input-product-type").val("");
-        $("#input-product-gender").val("");
-        $('.product-img').attr('src', '/../images/blank_avatar.png');
-
+    //summernote HTML text editor
+    $('#input-brand-desc').summernote({
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']]
+        ],
+        dialogsInBody: true
     });
 
+    var dataUpload = {};
 
-    $(".edit-product").on("click", function () {
-        var pdInfo = $(this).data("product");
+    $("#new-brand").on("click", function () {
+        dataUpload = {};
+        $('#input-brand-name').val("");
+        $('#input-brand-desc').val("");
+    });
 
-        axios.get("/api/product/detail/" + pdInfo).then(function(res){
+    $(".edit-brand").on("click", function () {
+        var pdInfo = $(this).data("brand");
+
+        axios.get("/api/brand/detail/" + pdInfo).then(function(res){
             if(res.data.successful) {
                 data = res.data.data;
-                dataProduct.id = data.id;
-                $("#input-product-name").val(data.name);
-                $("#input-product-desc").val(data.description);
-                $("#input-product-brand").val(data.brandId);
-                $("#input-product-scent").val(data.scentId);
-                $("#input-product-type").val(data.typeId);
-                $("#input-product-gender").val(data.gender);
-                if(data.mainImageURL != null) {
-                    $('.product-img').attr('src', '/../'+data.mainImageURL);
-                } else {
-                    $('.product-img').attr('src', '/../images/blank_avatar.png');
-                }
+                dataUpload.id = data.id;
+                $("#input-brand-name").val(data.name);
+
+                // $(".note-editable").val(data.description);
+
+                $('#input-brand-desc').summernote('insertText', data.description);
             } else {
-                console.log("Error");
+                console.log("Error getting brand data");
             }
         }, function(err){
-            console.log("Error");
+            console.log("Error getting brand data");
         })
     });
 
-
-
-    $(".btn-save-product").on("click", function () {
-        if($("#input-product-name").val() === "" || $("#input-product-desc").val() === "") {
+    $(".btn-save-brand").on("click", function () {
+        if($("#input-brand-name").val() === "" || $("#input-brand-desc").val() === "") {
             swal(
                 'Error',
                 'You need to fill all values',
@@ -64,19 +51,15 @@ $(document).ready(function() {
             return;
         }
 
-        dataProduct.name = $('#input-product-name').val();
-        dataProduct.brandId = $("#input-product-brand").val();
-        dataProduct.scentId = $("#input-product-scent").val();
-        dataProduct.typeId = $("#input-product-type").val();
-        dataProduct.gender = $("#input-product-gender").val();
-        dataProduct.description = $('#input-product-desc').val();
+        dataUpload.name = $('#input-brand-name').val();
+        dataUpload.description = $('#input-brand-desc').val();
 
-        var linkPost = "/api/product/create";
-        if (dataProduct.id) {
-            linkPost = "/api/product/update/" + dataProduct.id;
+        var linkPost = "/api/brand/create";
+        if (dataUpload.id) {
+            linkPost = "/api/brand/update/" + dataUpload.id;
         }
 
-        axios.post(linkPost, dataProduct).then(function(res){
+        axios.post(linkPost, dataUpload).then(function(res){
             if(res.data.successful) {
                 swal(
                     'Good job!',
@@ -95,15 +78,10 @@ $(document).ready(function() {
         }, function(err){
             swal(
                 'Error',
-                'Some error when saving product',
+                'Some error when saving brand',
                 'error'
             );
         })
     });
-
-
-        $('#input-brand-desc').summernote();
-
-
 
 });

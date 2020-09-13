@@ -35,4 +35,8 @@ public class BrandService {
     public Page<Brand> getBrandListByNameContaining(Pageable pageable, String brandName) {
         return brandRepository.getBrandListByNameContaining(pageable, brandName);
     }
+
+    public Brand add(Brand brand) {
+        return brandRepository.save(brand);
+    }
 }
