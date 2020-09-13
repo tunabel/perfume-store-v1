@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,8 +44,7 @@ public class OrderService {
         int currStatus = order.getStatus();
         List<OrderSku> orderSkuList = order.getOrderSkuList();
         if (order != null) {
-            order.setStatus(newStatus);
-            add(order);
+
             if (currStatus == 0 && newStatus == 2) {
                 for (OrderSku orderSku : orderSkuList) {
                     ProductSku sku = orderSku.getProductSKU();
@@ -52,6 +52,9 @@ public class OrderService {
                     productSKUService.add(sku);
                 }
             }
+            order.setStatus(newStatus);
+            order.setCreatedDate(new Date());
+            add(order);
             return true;
         }
         return false;
