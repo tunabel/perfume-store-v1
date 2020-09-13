@@ -264,7 +264,6 @@ public class AdminController extends BaseController {
         return "/admin/brand";
     }
 
-
     @GetMapping("/order")
     public String getOrders(Model model,
                             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
@@ -302,6 +301,55 @@ public class AdminController extends BaseController {
 
         return "/admin/order";
     }
+
+
+    @GetMapping("/order-sku/{orderId}")
+    public String getOrderSkuDetails(Model model, @PathVariable int orderId) {
+        AdminOrderSkuVM vm = new AdminOrderSkuVM();
+
+        Order order = orderService.findOne(orderId);
+
+        if (order != null) {
+            vm.setUsername(order.getUsername());
+            vm.setAddress(
+                    "Receiver: "+order.getName()
+                    +"\nAddress: "+order.getAddress()
+                    +"\nPhone: "+order.getPhone()
+                    +"\nEmail: "+order.getEmail()
+            );
+            vm.setOrderStatus(order.getStatus());
+            vm.setOrderId(orderId);
+            vm.setCreatedDate(order.getCreatedDate());
+        }
+
+        List<ProductSkuVM> productSkuVMList = new ArrayList<>();
+
+        List<ProductSku> productSkuList = productSKUService.findSkuListByOrderId(orderId);
+
+
+        if (productSkuList.size() > 0) {
+
+            for (ProductSku productSku : productSkuList) {
+                ProductSkuVM skuVM = new ProductSkuVM();
+                skuVM.setId(productSku.getId());
+                skuVM.setName(productSku.getName());
+
+                skuVM.setSpec(productSku.getSpec());
+                skuVM.setPrice(String.format(Locale.forLanguageTag("vi"), "%,d.000₫", productSku.getPrice()));
+                skuVM.setQuantity(productSku.getQuantity());
+                skuVM.setImageURL(productSku.getImageURL());
+                skuVM.setMainSku(productSku.getMainSku());
+                skuVM.setCreatedDate(productSku.getCreatedDate());
+                productSkuVMList.add(skuVM);
+            }
+        }
+
+        vm.setProductSkuVMList(productSkuVMList);
+        model.addAttribute("vm", vm);
+
+        return "/admin/order-sku";
+    }
+
 //
 //    @GetMapping("/chart")
 //    public String chart(Model model) {

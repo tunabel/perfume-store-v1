@@ -51,6 +51,14 @@ public interface ProductSKURepository extends JpaRepository<ProductSku, Integer>
             ")", nativeQuery = true)
     ProductSku findByIdNotInOrderOrCart(@Param("skuId") int skuId);
 
+    @Query(value = "SELECT * FROM dbo_product_sku s " +
+            "WHERE s.sku_id IN " +
+            "( " +
+            "SELECT os.sku_id FROM dbo_order_sku os " +
+            "WHERE os.order_id = :orderId" +
+            ")", nativeQuery = true)
+    List<ProductSku> findAllByOrderId(@Param("orderId") int orderId);
+
 //    @Query(nativeQuery = true, value = "SELECT ps.sku_id, b.name, p.name, ps.name FROM dbo_product_sku ps " +
 //            "JOIN dbo_product p " +
 //            "ON ps.product_id = p.product_id " +

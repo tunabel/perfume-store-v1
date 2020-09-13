@@ -1,6 +1,7 @@
 package com.tunabel.perfumestorev1.data.repository;
 
 import com.tunabel.perfumestorev1.data.model.Order;
+import com.tunabel.perfumestorev1.data.model.ProductSku;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query("SELECT o FROM Order o")
     Page<Order> getPage(Pageable pageable);
+
 }

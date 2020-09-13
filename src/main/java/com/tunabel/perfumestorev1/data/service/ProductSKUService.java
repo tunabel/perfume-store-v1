@@ -97,4 +97,8 @@ public class ProductSKUService {
 
         return false;
     }
+
+    public List<ProductSku> findSkuListByOrderId(int orderId) {
+        return productSKURepository.findAllByOrderId(orderId);
+    }
 }
