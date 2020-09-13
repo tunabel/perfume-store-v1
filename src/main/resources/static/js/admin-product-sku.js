@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var dataProduct = {};
     let newImage = false;
+    let deleteSkuId = -1;
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -102,6 +103,8 @@ $(document).ready(function() {
             linkPost = "/api/sku/update/" + dataProduct.id;
         }
 
+        console.log(dataProduct);
+
         axios.post(linkPost, dataProduct).then(function(res){
             if(res.data.successful) {
                 swal(
@@ -126,6 +129,37 @@ $(document).ready(function() {
             );
         })
     });
+
+
+    $(".delete-modal-btn").on("click", function () {
+        deleteSkuId = $(this).data("product");
+    })
+
+    $(".delete-sku-btn").on("click", function () {
+        axios.delete("/api/sku/delete/" + deleteSkuId).then(function(res){
+            if (res.data.successful) {
+                swal(
+                    'Good job!',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Error',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Some error when deleting SKU',
+                'error'
+            );
+        })
+    })
 
 
 

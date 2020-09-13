@@ -1,14 +1,12 @@
 package com.tunabel.perfumestorev1.controller.api;
 
-
-import com.tunabel.perfumestorev1.data.model.Product;
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
 import com.tunabel.perfumestorev1.data.service.ProductService;
 import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
-import com.tunabel.perfumestorev1.model.dto.ProductDto;
 import com.tunabel.perfumestorev1.model.dto.ProductSkuDto;
+import com.tunabel.perfumestorev1.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +25,7 @@ public class ProductSkuApiController {
 
     @Autowired
     ProductService productService;
+
 
     @GetMapping("/all")
     public ResponseEntity getAllSKUs() {
@@ -60,10 +59,7 @@ public class ProductSkuApiController {
                 dto.setName(skuEntity.getName());
                 dto.setMainSku(skuEntity.getMainSku());
                 dto.setQuantity(skuEntity.getQuantity());
-
-
                 dto.setCreatedDate(new Date());
-
 
                 result.setSuccessful(true);
                 result.setData(dto);
@@ -86,7 +82,7 @@ public class ProductSkuApiController {
         try {
             ProductSku sku = productSKUService.findById(skuId);
 
-            if (isMainSkuExisted(sku.getProductId(), skuId, dto.getMainSku())) {
+            if (dto.getMainSku() == 1 && isMainSkuExisted(sku.getProductId(), skuId)) {
                 result.setSuccessful(false);
                 result.setMessage("This product has already has a Main SKU. Please revise.");
                 return result;
@@ -99,8 +95,6 @@ public class ProductSkuApiController {
             sku.setQuantity(dto.getQuantity());
             sku.setImageURL(dto.getImageURL());
             sku.setMainSku(dto.getMainSku());
-
-
             sku.setCreatedDate(new Date());
 
             productSKUService.add(sku);
@@ -121,8 +115,7 @@ public class ProductSkuApiController {
         try {
             ProductSku sku = new ProductSku();
 
-
-            if (isMainSkuExisted(dto.getProductId(), dto.getMainSku())) {
+            if (dto.getMainSku() == 1 && isMainSkuExisted(dto.getProductId())) {
                 result.setSuccessful(false);
                 result.setMessage("This product has already has a Main SKU. Please revise.");
                 return result;
@@ -134,13 +127,10 @@ public class ProductSkuApiController {
             sku.setQuantity(dto.getQuantity());
             sku.setImageURL(dto.getImageURL());
             sku.setMainSku(dto.getMainSku());
-
             sku.setProduct(productService.findOne(dto.getProductId()));
-
             sku.setCreatedDate(new Date());
 
             sku = productSKUService.add(sku);
-
             result.setData(sku.getId());
             result.setMessage("New product SKU created with ID: " + sku.getId());
             result.setSuccessful(true);
@@ -151,23 +141,42 @@ public class ProductSkuApiController {
         return result;
     }
 
-
-    private boolean isMainSkuExisted(int productId, int skuId, int mainSku) {
+    private boolean isMainSkuExisted(int productId, int skuId) {
         ProductSku currentMainSku = productSKUService.getMainSkuByProductId(productId);
-        if (currentMainSku.getId() != skuId && mainSku == 1) {
+        if (currentMainSku.getId() != skuId) {
             return true;
         }
         return false;
-
     }
 
-    private boolean isMainSkuExisted(int productId, int mainSku) {
+    private boolean isMainSkuExisted(int productId) {
         ProductSku currentMainSku = productSKUService.getMainSkuByProductId(productId);
         if (currentMainSku != null) {
             return true;
         }
         return false;
+    }
 
+    @DeleteMapping(value = "/delete/{skuId}")
+    public BaseApiResult addNewProductImage(@PathVariable int skuId) {
+        DataApiResult result = new DataApiResult();
+
+        try {
+            boolean isSkuDeleted = productSKUService.deleteOne(skuId);
+
+            if (isSkuDeleted) {
+                result.setSuccessful(true);
+                result.setMessage("Sku deleted successfully");
+            } else {
+                result.setSuccessful(false);
+                result.setMessage("Sku is already purchased or in cart. Can't be deleted");
+            }
+
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
     }
 
 }
