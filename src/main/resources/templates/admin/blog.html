@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Blogs Management</h1>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/admin/blog}" th:object="${search}"
+                          method="get">
+                        <input class="form-control mr-sm-2" th:field="*{title}" type="search" placeholder="Search"
+                               aria-label="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+                <h2 th:if="${vm.getSearch()}" th:text="${vm.getSearch()}"></h2>
+
+                <div id="tagList" class="mb-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <h3>Tag List</h3>
+                                <button class="btn btn-primary edit-tag-btn"
+                                        data-toggle="modal"
+                                        data-target="#editTagModal">
+                                    Add New Tag
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div th:each="tag : ${vm.getTagVMList()}" class="btn-group mr-3 mb-2" role="group">
+                                <button type="button" class="btn btn-outline-primary" disabled
+                                        th:text="${'Tag: ' + tag.getName()}"></button>
+                                <button type="button" class="btn btn-outline-primary" disabled
+                                        th:text="${'Count: '+tag.getBlogCount()}"></button>
+                                <button type="button"
+                                        class="btn btn-outline-info edit-tag-btn"
+                                        th:attr="data-tag = ${tag.getId()}"
+                                        data-toggle="modal"
+                                        data-target="#editTagModal">
+                                    Rename
+                                </button>
+                                <button type="button"
+                                        class="btn btn-danger delete-modal-btn"
+                                        th:attr="data-tag = ${tag.getId()}"
+                                        data-toggle="modal"
+                                        data-target="#deleteTagModal">
+                                    Delete
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="blogList">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <h3>Blog List</h3>
+                                <a th:href="@{'/admin/blog-edit/'}"
+                                   class="btn btn-primary">Add new Blog</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span style="font-weight:bold;">Index</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Blog Title</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Short Desc</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Short Img</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Full Desc</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Full Img</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Tags</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Status</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Created Date</span>
+                                    </th>
+                                    <th>
+                                        <span style="font-weight:bold;">Options</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="blog, counter : ${vm.getBlogVMList()}">
+                                    <td th:text="${counter.index+1}"></td>
+                                    <td th:text="${blog.getTitle()}"></td>
+                                    <td>
+                                        <div th:utext="${blog.getShortDesc()}"
+                                             style="max-height: 200px; overflow-y: auto">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img style="width:100px; height:auto; border-radius: 0"
+                                             th:src="@{'../'+${blog.getShortImg()}}">
+                                    </td>
+                                    <td>
+                                        <div th:utext="${blog.getFullDesc()}"
+                                             style="max-height: 200px; overflow-y: hidden">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img style="width:100px; height:auto; border-radius: 0"
+                                             th:src="@{'../'+${blog.getFullImg()}}">
+                                    </td>
+                                    <td>
+                                       <div th:each="tag : ${blog.getTagVMList()}">
+                                           <button class="btn btn-outline-primary btn-sm mr-2 mb-2" disabled
+                                                   th:text="${tag.getName()}"></button>
+                                       </div>
+
+                                    </td>
+                                    <td th:switch="${blog.getStatus()}">
+                                        <button class="btn btn-secondary" th:case="'0'">Hidden</button>
+                                        <button class="btn btn-success" th:case="'1'">Published</button>
+                                    </td>
+                                    <td th:text="${blog.getCreatedDate()}"></td>
+                                    <td>
+                                        <a th:href="@{'/admin/blog-edit/' + ${blog.getId()}}"
+                                           class="btn btn-primary">Edit Blog</a>
+                                        <button th:if="${blog.getStatus()} == 1"
+                                                class="btn btn-danger switch-status-btn"
+                                                th:attr="data-blog = ${blog.getId()}">
+                                            Hide Blog
+                                        </button>
+                                        <button th:if="${blog.getStatus()} == 0"
+                                                class="btn btn-success switch-status-btn"
+                                                th:attr="data-user = ${blog.getId()}">
+                                            Publish
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <nav style="margin-top: 50px" aria-label="..." th:if="${vm.getBlogVMList().size()>0}">
+                    <ul class="pagination">
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a class="page-link" th:href="${''}" th:text="${i+1}"><span class="sr-only"></span></a>
+                            </li>
+                            <li class="page-item" th:unless="${page.number == i}">
+                                <a class="page-link" th:text="${i+1}"
+                                   th:href="${'?'
+                                   +('&page='+i)
+                                   +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                   +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}">
+                                </a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </nav>
+
+                <!-- Delete Tag Modal-->
+                <div class="modal fade" id="deleteTagModal" tabindex="-1" role="dialog"
+                     aria-labelledby="deleteTagModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteTagModalTitle">Delete Tag</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body container">
+                                <p>Are you sure to delete this Tag?</p>
+                                <h3 class="tag-delete-name"></h3>
+                                <span id="delete-tag-id"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger delete-tag-btn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Delete Tag Modal ends-->
+
+                <!-- Edit Tag Modal-->
+                <div class="modal fade" id="editTagModal" tabindex="-1" role="dialog"
+                     aria-labelledby="editTagModalTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editTagModalTitle">Rename/Create Tag</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body container">
+                                <label>Tag name: </label>
+                                <input type="text" class="form-control" id="input-tag-name" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success save-tag-btn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Edit Tag Modal ends-->
+
+            </div>
+            <!-- main-panel ends -->
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/dashboard.js}"></script>
+
+<script th:src="@{/js/admin-blog.js}"></script>
+</body>
+
+</html>
