@@ -16,4 +16,8 @@ public class BlogService {
     public Page<Blog> getBlogPageContaining(Pageable pageable, String search) {
         return blogRepository.getPageContaining(pageable, search);
     }
+
+    public int countByTag(int tagId) {
+        return blogRepository.findAllByTagId(tagId);
+    }
 }

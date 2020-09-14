@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -405,7 +406,7 @@ public class AdminController extends BaseController {
             if (userOrderList.size() > 0) {
                 long totalSpending = 0L;
 
-                for(Order order: userOrderList) {
+                for (Order order : userOrderList) {
                     totalSpending += order.getTotalPrice();
                 }
                 userVM.setTotalSpending(totalSpending);
@@ -437,9 +438,9 @@ public class AdminController extends BaseController {
 
     @GetMapping("/blog")
     public String getBlogs(Model model,
-                            @Valid @ModelAttribute("search") BlogVM blogSearch,
-                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+                           @Valid @ModelAttribute("search") BlogVM blogSearch,
+                           @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                           @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
     ) {
         AdminBlogVM vm = new AdminBlogVM();
 
@@ -467,13 +468,18 @@ public class AdminController extends BaseController {
 
             List<TagVM> tagVMS = new ArrayList<>();
 
-            for(Tag tag: blog.getTagList()) {
+            for (Tag tag : blog.getTagList()) {
                 TagVM tagVM = new TagVM();
                 tagVM.setId(tag.getId());
                 tagVM.setName(tag.getName());
 
                 tagVMS.add(tagVM);
             }
+
+            Collections.sort(tagVMS, (tag1, tag2) ->
+                    tag1.getName().compareToIgnoreCase(tag2.getName())
+            );
+
             blogVM.setTagVMList(tagVMS);
 
             blogVMList.add(blogVM);
@@ -482,13 +488,17 @@ public class AdminController extends BaseController {
         List<TagVM> tagVMList = new ArrayList<>();
         List<Tag> tagList = tagService.getAll();
 
-        for (Tag tag: tagList) {
+        for (Tag tag : tagList) {
             TagVM tagVM = new TagVM();
             tagVM.setId(tag.getId());
             tagVM.setName(tag.getName());
+            tagVM.setBlogCount(blogService.countByTag(tag.getId()));
             tagVMList.add(tagVM);
         }
 
+        Collections.sort(tagVMList, (tag1, tag2) ->
+                tag1.getName().compareToIgnoreCase(tag2.getName())
+        );
 
         vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
         vm.setBlogVMList(blogVMList);

@@ -5,6 +5,15 @@ import java.util.Date;
 public class TagVM {
     private int id;
     private String name;
+    private int blogCount;
+
+    public int getBlogCount() {
+        return blogCount;
+    }
+
+    public void setBlogCount(int blogCount) {
+        this.blogCount = blogCount;
+    }
 
     public int getId() {
         return id;

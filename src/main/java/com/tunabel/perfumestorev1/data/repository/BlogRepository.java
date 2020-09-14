@@ -12,4 +12,8 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     @Query("SELECT b FROM Blog b " +
             "WHERE (:search IS NULL OR UPPER(b.title) LIKE CONCAT('%',UPPER(:search),'%'))")
     Page<Blog> getPageContaining(Pageable pageable, @Param("search") String search);
+
+    @Query(value = "SELECT COUNT(b.blog_id) FROM dbo_blog b " +
+            "JOIN dbo_blog_tag bt WHERE bt.tag_id = :tagId", nativeQuery = true)
+    int findAllByTagId(@Param("tagId") int tagId);
 }
