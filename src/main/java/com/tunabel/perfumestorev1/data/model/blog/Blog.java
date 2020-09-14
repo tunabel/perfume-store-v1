@@ -41,7 +41,7 @@ public class Blog {
     @Column(name = "created_date")
     Date createdDate;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "blog")
+    @ManyToMany
     @JoinTable(
             name = "dbo_blog_tag",
             joinColumns = @JoinColumn(name = "blog_id"),
