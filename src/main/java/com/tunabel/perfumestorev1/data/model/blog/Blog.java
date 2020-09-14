@@ -41,8 +41,13 @@ public class Blog {
     @Column(name = "created_date")
     Date createdDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "blog")
-    List<BlogTag> blogTagList = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "blog")
+    @JoinTable(
+            name = "dbo_blog_tag",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    List<Tag> tagList = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -108,11 +113,11 @@ public class Blog {
         this.createdDate = createdDate;
     }
 
-    public List<BlogTag> getBlogTagList() {
-        return blogTagList;
+    public List<Tag> getTagList() {
+        return tagList;
     }
 
-    public void setBlogTagList(List<BlogTag> blogTagList) {
-        this.blogTagList = blogTagList;
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 }
