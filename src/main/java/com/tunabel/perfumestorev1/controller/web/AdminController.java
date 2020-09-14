@@ -1,8 +1,12 @@
 package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.*;
+import com.tunabel.perfumestorev1.data.model.blog.Blog;
+import com.tunabel.perfumestorev1.data.model.blog.Tag;
 import com.tunabel.perfumestorev1.data.service.*;
 import com.tunabel.perfumestorev1.model.viewmodel.admin.*;
+import com.tunabel.perfumestorev1.model.viewmodel.blog.BlogVM;
+import com.tunabel.perfumestorev1.model.viewmodel.blog.TagVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.*;
 import com.tunabel.perfumestorev1.model.viewmodel.order.OrderSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.order.OrderVM;
@@ -46,6 +50,10 @@ public class AdminController extends BaseController {
     private OrderSkuService orderSkuService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("")
     public String admin(Model model) {
@@ -425,6 +433,74 @@ public class AdminController extends BaseController {
         model.addAttribute("page", userPage);
 
         return "/admin/user";
+    }
+
+    @GetMapping("/blog")
+    public String getBlogs(Model model,
+                            @Valid @ModelAttribute("search") BlogVM blogSearch,
+                            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size
+    ) {
+        AdminBlogVM vm = new AdminBlogVM();
+
+        Pageable pageable = new PageRequest(page, size);
+
+        Page<Blog> blogPage = null;
+
+        if (blogSearch.getTitle() != null && !blogSearch.getTitle().isEmpty()) {
+            blogPage = blogService.getBlogPageContaining(pageable, blogSearch.getTitle().trim());
+            vm.setSearch("Find with keyword: " + blogSearch.getTitle());
+        } else blogPage = blogService.getBlogPageContaining(pageable, null);
+
+        List<BlogVM> blogVMList = new ArrayList<>();
+
+        for (Blog blog : blogPage.getContent()) {
+            BlogVM blogVM = new BlogVM();
+
+            blogVM.setId(blog.getId());
+            blogVM.setTitle(blog.getTitle());
+            blogVM.setShortDesc(blog.getShortDesc());
+            blogVM.setShortImg(blog.getShortImg());
+            blogVM.setFullDesc(blog.getFullDesc());
+            blogVM.setFullImg(blog.getFullImg());
+            blogVM.setCreatedDate(blog.getCreatedDate());
+
+            List<TagVM> tagVMS = new ArrayList<>();
+
+            for(Tag tag: blog.getTagList()) {
+                TagVM tagVM = new TagVM();
+                tagVM.setId(tag.getId());
+                tagVM.setName(tag.getName());
+
+                tagVMS.add(tagVM);
+            }
+            blogVM.setTagVMList(tagVMS);
+
+            blogVMList.add(blogVM);
+        }
+
+        List<TagVM> tagVMList = new ArrayList<>();
+        List<Tag> tagList = tagService.getAll();
+
+        for (Tag tag: tagList) {
+            TagVM tagVM = new TagVM();
+            tagVM.setId(tag.getId());
+            tagVM.setName(tag.getName());
+            tagVMList.add(tagVM);
+        }
+
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setBlogVMList(blogVMList);
+        vm.setTagVMList(tagVMList);
+        if (blogVMList.size() == 0) {
+            vm.setSearch("No blog found");
+        }
+
+        model.addAttribute("vm", vm);
+        model.addAttribute("page", blogPage);
+
+        return "/admin/blog";
     }
 
 //
