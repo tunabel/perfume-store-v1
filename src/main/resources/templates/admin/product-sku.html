@@ -68,7 +68,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="sku : ${vm.getOrderSkuVMList()}">
+                                <tr th:each="sku : ${vm.getProductSkuVMList()}">
                                     <td th:text="${sku.getId()}"></td>
                                     <td>
                                         <img th:if="${!sku.getImageURL().isEmpty()}"

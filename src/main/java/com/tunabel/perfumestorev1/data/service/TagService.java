@@ -16,4 +16,8 @@ public class TagService {
     public List<Tag> getAll() {
         return tagRepository.findAll();
     }
+
+    public List<Tag> getAllExceptForBlogId(int blogId) {
+        return tagRepository.findAllExceptForBlogId(blogId);
+    }
 }

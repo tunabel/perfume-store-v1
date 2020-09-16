@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin-head"></head>
+<body>
+<div class="container-scroller">
+
+    <!-- partial:partials/_navbar.html -->
+    <div th:replace="fragments/admin-header :: header_info (vm=${vm.getHeaderMenuAdminVM()})"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div th:replace="fragments/admin-sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1>Blog Editor</h1>
+                </div>
+
+                <div id="blogEditor">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex mb-3 justify-content-between">
+                                <a class="btn btn-primary" href="/admin/blog" style="align-self: flex-end">
+                                    Go back to Blog List
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" th:object="${vm.getBlogVMList().get(0)}">
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">Short Image</div>
+                                    <div class="d-flex flex-row">
+                                        <img id="short-img" th:src="*{'/'+shortImg}" style="height: 200px">
+                                        <div class="ml-4">
+                                            <div class="mb-3">Select other image:</div>
+                                            <input type="file" id="input-short-img">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">Short Description</div>
+                                    <textarea type="text" name="input-short-desc" class="form-control"
+                                              id="input-short-desc"
+                                              th:text="*{shortDesc}"></textarea>
+                                </div>
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">Full Image</div>
+                                    <div class="d-flex flex-row">
+                                        <img id="full-img" th:src="*{'/'+fullImg}" style="height: 200px">
+                                        <div class="ml-4">
+                                            <div class="mb-3">Select other image:</div>
+                                            <input type="file" id="input-full-img">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">Full Description</div>
+                                    <textarea name="input-full-desc" class="form-control" id="input-full-desc"
+                                              th:text="*{fullDesc}"></textarea>
+                                </div>
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">List Tags</div>
+                                    <div th:each="tag: *{tagVMList}">
+                                        <input type="checkbox" name="tag" th:value="${tag.getId()}" checked>
+                                        <label class="tag-label" th:text="${tag.getName()}"></label>
+                                    </div>
+                                    <div th:each="tag: ${vm.getTagVMList()}">
+                                        <input type="checkbox" name="tag" th:value="${tag.getId()}">
+                                        <label class="tag-label" th:text="${tag.getName()}"></label>
+                                    </div>
+                                    <div  class="input-group">
+                                        <input type="text" id="input-new-tag" class="form-control">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-info" id="new-tag-btn" >Add new tag</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4 pb-4 border-bottom">
+                                    <div class="h4 mb-3">Blog Status</div>
+                                    <div>
+                                        <select class="form-control" id="input-blog-status">
+                                            <option value="0" th:if="*{status == 0}" selected>Hidden</option>
+                                            <option value="0" th:if="*{status == 1}">Hidden</option>
+                                            <option value="1" th:if="*{status == 1}" selected>Published</option>
+                                            <option value="1" th:if="*{status == 0}">Published</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="/admin/blog" class="btn btn-secondary mr-3">Cancel</a>
+                                    <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- partial:partials/_footer.html -->
+            <div th:replace="fragments/admin-footer :: footer_info"></div>
+            <!-- partial -->
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/vendors/base/vendor.bundle.base.js}"></script>
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/sweetalert2.min.js}"></script>
+
+<script th:src="@{/js/summernote-bs4.min.js}"></script>
+<script th:src="@{/js/admin-blog-detail.js}"></script>
+</body>
+
+</html>

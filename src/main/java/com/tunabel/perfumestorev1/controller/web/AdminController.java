@@ -513,6 +513,67 @@ public class AdminController extends BaseController {
         return "/admin/blog";
     }
 
+
+    @GetMapping("/blog-edit/{blogId}")
+    public String getBlogDetail(Model model,
+                                @PathVariable int blogId
+    ) {
+        Blog blog = blogService.getById(blogId);
+        AdminBlogVM vm = new AdminBlogVM();
+
+        List<BlogVM> blogVMList = new ArrayList<>();
+        if (blog != null) {
+
+
+            BlogVM blogVM = new BlogVM();
+
+            blogVM.setId(blog.getId());
+            blogVM.setTitle(blog.getTitle());
+            blogVM.setShortDesc(blog.getShortDesc());
+            blogVM.setShortImg(blog.getShortImg());
+            blogVM.setFullDesc(blog.getFullDesc());
+            blogVM.setFullImg(blog.getFullImg());
+            blogVM.setCreatedDate(blog.getCreatedDate());
+
+            List<TagVM> tagVMS = new ArrayList<>();
+
+            for (Tag tag : blog.getTagList()) {
+                TagVM tagVM = new TagVM();
+                tagVM.setId(tag.getId());
+                tagVM.setName(tag.getName());
+
+                tagVMS.add(tagVM);
+            }
+
+            Collections.sort(tagVMS, (tag1, tag2) ->
+                    tag1.getName().compareToIgnoreCase(tag2.getName())
+            );
+
+            blogVM.setTagVMList(tagVMS);
+
+            blogVMList.add(blogVM);
+        }
+
+        List<TagVM> tagVMList = new ArrayList<>();
+        List<Tag> tagList = tagService.getAllExceptForBlogId(blogId);
+
+        for (Tag tag : tagList) {
+            TagVM tagVM = new TagVM();
+            tagVM.setId(tag.getId());
+            tagVM.setName(tag.getName());
+            tagVMList.add(tagVM);
+        }
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setBlogVMList(blogVMList);
+        vm.setTagVMList(tagVMList);
+
+        model.addAttribute("vm", vm);
+
+        return "/admin/blog-detail";
+    }
+
+
 //
 //    @GetMapping("/chart")
 //    public String chart(Model model) {

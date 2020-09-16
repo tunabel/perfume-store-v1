@@ -20,4 +20,8 @@ public class BlogService {
     public int countByTag(int tagId) {
         return blogRepository.findAllByTagId(tagId);
     }
+
+    public Blog getById(int blogId) {
+        return blogRepository.findOne(blogId);
+    }
 }
