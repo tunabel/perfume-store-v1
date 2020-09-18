@@ -14,4 +14,8 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
             "WHERE bt.blog_id = :blogId) " +
             "ORDER BY t.tag_name", nativeQuery = true)
     List<Tag> findAllExceptForBlogId(@Param("blogId") int blogId);
+
+    @Query(value = "SELECT t FROM Tag t " +
+            "WHERE UPPER(t.name) LIKE CONCAT('%',UPPER(:tagName),'%') ")
+    List<Tag> findByName(@Param("tagName") String tagName);
 }

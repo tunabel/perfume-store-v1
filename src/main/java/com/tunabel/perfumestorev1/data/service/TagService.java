@@ -20,4 +20,13 @@ public class TagService {
     public List<Tag> getAllExceptForBlogId(int blogId) {
         return tagRepository.findAllExceptForBlogId(blogId);
     }
+
+    public boolean isExistedName(String tagName) {
+        List<Tag> tagList = tagRepository.findByName(tagName);
+        return (tagList.size() > 0) ? true : false;
+    }
+
+    public Tag save(Tag newTagEntity) {
+        return tagRepository.save(newTagEntity);
+    }
 }
