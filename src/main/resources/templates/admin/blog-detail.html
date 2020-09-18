@@ -29,71 +29,159 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="post" th:object="${vm.getBlogVMList().get(0)}">
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">Short Image</div>
-                                    <div class="d-flex flex-row">
-                                        <img id="short-img" th:src="*{'/'+shortImg}" style="height: 200px">
-                                        <div class="ml-4">
-                                            <div class="mb-3">Select other image:</div>
-                                            <input type="file" id="input-short-img">
+                            <!--                            <form method="post" th:object="${vm.getBlogVMList()().get(0)}">-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">Short Image</div>-->
+                            <!--                                    <div class="d-flex flex-row">-->
+                            <!--                                        <img id="short-img" th:src="*{'/'+shortImg}" style="height: 200px">-->
+                            <!--                                        <div class="ml-4">-->
+                            <!--                                            <div class="mb-3">Select other image:</div>-->
+                            <!--                                            <input type="file" id="input-short-img">-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">Short Description</div>-->
+                            <!--                                    <textarea type="text" name="input-short-desc" class="form-control"-->
+                            <!--                                              id="input-short-desc"-->
+                            <!--                                              th:text="*{shortDesc}"></textarea>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">Full Image</div>-->
+                            <!--                                    <div class="d-flex flex-row">-->
+                            <!--                                        <img id="full-img" th:src="*{'/'+fullImg}" style="height: 200px">-->
+                            <!--                                        <div class="ml-4">-->
+                            <!--                                            <div class="mb-3">Select other image:</div>-->
+                            <!--                                            <input type="file" id="input-full-img">-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">Full Description</div>-->
+                            <!--                                    <textarea name="input-full-desc" class="form-control" id="input-full-desc"-->
+                            <!--                                              th:text="*{fullDesc}"></textarea>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">List Tags</div>-->
+                            <!--                                    <div th:each="tag: *{tagVMList}">-->
+                            <!--                                        <input type="checkbox" name="tag" th:value="${tag.getId()}" checked>-->
+                            <!--                                        <label class="tag-label" th:text="${tag.getName()}"></label>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div th:each="tag: ${vm.getTagVMList()}">-->
+                            <!--                                        <input type="checkbox" name="tag" th:value="${tag.getId()}">-->
+                            <!--                                        <label class="tag-label" th:text="${tag.getName()}"></label>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div  class="input-group">-->
+                            <!--                                        <input type="text" id="input-new-tag" class="form-control">-->
+                            <!--                                        <div class="input-group-append">-->
+                            <!--                                            <button type="button" class="btn btn-info" id="new-tag-btn" >Add new tag</button>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="mb-4 pb-4 border-bottom">-->
+                            <!--                                    <div class="h4 mb-3">Blog Status</div>-->
+                            <!--                                    <div>-->
+                            <!--                                        <select class="form-control" id="input-blog-status">-->
+                            <!--                                            <option value="0" th:if="*{status == 0}" selected>Hidden</option>-->
+                            <!--                                            <option value="0" th:if="*{status == 1}">Hidden</option>-->
+                            <!--                                            <option value="1" th:if="*{status == 1}" selected>Published</option>-->
+                            <!--                                            <option value="1" th:if="*{status == 0}">Published</option>-->
+                            <!--                                        </select>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div>-->
+                            <!--                                    <a href="/admin/blog" class="btn btn-secondary mr-3">Cancel</a>-->
+                            <!--                                    <button type="submit" class="btn btn-primary submit-btn">Save</button>-->
+                            <!--                                </div>-->
+                            <!--                            </form>-->
+
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">Short Image</div>
+                                <div class="d-flex flex-row">
+                                    <img id="short-img" th:src="${'../../'+ vm.getBlogVMList().get(0).getShortImg()}"
+                                         style="height: 200px">
+                                    <div class="ml-4">
+                                        <div class="mb-3">Select other image:</div>
+                                        <input type="file" id="input-short-img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">Short Description</div>
+                                <textarea type="text" name="input-short-desc" class="form-control"
+                                          id="input-short-desc"
+                                          th:text="${vm.getBlogVMList().get(0).getShortDesc()}"></textarea>
+                            </div>
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">Full Image</div>
+                                <div class="d-flex flex-row">
+                                    <img id="full-img" th:src="${'../../'+ vm.getBlogVMList().get(0).getFullImg()}"
+                                         style="height: 200px">
+                                    <div class="ml-4">
+                                        <div class="mb-3">Select other image:</div>
+                                        <input type="file" id="input-full-img">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">Full Description</div>
+                                <textarea name="input-full-desc" class="form-control" id="input-full-desc"
+                                          th:text="${vm.getBlogVMList().get(0).getFullDesc()}"></textarea>
+                            </div>
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">List Tags</div>
+                                <div class="d-flex flex-row">
+                                    <div class="mr-3 border-right" style="width: 50%">
+                                        <div class="h5 mb-2">Existing tags</div>
+                                        <div th:each="tag: ${vm.getBlogVMList().get(0).getTagVMList()}">
+                                            <input type="checkbox" name="tag" th:value="${tag.getId()}" checked>
+                                            <label class="tag-label" th:text="${tag.getName()}"></label>
+                                        </div>
+                                        <div th:each="tag: ${vm.getTagVMList()}">
+                                            <input type="checkbox" name="tag" th:value="${tag.getId()}">
+                                            <label class="tag-label" th:text="${tag.getName()}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-content-between flex-wrap">
+                                        <div>
+                                            <div class="h5 mb-2">New tags</div>
+                                            <div id="new-tag-list">
+
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" id="input-new-tag" class="form-control">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-info" id="new-tag-btn">Add new tag
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">Short Description</div>
-                                    <textarea type="text" name="input-short-desc" class="form-control"
-                                              id="input-short-desc"
-                                              th:text="*{shortDesc}"></textarea>
-                                </div>
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">Full Image</div>
-                                    <div class="d-flex flex-row">
-                                        <img id="full-img" th:src="*{'/'+fullImg}" style="height: 200px">
-                                        <div class="ml-4">
-                                            <div class="mb-3">Select other image:</div>
-                                            <input type="file" id="input-full-img">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">Full Description</div>
-                                    <textarea name="input-full-desc" class="form-control" id="input-full-desc"
-                                              th:text="*{fullDesc}"></textarea>
-                                </div>
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">List Tags</div>
-                                    <div th:each="tag: *{tagVMList}">
-                                        <input type="checkbox" name="tag" th:value="${tag.getId()}" checked>
-                                        <label class="tag-label" th:text="${tag.getName()}"></label>
-                                    </div>
-                                    <div th:each="tag: ${vm.getTagVMList()}">
-                                        <input type="checkbox" name="tag" th:value="${tag.getId()}">
-                                        <label class="tag-label" th:text="${tag.getName()}"></label>
-                                    </div>
-                                    <div  class="input-group">
-                                        <input type="text" id="input-new-tag" class="form-control">
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-info" id="new-tag-btn" >Add new tag</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-4 pb-4 border-bottom">
-                                    <div class="h4 mb-3">Blog Status</div>
-                                    <div>
-                                        <select class="form-control" id="input-blog-status">
-                                            <option value="0" th:if="*{status == 0}" selected>Hidden</option>
-                                            <option value="0" th:if="*{status == 1}">Hidden</option>
-                                            <option value="1" th:if="*{status == 1}" selected>Published</option>
-                                            <option value="1" th:if="*{status == 0}">Published</option>
-                                        </select>
-                                    </div>
-                                </div>
+
+                            </div>
+                            <div class="mb-4 pb-4 border-bottom">
+                                <div class="h4 mb-3">Blog Status</div>
                                 <div>
-                                    <a href="/admin/blog" class="btn btn-secondary mr-3">Cancel</a>
-                                    <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                                    <select class="form-control" id="input-blog-status">
+                                        <option value="0" th:if="${vm.getBlogVMList().get(0).getStatus() == 0}" selected>
+                                            Hidden
+                                        </option>
+                                        <option value="0" th:if="${vm.getBlogVMList().get(0).getStatus() == 1}">Hidden
+                                        </option>
+                                        <option value="1" th:if="${vm.getBlogVMList().get(0).getStatus() == 1}" selected>
+                                            Published
+                                        </option>
+                                        <option value="1" th:if="${vm.getBlogVMList().get(0).getStatus() == 0}">
+                                            Published
+                                        </option>
+                                    </select>
                                 </div>
-                            </form>
+                            </div>
+                            <div>
+                                <a href="/admin/blog" class="btn btn-secondary mr-3">Cancel</a>
+                                <button class="btn btn-primary submit-btn">Save</button>
+                            </div>
                         </div>
                     </div>
                 </div>
