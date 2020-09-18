@@ -44,6 +44,8 @@ public class FileStorageService {
         long unixTimestamp = Instant.now().getEpochSecond();
 
         try {
+
+            //TODO different name for each type of image. maybe will need more params
             String newFileName = ""
                     + unixTimestamp + "-"
                     + file.getOriginalFilename();

@@ -17,7 +17,6 @@ $(document).ready(function () {
         });
     });
 
-
     $(".save-image-btn").on("click", function () {
         let formData = new FormData();
         linkPost = "/api/product-image/update/" + imageId;
