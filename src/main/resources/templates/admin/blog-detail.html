@@ -26,6 +26,7 @@
                                 <a class="btn btn-primary" href="/admin/blog" style="align-self: flex-end">
                                     Go back to Blog List
                                 </a>
+                                <button class="btn btn-success new-blog-btn" >Create new blog</button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -96,6 +97,13 @@
                             <!--                            </form>-->
 
                             <div class="mb-4 pb-4 border-bottom">
+                                <div class="h3">
+                                    <span class="mr-3">Blog Title:</span>
+                                    <span id="blog-id" th:text="${vm.getBlogVMList().get(0).getId()}" hidden></span>
+                                    <input type="text" id="input-blog-title"  th:value="${vm.getBlogVMList().get(0).getTitle()}"></input>
+                                </div>
+                                <div class="mb-4 border-bottom" style="text-align: right">Created/Updated Date: <span id="blog-date" th:text="${vm.getBlogVMList().get(0).getCreatedDate()}"></span>
+                                </div>
                                 <div class="h4 mb-3">Short Image</div>
                                 <div class="d-flex flex-row">
                                     <img id="short-img" th:src="${'../../'+ vm.getBlogVMList().get(0).getShortImg()}"
@@ -164,17 +172,14 @@
                                 <div class="h4 mb-3">Blog Status</div>
                                 <div>
                                     <select class="form-control" id="input-blog-status">
-                                        <option value="0" th:if="${vm.getBlogVMList().get(0).getStatus() == 0}" selected>
-                                            Hidden
-                                        </option>
-                                        <option value="0" th:if="${vm.getBlogVMList().get(0).getStatus() == 1}">Hidden
-                                        </option>
-                                        <option value="1" th:if="${vm.getBlogVMList().get(0).getStatus() == 1}" selected>
-                                            Published
-                                        </option>
-                                        <option value="1" th:if="${vm.getBlogVMList().get(0).getStatus() == 0}">
-                                            Published
-                                        </option>
+                                        <th:block th:if="${vm.getBlogVMList().get(0).getStatus() == 0}">
+                                            <option value="0" selected>Hidden</option>
+                                            <option value="1">Public</option>
+                                        </th:block>
+                                        <th:block th:if="${vm.getBlogVMList().get(0).getStatus() == 1}">
+                                            <option value="0">Hidden</option>
+                                            <option value="1" selected>Public</option>
+                                        </th:block>
                                     </select>
                                 </div>
                             </div>

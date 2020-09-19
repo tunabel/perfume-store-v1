@@ -29,4 +29,8 @@ public class TagService {
     public Tag save(Tag newTagEntity) {
         return tagRepository.save(newTagEntity);
     }
+
+    public Tag getOne(int tagId) {
+        return tagRepository.findOne(tagId);
+    }
 }

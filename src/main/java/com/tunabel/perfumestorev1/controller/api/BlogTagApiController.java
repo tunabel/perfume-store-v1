@@ -1,16 +1,20 @@
 package com.tunabel.perfumestorev1.controller.api;
 
 import com.tunabel.perfumestorev1.data.model.Brand;
+import com.tunabel.perfumestorev1.data.model.blog.Blog;
 import com.tunabel.perfumestorev1.data.model.blog.Tag;
 import com.tunabel.perfumestorev1.data.service.BlogService;
 import com.tunabel.perfumestorev1.data.service.TagService;
 import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
+import com.tunabel.perfumestorev1.model.dto.BlogDto;
 import com.tunabel.perfumestorev1.model.dto.BrandDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/blogtag")
@@ -27,7 +31,7 @@ public class BlogTagApiController {
     }
 
     @PostMapping(value = "/newTag")
-    public BaseApiResult createBrand(@RequestParam String newTag) {
+    public BaseApiResult createTag(@RequestParam String newTag) {
         DataApiResult result = new DataApiResult();
 
         String validatedTag = tagValidate(newTag);
@@ -52,5 +56,46 @@ public class BlogTagApiController {
             result.setMessage(e.getMessage());
         }
         return result;
+    }
+
+    @PostMapping(value = "/update")
+    public BaseApiResult updateBlog(@RequestBody BlogDto blogData) {
+        DataApiResult result = new DataApiResult();
+
+        if (blogData != null) {
+            Blog blog = blogService.getById(blogData.getId());
+            if (blog == null) {
+                blog = new Blog();
+            }
+
+            blog.setTitle(blogData.getTitle());
+            blog.setShortImg(blogData.getShortImg());
+            blog.setShortDesc(blogData.getShortDesc());
+            blog.setFullImg(blogData.getFullImg());
+            blog.setFullDesc(blogData.getFullDesc());
+            blog.setStatus(blogData.getStatus());
+            blog.setCreatedDate(new Date());
+
+            List<Tag> tagList = new ArrayList<>();
+            for (int tagId : blogData.getTagIdList()) {
+                Tag tag = tagService.getOne(tagId);
+                if (tag != null) {
+                    tagList.add(tag);
+                }
+            }
+
+            blog.setTagList(tagList);
+
+            try {
+                blogService.save(blog);
+                result.setMessage("Blog saved");
+                result.setSuccessful(true);
+            } catch (Exception e) {
+                result.setSuccessful(false);
+                result.setMessage(e.getMessage());
+            }
+        }
+        return result;
+
     }
 }

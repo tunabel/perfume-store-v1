@@ -24,4 +24,8 @@ public class BlogService {
     public Blog getById(int blogId) {
         return blogRepository.findOne(blogId);
     }
+
+    public Blog save(Blog blog) {
+        return blogRepository.save(blog);
+    }
 }

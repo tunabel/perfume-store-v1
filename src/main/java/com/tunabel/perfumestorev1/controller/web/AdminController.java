@@ -464,6 +464,7 @@ public class AdminController extends BaseController {
             blogVM.setShortImg(blog.getShortImg());
             blogVM.setFullDesc(blog.getFullDesc());
             blogVM.setFullImg(blog.getFullImg());
+            blogVM.setStatus(blog.getStatus());
             blogVM.setCreatedDate(blog.getCreatedDate());
 
             List<TagVM> tagVMS = new ArrayList<>();
@@ -533,6 +534,7 @@ public class AdminController extends BaseController {
             blogVM.setShortImg(blog.getShortImg());
             blogVM.setFullDesc(blog.getFullDesc());
             blogVM.setFullImg(blog.getFullImg());
+            blogVM.setStatus(blog.getStatus());
             blogVM.setCreatedDate(blog.getCreatedDate());
 
             List<TagVM> tagVMS = new ArrayList<>();
