@@ -33,4 +33,13 @@ public class TagService {
     public Tag getOne(int tagId) {
         return tagRepository.findOne(tagId);
     }
+
+    public Tag getByName(String name) {
+        List<Tag> results =  tagRepository.findByName(name);
+
+        if (results.size() > 0 ) {
+            return results.get(0);
+        }
+        return null;
+    }
 }

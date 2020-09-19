@@ -1,18 +1,24 @@
 $(document).ready(function () {
-
-    let dataProduct = {};
+    let tagData = {};
+    let tagIdToDelete = -1;
+    let tagIdToRename = -1;
 
     $("#new-tag-btn").on("click", function () {
-        dataProduct = {};
-        $('#input-product-name').val("");
-    });
+        tagData = {};
+        tagIdToDelete = -1;
+        tagIdToRename = -1;
 
+        $('#input-tag-name').val("");
+    });
+    //button to open modal
     $(".delete-modal-btn").on("click", function () {
-        imageId = $(this).data("image");
+        tagData = {};
+        tagIdToDelete = $(this).data("id");
+        $(".tag-delete-name").text($(this).data("name"))
     })
 
-    $(".delete-image-btn").on("click", function () {
-        axios.delete("/api/product-image/delete/" + imageId).then(function(res){
+    $(".delete-tag-btn").on("click", function () {
+        axios.delete("/api/blogtag/tag/delete/" + tagIdToDelete).then(function (res) {
             if (res.data.successful) {
                 swal(
                     'Good job!',
@@ -31,35 +37,62 @@ $(document).ready(function () {
         }, function (err) {
             swal(
                 'Error',
-                'Some error when deleting image',
+                'Some error when deleting tag',
                 'error'
             );
         })
     })
 
-    $(".edit-product").on("click", function () {
-        var pdInfo = $(this).data("product");
 
-        axios.get("/api/product/detail/" + pdInfo).then(function(res){
-            if(res.data.successful) {
-                data = res.data.data;
-                dataProduct.id = data.id;
-                $("#input-product-name").val(data.name);
-                $("#input-product-desc").val(data.description);
-                $("#input-product-brand").val(data.brandId);
-                $("#input-product-scent").val(data.scentId);
-                $("#input-product-type").val(data.typeId);
-                $("#input-product-gender").val(data.gender);
-                if(data.mainImageURL != null) {
-                    $('.product-img').attr('src', '/../'+data.mainImageURL);
-                } else {
-                    $('.product-img').attr('src', '/../images/blank_avatar.png');
-                }
-            } else {
-                console.log("Error");
-            }
-        }, function(err){
-            console.log("Error");
-        })
+    $(".edit-tag-btn").on('click', function () {
+        let tagInfo = $(this).data("tag").split(";");
+        tagIdToRename = tagInfo[0];
+        $("#input-tag-name").val(tagInfo[1]);
     });
+
+    $(".save-tag-btn").on('click', function () {
+
+        if ($("#input-tag-name").val() === "") {
+            swal(
+                'Error',
+                'You need to set the tag\'s name',
+                'error'
+            );
+            return;
+        }
+
+        if (tagIdToRename > 0) {
+            tagData.id = tagIdToRename;
+        }
+        tagData.name = $("#input-tag-name").val();
+        console.log(tagData);
+        var linkPost = "/api/blogtag/tag/save";
+
+        axios.post(linkPost, tagData).then(function (res) {
+            if (res.data.successful) {
+                swal(
+                    'Success!',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Error',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Some error when saving tag',
+                'error'
+            );
+        })
+
+    })
+
+
 });

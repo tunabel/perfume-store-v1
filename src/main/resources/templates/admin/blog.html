@@ -19,8 +19,8 @@
                     <h1>Blogs Management</h1>
                     <form class="form-inline my-2 my-lg-0" th:action="@{/admin/blog}" th:object="${search}"
                           method="get">
-                        <input class="form-control mr-sm-2" th:field="*{title}" type="search" placeholder="Search"
-                               aria-label="Search">
+                        <input class="form-control mr-sm-2" th:field="*{title}" type="search" placeholder="Search title"
+                               aria-label="Search title">
                         <button class="btn btn-primary" type="submit">Search</button>
                     </form>
                 </div>
@@ -46,14 +46,13 @@
                                         th:text="${'Count: '+tag.getBlogCount()}"></button>
                                 <button type="button"
                                         class="btn btn-outline-info edit-tag-btn"
-                                        th:attr="data-tag = ${tag.getId()}"
+                                        th:attr="data-tag = ${tag.getId()+';'+tag.getName()}"
                                         data-toggle="modal"
                                         data-target="#editTagModal">
                                     Rename
-                                </button>
                                 <button type="button"
                                         class="btn btn-danger delete-modal-btn"
-                                        th:attr="data-tag = ${tag.getId()}"
+                                        th:attr="data-tag = ${tag.getId()+';'+tag.getName()}"
                                         data-toggle="modal"
                                         data-target="#deleteTagModal">
                                     Delete
@@ -139,8 +138,8 @@
 
                                     </td>
                                     <td th:switch="${blog.getStatus()}">
-                                        <button class="btn btn-secondary" th:case="'0'">Hidden</button>
-                                        <button class="btn btn-success" th:case="'1'">Published</button>
+                                        <button class="btn btn-secondary" th:case="'0'" disabled>Hidden</button>
+                                        <button class="btn btn-success" th:case="'1'" disabled>Published</button>
                                     </td>
                                     <td th:text="${blog.getCreatedDate()}"></td>
                                     <td>
@@ -195,8 +194,8 @@
                             </div>
                             <div class="modal-body container">
                                 <p>Are you sure to delete this Tag?</p>
-                                <h3 class="tag-delete-name"></h3>
-                                <span id="delete-tag-id"></span>
+                                <div class="h3 tag-delete-name"></div>
+<!--                                <span id="delete-tag-id"></span>-->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -9,6 +9,7 @@ import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
 import com.tunabel.perfumestorev1.model.dto.BlogDto;
 import com.tunabel.perfumestorev1.model.dto.BrandDto;
+import com.tunabel.perfumestorev1.model.viewmodel.blog.TagVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,6 +97,42 @@ public class BlogTagApiController {
             }
         }
         return result;
+    }
 
+    @PostMapping(value = "/tag/save")
+    public BaseApiResult saveTag(@RequestBody TagVM tag) {
+        DataApiResult result = new DataApiResult();
+
+        String validatedTagName = tagValidate(tag.getName());
+
+        Tag possibleTag = tagService.getByName(validatedTagName);
+
+        //if submitted tagname is existed, and submitted tag is new or has different ID
+        if ((possibleTag != null && tag.getId() == null) ||
+                (possibleTag != null && possibleTag.getId() != tag.getId())) {
+            result.setSuccessful(false);
+            result.setMessage("Tag " + validatedTagName + " existed");
+            return result;
+        }
+
+        Tag savingTag = new Tag();
+
+        try {
+            //if the tag is to be updated:
+            if ((possibleTag == null && tag.getId() != null) || (possibleTag != null && possibleTag.getId() == tag.getId())) {
+                savingTag.setId(tag.getId());
+            }
+
+            savingTag.setName(validatedTagName);
+            tagService.save(savingTag);
+
+            result.setMessage("Tag " + validatedTagName + " added!");
+            result.setSuccessful(true);
+
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
     }
 }

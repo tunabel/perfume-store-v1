@@ -3,7 +3,7 @@ package com.tunabel.perfumestorev1.model.viewmodel.blog;
 import java.util.Date;
 
 public class TagVM {
-    private int id;
+    private Integer id;
     private String name;
     private int blogCount;
 
@@ -15,11 +15,11 @@ public class TagVM {
         this.blogCount = blogCount;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
