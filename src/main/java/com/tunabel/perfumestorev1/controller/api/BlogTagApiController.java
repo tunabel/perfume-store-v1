@@ -1,6 +1,5 @@
 package com.tunabel.perfumestorev1.controller.api;
 
-import com.tunabel.perfumestorev1.data.model.Brand;
 import com.tunabel.perfumestorev1.data.model.blog.Blog;
 import com.tunabel.perfumestorev1.data.model.blog.Tag;
 import com.tunabel.perfumestorev1.data.service.BlogService;
@@ -8,7 +7,6 @@ import com.tunabel.perfumestorev1.data.service.TagService;
 import com.tunabel.perfumestorev1.model.api.BaseApiResult;
 import com.tunabel.perfumestorev1.model.api.DataApiResult;
 import com.tunabel.perfumestorev1.model.dto.BlogDto;
-import com.tunabel.perfumestorev1.model.dto.BrandDto;
 import com.tunabel.perfumestorev1.model.viewmodel.blog.TagVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -129,6 +127,26 @@ public class BlogTagApiController {
             result.setMessage("Tag " + validatedTagName + " added!");
             result.setSuccessful(true);
 
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
+    @DeleteMapping(value = "/tag/delete/{tagId}")
+    public BaseApiResult deleteTag(@PathVariable int tagId) {
+        DataApiResult result = new DataApiResult();
+
+        try {
+            boolean isTagDeleted = tagService.deleteOne(tagId);
+            if (isTagDeleted) {
+                result.setSuccessful(true);
+                result.setMessage("Tag deleted successfully");
+            } else {
+                result.setSuccessful(false);
+                result.setMessage("Can't delete tag");
+            }
         } catch (Exception e) {
             result.setSuccessful(false);
             result.setMessage(e.getMessage());

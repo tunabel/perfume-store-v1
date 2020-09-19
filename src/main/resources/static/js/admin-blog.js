@@ -3,25 +3,26 @@ $(document).ready(function () {
     let tagIdToDelete = -1;
     let tagIdToRename = -1;
 
+    //button to open new tag modal
     $("#new-tag-btn").on("click", function () {
         tagData = {};
         tagIdToDelete = -1;
         tagIdToRename = -1;
-
         $('#input-tag-name').val("");
     });
-    //button to open modal
+    //button to open delete modal
     $(".delete-modal-btn").on("click", function () {
         tagData = {};
-        tagIdToDelete = $(this).data("id");
-        $(".tag-delete-name").text($(this).data("name"))
+        let tagInfo = $(this).data("tag").split(";");
+        tagIdToDelete = tagInfo[0];
+        $(".tag-delete-name").text(tagInfo[1]);
     })
-
+    //button to confirm tag deletion
     $(".delete-tag-btn").on("click", function () {
         axios.delete("/api/blogtag/tag/delete/" + tagIdToDelete).then(function (res) {
             if (res.data.successful) {
                 swal(
-                    'Good job!',
+                    'Deletion succeeded!',
                     res.data.message,
                     'success'
                 ).then(function () {
@@ -65,7 +66,6 @@ $(document).ready(function () {
             tagData.id = tagIdToRename;
         }
         tagData.name = $("#input-tag-name").val();
-        console.log(tagData);
         var linkPost = "/api/blogtag/tag/save";
 
         axios.post(linkPost, tagData).then(function (res) {

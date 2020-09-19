@@ -42,4 +42,15 @@ public class TagService {
         }
         return null;
     }
+
+    public boolean deleteOne(int tagId) {
+        Tag tag = tagRepository.findOne(tagId);
+        if (tag == null) {
+            return false;
+        } else {
+            tagRepository.delete(tagId);
+            return true;
+        }
+
+    }
 }
