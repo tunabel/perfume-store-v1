@@ -515,6 +515,34 @@ public class AdminController extends BaseController {
     }
 
 
+    @GetMapping("/blog-new/")
+    public String newBlogEdit(Model model) {
+        AdminBlogVM vm = new AdminBlogVM();
+
+        List<BlogVM> blogVMList = new ArrayList<>();
+        BlogVM blogVM = new BlogVM();
+
+        blogVMList.add(blogVM);
+
+        List<TagVM> tagVMList = new ArrayList<>();
+        List<Tag> tagList = tagService.getAll();
+
+        for (Tag tag : tagList) {
+            TagVM tagVM = new TagVM();
+            tagVM.setId(tag.getId());
+            tagVM.setName(tag.getName());
+            tagVMList.add(tagVM);
+        }
+
+        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
+        vm.setBlogVMList(blogVMList);
+        vm.setTagVMList(tagVMList);
+
+        model.addAttribute("vm", vm);
+
+        return "/admin/blog-detail";
+    }
+
     @GetMapping("/blog-edit/{blogId}")
     public String getBlogDetail(Model model,
                                 @PathVariable int blogId
