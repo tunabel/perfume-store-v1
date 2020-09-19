@@ -14,7 +14,7 @@ public class UserApiController {
     UserService userService;
 
     @PostMapping("/switch-status/{userId}")
-    public BaseApiResult updateBrand(@PathVariable int userId) {
+    public BaseApiResult updateUserStatus(@PathVariable int userId) {
         BaseApiResult result = new BaseApiResult();
 
         try {

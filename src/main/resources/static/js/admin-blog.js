@@ -66,8 +66,7 @@ $(document).ready(function () {
             tagData.id = tagIdToRename;
         }
         tagData.name = $("#input-tag-name").val();
-        var linkPost = "/api/blogtag/tag/save";
-
+        let linkPost = "/api/blogtag/tag/save";
         axios.post(linkPost, tagData).then(function (res) {
             if (res.data.successful) {
                 swal(
@@ -94,5 +93,33 @@ $(document).ready(function () {
 
     })
 
+    $(".switch-status-btn").on('click', function () {
+        let blogId = $(this).data("blog");
+        let linkPost = "/api/blogtag/switch-status/";
+        axios.post(linkPost + blogId).then(function (res) {
+            if (res.data.successful) {
+                swal(
+                    'Success!',
+                    res.data.message,
+                    'success'
+                ).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal(
+                    'Error',
+                    res.data.message,
+                    'error'
+                );
+            }
+        }, function (err) {
+            swal(
+                'Error',
+                'Some error when updating status',
+                'error'
+            );
+        })
+
+    })
 
 });

@@ -28,4 +28,22 @@ public class BlogService {
     public Blog save(Blog blog) {
         return blogRepository.save(blog);
     }
+
+    public boolean switchStatus(int blogId) {
+        Blog blog = blogRepository.getOne(blogId);
+
+        if (blog != null) {
+            int currStatus = blog.getStatus();
+            if (currStatus == 0) {
+                blog.setStatus(1);
+            } else {
+                blog.setStatus(0);
+            }
+
+            blogRepository.save(blog);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

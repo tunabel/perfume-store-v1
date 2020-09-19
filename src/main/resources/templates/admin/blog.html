@@ -152,8 +152,8 @@
                                         </button>
                                         <button th:if="${blog.getStatus()} == 0"
                                                 class="btn btn-success switch-status-btn"
-                                                th:attr="data-user = ${blog.getId()}">
-                                            Publish
+                                                th:attr="data-blog = ${blog.getId()}">
+                                            Publish Blog
                                         </button>
                                     </td>
                                 </tr>

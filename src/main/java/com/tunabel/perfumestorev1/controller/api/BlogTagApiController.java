@@ -153,4 +153,26 @@ public class BlogTagApiController {
         }
         return result;
     }
+
+
+    @PostMapping("/switch-status/{blogId}")
+    public BaseApiResult updateBlogStatus(@PathVariable int blogId) {
+        BaseApiResult result = new BaseApiResult();
+
+        try {
+            boolean isStatusUpdated = blogService.switchStatus(blogId);
+
+            if (isStatusUpdated) {
+                result.setSuccessful(true);
+                result.setMessage("Blog Status updated successfully");
+            } else {
+                result.setSuccessful(false);
+                result.setMessage("Blog Status not updated");
+            }
+        } catch (Exception e) {
+            result.setSuccessful(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
 }
