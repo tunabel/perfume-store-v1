@@ -18,8 +18,8 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" th:classappend="${vm.getPageName() == 'home' ? 'cta' : ''}"><a th:href="@{/}" class="nav-link">Home</a></li>
                     <li class="nav-item" th:classappend="${vm.getPageName() == 'shop' ? 'cta' : ''}"><a th:href="@{/shop}" class="nav-link">Shop</a></li>
-                    <li class="nav-item" th:classappend="${vm.getPageName() == 'blog' ? 'cta' : ''}"><a href="blog" class="nav-link">Blog</a></li>
-                    <li class="nav-item" th:classappend="${vm.getPageName() == 'aboutus' ? 'cta' : ''}"><a href="about" class="nav-link">About Us</a></li>
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'blog' ? 'cta' : ''}"><a th:href="@{/blog}" class="nav-link">Blog</a></li>
+                    <li class="nav-item" th:classappend="${vm.getPageName() == 'aboutus' ? 'cta' : ''}"><a th:href="@{/about-us}" class="nav-link">About Us</a></li>
                     <li class="nav-item" th:if="${!vm.isLoggedIn()}" th:classappend="${vm.getPageName() == 'profile' ? 'cta' : ''}">
                         <a th:href="@{/login}" class="nav-link">
 							<span class="icon-user">

@@ -46,4 +46,14 @@ public class BlogService {
             return false;
         }
     }
+
+    public Page<Blog> getActiveBlogPageFromSearchAndTag(Pageable pageRequest, String search, int tagId) {
+        if (tagId == 0) {
+
+            return blogRepository.getActiveBlogPageFromSearch(pageRequest, search);
+        } else {
+            return blogRepository.getActiveBlogPageFromSearchAndTag(pageRequest, search, tagId);
+
+        }
+    }
 }

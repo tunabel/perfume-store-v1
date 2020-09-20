@@ -149,7 +149,7 @@
                                     <a th:text="${sku.getBrand()}" class="brand-link"
                                        th:href="${'/shop?brand='+sku.getBrandId()}"></a>
                                 </h3>
-                                <h3 >
+                                <h3>
                                     <a th:text="${sku.getName()}" style="color:gray"
                                        th:href="${'/product/?sku='+sku.getId()}"></a>
                                 </h3>
@@ -176,13 +176,15 @@
                 <div class="block-27">
                     <ul>
                         <li><a href="#">&lt;</a></li>
-                        <th:block th:each="i: ${#numbers.sequence(1, page.totalPages)}">
-                            <li class="active" th:if="${page.number+1 == i}" aria-current="page">
-                                <a th:href="${#httpServletRequest.requestURI}" th:text="${i}"></a>
+                        <th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                            <li class="page-item active" th:if="${page.number == i}" aria-current="page">
+                                <a th:href="${''}" th:text="${i+1}"></a>
                             </li>
-                            <li th:unless="${page.number+1 == i}">
-                                <a th:text="${i}"
-                                   th:href="@{${#httpServletRequest.requestURI}+'?page='+i}">
+                            <li class="page-item" th:unless="${page.number == i}">
+                                <a th:text="${i+1}"
+                                   th:href="${'?'+('&page='+i)
+                                   +(#httpServletRequest.getParameter('size')==null?'':('&size='+#httpServletRequest.getParameter('size')))
+                                   +(#httpServletRequest.getParameter('name')==null?'':('&name='+#httpServletRequest.getParameter('name')))}">
                                 </a>
                             </li>
                         </th:block>
