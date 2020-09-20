@@ -1,9 +1,12 @@
 package com.tunabel.perfumestorev1.controller.web;
 
 import com.tunabel.perfumestorev1.data.model.ProductSku;
+import com.tunabel.perfumestorev1.data.model.blog.Blog;
+import com.tunabel.perfumestorev1.data.service.BlogService;
 import com.tunabel.perfumestorev1.data.service.BrandService;
 import com.tunabel.perfumestorev1.data.service.ProductSKUService;
 import com.tunabel.perfumestorev1.data.service.ProductService;
+import com.tunabel.perfumestorev1.model.viewmodel.blog.BlogVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.home.HomePageVM;
@@ -32,6 +35,9 @@ public class HomeController extends BaseController {
     @Autowired
     private ProductSKUService productSKUService;
 
+    @Autowired
+    private BlogService blogService;
+
     @GetMapping(value = "")
     public String home(Model model, HttpServletResponse response,
                        HttpServletRequest request,
@@ -43,7 +49,7 @@ public class HomeController extends BaseController {
 
         List<ProductSku> newArrivalList = productSKUService.getNewArrivalList(12);
         //TODO BestSeller List
-        List<ProductSku> bestSellerList = productSKUService.getNewArrivalList(5);
+        List<ProductSku> bestSellerList = productSKUService.getBestSellerList(5);
 
         List<ProductSkuVM> newArrivalVMList = new ArrayList<>();
         for (ProductSku productSKU : newArrivalList) {
@@ -72,6 +78,20 @@ public class HomeController extends BaseController {
 
         vm.setNewArrivalList(newArrivalVMList);
         vm.setBestSellerList(bestSellerVMList);
+
+        List<Blog> recentBlogList = blogService.getRecentList(3);
+        List<BlogVM> recentBlogVMList = new ArrayList<>();
+
+        for (Blog recentBlog : recentBlogList) {
+            BlogVM blogVM = new BlogVM();
+            blogVM.setId(recentBlog.getId());
+            blogVM.setTitle(recentBlog.getTitle());
+            blogVM.setShortImg(recentBlog.getShortImg());
+            blogVM.setShortDesc(recentBlog.getShortDesc());
+            recentBlogVMList.add(blogVM);
+        }
+
+        vm.setRecentBlogList(recentBlogVMList);
 
         HeaderMenuVM headerMenuVM = this.getHeaderMenuVM(cartQty, principal);
         headerMenuVM.setPageName("home");

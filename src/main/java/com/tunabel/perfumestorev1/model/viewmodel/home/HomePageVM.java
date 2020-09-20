@@ -1,5 +1,6 @@
 package com.tunabel.perfumestorev1.model.viewmodel.home;
 
+import com.tunabel.perfumestorev1.model.viewmodel.blog.BlogVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.HeaderMenuVM;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 
@@ -8,6 +9,7 @@ import java.util.List;
 public class HomePageVM {
     private List<ProductSkuVM> newArrivalList;
     private List<ProductSkuVM> bestSellerList;
+    private List<BlogVM> recentBlogList;
     private HeaderMenuVM headerMenuVM;
     private String searchQuery;
 
@@ -51,5 +53,13 @@ public class HomePageVM {
 
     public void setHeaderMenuVM(HeaderMenuVM headerMenuVM) {
         this.headerMenuVM = headerMenuVM;
+    }
+
+    public List<BlogVM> getRecentBlogList() {
+        return recentBlogList;
+    }
+
+    public void setRecentBlogList(List<BlogVM> recentBlogList) {
+        this.recentBlogList = recentBlogList;
     }
 }

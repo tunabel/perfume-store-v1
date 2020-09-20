@@ -27,7 +27,7 @@ public interface ProductSKURepository extends JpaRepository<ProductSku, Integer>
     Page<ProductSku> getPageMainSku(Pageable pageRequest, @Param("sort") String sort);
 
 
-    @Query("SELECT s FROM ProductSku s "+
+    @Query("SELECT s FROM ProductSku s " +
             "WHERE s.mainSku = 1")
     Page<ProductSku> getPageMainSkuBySales(Pageable pageRequest);
 
@@ -59,19 +59,11 @@ public interface ProductSKURepository extends JpaRepository<ProductSku, Integer>
             ")", nativeQuery = true)
     List<ProductSku> findAllByOrderId(@Param("orderId") int orderId);
 
-//    @Query(nativeQuery = true, value = "SELECT ps.sku_id, b.name, p.name, ps.name FROM dbo_product_sku ps " +
-//            "JOIN dbo_product p " +
-//            "ON ps.product_id = p.product_id " +
-//            "JOIN dbo_product_brand b " +
-//            "ON b.brand_id = p.brand_id " +
-//            "WHERE ps.sku_id IN ( " +
-//            "SELECT ps.sku_id FROM dbo_product_sku ps " +
-//            "JOIN dbo_order_sku os " +
-//            "ON os.sku_id = ps.sku_id " +
-//            "GROUP BY ps.sku_id, os.order_id " +
-//            "HAVING os.order_id IN ( " +
-//            "SELECT o.order_id FROM dbo_order o " +
-//            "WHERE MONTH(o.created_date) = :month AND YEAR(o.created_date) = :year) " +
-//            "ORDER BY SUM(os.quantity) DESC )")
-//    List<ChartDataVM> getListFiveHotProduct(Pageable pageable, int month, int year);
+    @Query(value = "SELECT p.*, SUM(op.quantity)AS SALES FROM dbo_product_sku p " +
+            "JOIN dbo_order_sku op " +
+            "ON op.sku_id = p.sku_id " +
+            "GROUP BY p.sku_id " +
+            "ORDER BY SALES DESC " +
+            "LIMIT :limit", nativeQuery = true)
+    List<ProductSku> getBestSellers(@Param("limit") int limit);
 }

@@ -12,8 +12,6 @@ public interface ProductSKURepositoryCustom {
 
     List<ProductSku> getNewArrivals(int limit);
 
-    List<ProductSku> getBestSellers(int limit);
-
     Page<ProductSku> getPageByQuery(ProductSearchVM searchVM, PageRequest pageRequest, String sort);
 
     Page<ProductSku> getPageMainSkuByArrival(PageRequest pageRequest);

@@ -23,18 +23,6 @@ public class ProductSKURepositoryImpl implements ProductSKURepositoryCustom {
     }
 
     @Override
-    public List<ProductSku> getBestSellers(int limit) {
-        Query query = entityManager.createNativeQuery("SELECT p.*, SUM(op.quantity)AS SALES FROM dbo_product_sku p\n" +
-                "JOIN dbo_order_sku op\n" +
-                "ON op.sku_id = p.sku_id\n" +
-                "GROUP BY p.sku_id\n" +
-                "ORDER BY SALES DESC\n" +
-                "LIMIT ?");
-        query.setParameter(1,limit);
-        return query.getResultList();
-    }
-
-    @Override
     public Page<ProductSku> getPageByQuery(ProductSearchVM searchVM, PageRequest pageRequest, String sort) {
         return null;
     }
