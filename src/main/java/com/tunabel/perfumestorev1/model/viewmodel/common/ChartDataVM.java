@@ -13,8 +13,8 @@ public class ChartDataVM {
         this.value = value.toString();
     }
 
-    public ChartDataVM(Integer label, Double value) {
-        this.label = "Tháng " + label.toString();
+    public ChartDataVM(Integer label, Long value) {
+        this.label = label.toString();
         this.value = value.toString();
     }
 

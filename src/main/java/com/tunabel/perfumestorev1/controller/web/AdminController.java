@@ -602,29 +602,4 @@ public class AdminController extends BaseController {
 
         return "/admin/blog-detail";
     }
-
-
-//
-//    @GetMapping("/chart")
-//    public String chart(Model model) {
-//
-//        ChartVM vm = new ChartVM();
-//
-//        vm.setHeaderMenuAdminVM(this.getHeaderMenuAdminVM());
-//
-//        List<ChartDataVM> chartDataVMS = new ArrayList<>();
-//
-//        List<Brand> brandList = brandService.getBrandList();
-//
-//        for(Brand brand : brandList) {
-//            chartDataVMS.add(new ChartDataVM(brand.getName(), (long) brand.getListProducts().size()));
-//        }
-//
-//        vm.setChartDataVMS(chartDataVMS);
-//
-//        model.addAttribute("vm", vm);
-//
-//        return "/admin/chart";
-//    }
-
 }

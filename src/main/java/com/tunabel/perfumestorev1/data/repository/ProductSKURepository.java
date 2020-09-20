@@ -2,9 +2,7 @@ package com.tunabel.perfumestorev1.data.repository;
 
 import com.tunabel.perfumestorev1.data.model.ProductSku;
 import com.tunabel.perfumestorev1.model.viewmodel.common.ChartDataVM;
-import com.tunabel.perfumestorev1.model.viewmodel.common.ProductSkuVM;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -66,4 +64,5 @@ public interface ProductSKURepository extends JpaRepository<ProductSku, Integer>
             "ORDER BY SALES DESC " +
             "LIMIT :limit", nativeQuery = true)
     List<ProductSku> getBestSellers(@Param("limit") int limit);
+
 }

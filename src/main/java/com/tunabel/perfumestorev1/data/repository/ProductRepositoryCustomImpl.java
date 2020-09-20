@@ -1,15 +1,20 @@
 package com.tunabel.perfumestorev1.data.repository;
 
 import com.tunabel.perfumestorev1.data.model.Product;
+import com.tunabel.perfumestorev1.data.model.ProductSku;
+import com.tunabel.perfumestorev1.model.viewmodel.common.ChartDataVM;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
 public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     @Autowired
     EntityManager entityManager;
+
+
 
 //    @Override
 //    public Product findBySkuId(int skuId) {

@@ -1,7 +1,9 @@
 package com.tunabel.perfumestorev1.data.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "dbo_product_sku")
@@ -18,6 +20,9 @@ public class ProductSku {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productSKU")
+    private List<OrderSku> orderSkuList = new ArrayList<>();
 
     private String name;
 
@@ -122,5 +127,13 @@ public class ProductSku {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<OrderSku> getOrderSkuList() {
+        return orderSkuList;
+    }
+
+    public void setOrderSkuList(List<OrderSku> orderSkuList) {
+        this.orderSkuList = orderSkuList;
     }
 }
