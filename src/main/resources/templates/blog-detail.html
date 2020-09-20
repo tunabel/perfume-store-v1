@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div th:replace="fragments/header :: header_info (vm=${vm.getHeaderMenuVM()})"></div>
+
+<div class="hero-wrap hero-bread" style="background-image: url('../../images/bg_6.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <div class="col-md-9 ftco-animate text-center">
+
+                    <h1 class="mb-0 bread">Blog</h1>
+                    <p class="breadcrumbs">
+                        <span class="mr-2">
+                            <a href="/">Home</a>
+                        </span>
+                        <span class="mr-2"> / <a href="/blog">Blog</a></span>
+
+                        <span class="mr-2"> / </span>
+                        <span>Blog Post</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 ftco-animate">
+                <h2 class="mb-3" th:text="${vm.getTitle()}"></h2>
+                <p>
+                    <img th:src="${'../../'+vm.getShortImg()}" alt="Short Img" class="img-fluid">
+                </p>
+                <div th:utext="${vm.getShortDesc()}"></div>
+
+                <p>
+                    <img th:src="${'../../'+vm.getFullImg()}" alt="Full Img" class="img-fluid">
+                </p>
+                <div th:utext="${vm.getFullDesc()}"></div>
+
+                <div class="tag-widget post-tag-container mb-5 mt-5">
+                    <div class="tagcloud">
+                        <span th:each="tag : ${vm.getBlogtagVMList()}">
+                            <a th:href="${'/blog/?tag='+tag.getId()}"
+                               class="tag-cloud-link"
+                               th:text="${tag.getName()}"
+                            >
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+            </div> <!-- .col-md-8 -->
+            <div class="col-lg-4 sidebar ftco-animate">
+                <div class="sidebar-box">
+                    <form action="#" class="search-form">
+                        <div class="form-group">
+                            <span class="icon fa fa-search"></span>
+                            <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                        </div>
+                    </form>
+                </div>
+                <div class="sidebar-box ftco-animate">
+                    <div class="categories">
+                        <h3>Tag List</h3>
+                        <li th:each="tag : ${vm.getAlltagVMList()}" class="d-flex justify-content-between">
+                            <a th:href="@{/blog/(tag=${tag.getId()})}" th:text="${tag.getName()}">
+                            </a>
+                            <span th:text="${tag.getBlogCount()}"></span>
+                        </li>
+                    </div>
+                </div>
+
+                <div class="sidebar-box ftco-animate">
+                    <h3>Recent Blog</h3>
+                    <div class="block-21 mb-4 d-flex" th:each="blog : ${vm.getRecentBlogVMList()}">
+                        <a class="blog-img mr-4" th:href="${'/blog/post/'+blog.getId()}" th:style="'background-image:url(../../' + ${blog.getShortImg()} + ');'"></a>
+                        <div class="text">
+                            <h3 class="heading">
+                                <a th:href="${'/blog/post/'+blog.getId()}" th:text="${blog.getTitle()}"></a>
+                            </h3>
+                            <div class="meta">
+<!--                                <div><a th:text="${#dates.format(blog.getCreatedDate(), 'dd-MM-yyyy')}" ></a></div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section> <!-- .section -->
+
+<div th:replace="fragments/footer :: footer_info"></div>
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.0.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.stellar.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/aos.js}"></script>
+<script th:src="@{/js/scrollax.min.js}"></script>
+<script th:src="@{/js/axios.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

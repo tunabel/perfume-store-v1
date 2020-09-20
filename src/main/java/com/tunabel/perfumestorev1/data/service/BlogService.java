@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BlogService {
 
@@ -49,11 +51,13 @@ public class BlogService {
 
     public Page<Blog> getActiveBlogPageFromSearchAndTag(Pageable pageRequest, String search, int tagId) {
         if (tagId == 0) {
-
             return blogRepository.getActiveBlogPageFromSearch(pageRequest, search);
         } else {
             return blogRepository.getActiveBlogPageFromSearchAndTag(pageRequest, search, tagId);
-
         }
+    }
+
+    public List<Blog> getRecentList(int limit) {
+        return blogRepository.getRecentBlogList(limit);
     }
 }

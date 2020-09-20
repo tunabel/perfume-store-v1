@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface BlogRepository extends JpaRepository<Blog, Integer> {
 
     @Query("SELECT b FROM Blog b " +
@@ -38,4 +40,8 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     @Query("SELECT b FROM Blog b " +
             "WHERE (:search IS NULL OR UPPER(b.title) LIKE CONCAT('%',UPPER(:search),'%')) AND b.status = 1")
     Page<Blog> getActiveBlogPageFromSearch(Pageable pageRequest, @Param("search") String search);
+
+
+    @Query(value = "SELECT * FROM dbo_blog b ORDER BY b.created_date DESC LIMIT :limit", nativeQuery = true)
+    List<Blog> getRecentBlogList(@Param("limit") int limit);
 }
