@@ -47,6 +47,15 @@ public interface ProductRepository extends JpaRepository<Product,Integer> , Prod
             "ORDER BY SUM(os.price) DESC")
     List<ChartDataVM> getBestSellersOfMonth(@Param("month") int monthValue, @Param("year") int year);
 
+    @Query("SELECT new com.tunabel.perfumestorev1.model.viewmodel.common.ChartDataVM(p.name, SUM(os.price)) FROM Product p " +
+            "JOIN p.productSkuList ps " +
+            "JOIN ps.orderSkuList os " +
+            "JOIN os.order o " +
+            "WHERE YEAR(o.createdDate) = :year " +
+            "GROUP BY p.id " +
+            "ORDER BY SUM(os.price) DESC")
+    List<ChartDataVM> getBestSellersOfYear(@Param("year") int year);
+
 //    @Query("SELECT p FROM dbo_product p " +
 //            "WHERE (:brandId IS NULL OR (p.brandId = :brandId))" +
 //            "AND (:productName IS NULL OR UPPER(p.name) LIKE CONCAT('%',UPPER(:productName),'%'))")

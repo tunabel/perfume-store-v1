@@ -35,7 +35,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query("SELECT new com.tunabel.perfumestorev1.model.viewmodel.common.ChartDataVM(DAY(o.createdDate), SUM(o.totalPrice)) FROM Order o " +
             "WHERE MONTH(o.createdDate) = :month " +
+            "AND YEAR(o.createdDate) = :year " +
             "GROUP BY DAY(o.createdDate) " +
             "ORDER BY DAY(o.createdDate)")
-    List<ChartDataVM> getRevenueDayByMonth(@Param("month") Integer month);
+    List<ChartDataVM> getRevenueDayByMonth(@Param("month") Integer month, @Param("year") Integer year);
 }
