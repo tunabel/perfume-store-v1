@@ -70,7 +70,10 @@ public class BaseController {
                         flag2 = false;
                         guid = c.getValue();
                         Cart guestCart = cartService.findFirstCartByGuid(guid);
-                        cartQty = cartSkuService.countSkuQty(guestCart.getId());
+                        //after guest has checked out, there won't be cart...
+                        if (guestCart != null) {
+                            cartQty = cartSkuService.countSkuQty(guestCart.getId());
+                        }
                     }
                 }
             }
@@ -114,12 +117,12 @@ public class BaseController {
 
         HeaderMenuAdminVM vm = new HeaderMenuAdminVM();
 
-        String  username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User userEntity = userService.findUserByUsername(username);
 
-        if(userEntity!=null) {
+        if (userEntity != null) {
             vm.setUsername(username);
-            if(userEntity.getAvatarURL() != null) {
+            if (userEntity.getAvatarURL() != null) {
                 vm.setAvatarURL(userEntity.getAvatarURL());
             } else vm.setAvatarURL("/images/blank_avatar.png");
         }

@@ -52,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" placeholder="" id="phone" required
+                                    <input type="text" class="form-control" placeholder="" id="phone" required maxlength="10"
                                            th:field="*{phone}">
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
 
                                 <p class="d-flex total-price">
                                     <span>Total</span>
-                                    <span th:text="${order.getPrice()}"></span>
+                                    <span th:text="${#numbers.formatInteger(order.getPrice(), 3, 'POINT')+'.000đ'}"></span>
                                 </p>
                                 <button type="submit" class="btn btn-primary py-3 px-4">Order</button>
                             </div>

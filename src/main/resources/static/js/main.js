@@ -339,7 +339,7 @@ $(document).ready(function () {
         var dataCart = {};
         var skuId = $(this).data("sku");
         dataCart.qty = document.getElementById('quantity').value;
-        dataCart.skuID = skuId;
+        dataCart.skuId = skuId;
         dataCart.guid = getCookie("guid");
         console.log(dataCart);
 

@@ -24,7 +24,7 @@
                     <!--                            data-target="#editProductSkuModal">-->
                     <!--                        Add new SKU-->
                     <!--                    </button>-->
-                    <button type="button" class="btn btn-behance" onclick="printJS('skuList', 'html')">
+                    <button type="button" class="btn btn-behance" id="printOrder">
                         Print Order
                     </button>
                     <a class="btn btn-primary" href="/admin/order" style="align-self: flex-end">
@@ -37,7 +37,7 @@
                             <div>
                                 <h2>Order Info</h2>
                                 <div class="mb-3" style="font-size: 18px">
-                                    <div>Order ID: <span th:text="${vm.getOrderId()}"></span></div>
+                                    <div>Order ID: <span th:text="${vm.getOrderId()}" id="order-id"></span></div>
                                     <div>Username: <span th:text="${vm.getUsername()}"></span></div>
                                     <div>Created Date: <span th:text="${vm.getCreatedDate()}"></span></div>
                                     <div>Receiver Address:
@@ -118,8 +118,10 @@
 <script th:src="@{/vendors/jquery-bar-rating/jquery.barrating.min.js}"></script>
 <script th:src="@{/js/axios.min.js}"></script>
 <script th:src="@{/js/sweetalert2.min.js}"></script>
+<script th:src="@{/js/pdfmake.min.js}"></script>
+<script th:src="@{/js/vfs_fonts.js}"></script>
 
-<script th:src="@{/js/admin-product-sku.js}"></script>
+<script th:src="@{/js/admin-order-sku.js}"></script>
 </body>
 
 </html>

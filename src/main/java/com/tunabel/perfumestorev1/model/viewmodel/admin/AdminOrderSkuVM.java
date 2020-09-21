@@ -17,6 +17,8 @@ public class AdminOrderSkuVM {
     private long totalPrice;
     private Date createdDate;
 
+
+
     private HeaderMenuAdminVM headerMenuAdminVM;
 
 

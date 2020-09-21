@@ -89,7 +89,14 @@
                                     var newTotal = parseInt(document.getElementById('totalPrice').innerText) +
                                         parseInt(document.getElementById('price' + [[${cartSku.getSkuId()}]]).innerText);
                                     document.getElementById('totalPrice').innerText = newTotal;
-                                    document.getElementById('display_totalPrice').innerText = (newTotal.toLocaleString("DE") + ".000đ");
+                                    let formattedTotal;
+
+                                    if (newTotal > 0) {
+                                        formattedTotal = newTotal.toLocaleString("DE") + ".000đ";
+                                    } else {
+                                        formattedTotal = 0;
+                                    }
+                                    document.getElementById('display_totalPrice').innerText = (formattedTotal);
                                 }
                             </script>
                         </tr><!-- END TR-->
@@ -119,7 +126,8 @@
                     <p class="d-flex total-price">
                         <span>Cart Total</span>
                         <span id="totalPrice" th:text="${vm.getTotalPrice()}" style="display:none"></span>
-                        <span id="display_totalPrice"
+
+                        <span id="display_totalPrice" th:if="${vm.getTotalPrice() > 0}"
                               th:text="${#numbers.formatInteger(vm.getTotalPrice(), 3, 'POINT')+'.000đ'}"></span>
                     </p>
                 </div>
